@@ -202,16 +202,16 @@
         document:</t>
 
         <t><list style="symbols">
-            <t>Signed URI: A URI that contains a signed JWT for itself.</t>
+            <t>Signed URI: A URI that contains a signed JWT for itself.<vspace blankLines="1"/></t>
 
             <t>Target CDN URI: Embedded URI created by the CSP to direct UA
             towards the Upstream CDN. The Target CDN URI can be signed by the
-            CSP and verified by the Upstream CDN.</t>
+            CSP and verified by the Upstream CDN.<vspace blankLines="1"/></t>
 
             <t>Redirection URI: URI created by the Upstream CDN to redirect UA
             towards the Downstream CDN. The Redirection URI can be signed by
             the Upstream CDN and verified by the Downstream CDN. In a cascaded
-            CDNI scenario, there can be more than one Redirection URI.</t>
+            CDNI scenario, there can be more than one Redirection URI.<vspace blankLines="1"/></t>
           </list></t>
       </section>
 
@@ -416,10 +416,10 @@
             Container for holding
             the URI representation before the URI Signing Package is added. This representation can take several forms
             detailed below. More forms may be added in the future to extend the
-            capabilities.
+            capabilities.<vspace blankLines="1"/>
 
             <list style="symbols">
-              <t>URI - Prefixed with 'uri:', this string is the URI that MUST be matched with a simple string match to the requested URI.</t>
+              <t>URI - Prefixed with 'uri:', this string is the URI that MUST be matched with a simple string match to the requested URI.<vspace blankLines="1"/></t>
 
               <t>URI Pattern - Prefixed with 'uri-pattern:', this string for one or more URI Patterns that describes for which content the Signed URI
               is valid. The URI Pattern Container contains an expression to
@@ -438,21 +438,21 @@
               '*://*/folder/content-83112371/quality_*/segment????.mp4'. An
               example of two concatenated URI Patterns is the following:
               'http://*/folder/content-83112371/manifest/*.xml;http://*/folder/content-83112371/quality_*/segment????.mp4'.
-              In order to increase performance of string parsing of the UPC, implementations can check often-used UPC prefixes to quickly check whether certain URI components can be ignored. For example, UPC prefixes '*://*/' or '*://*:*' will be used in case the scheme and authority components of the URI are ignored for purposes of UPC enforcement.</t>
+              In order to increase performance of string parsing of the UPC, implementations can check often-used UPC prefixes to quickly check whether certain URI components can be ignored. For example, UPC prefixes '*://*/' or '*://*:*' will be used in case the scheme and authority components of the URI are ignored for purposes of UPC enforcement.<vspace blankLines="1"/></t>
 
               <t>URI Regular Expression - Prefixed with 'uri-regex:', this string
               is any <xref target="PCRE839">PCRE</xref> compatible regular expression
               used to match against the requested URI.
               Note: Due to computation complexity of executing arbitrary regular
               expressions, it is RECOMMENDED to only execute after validating the
-              JWT to ensure it's authenticity.</t>
+              JWT to ensure it's authenticity.<vspace blankLines="1"/></t>
             </list></t>
 
             <t>Expiry Time (exp) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.4 MUST be followed.
             Note: The time on the entities that generate and
             validate the signed URI SHOULD be in sync. In the CDNI case, this
             means that servers at both the CSP, uCDN and dCDN need to be
-            time-synchronized. It is RECOMMENDED to use NTP for this.</t>
+            time-synchronized. It is RECOMMENDED to use NTP for this.<vspace blankLines="1"/></t>
 
             <t>Client IP (aud) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.3 MUST be followed.
             IP address, or IP prefix, for
@@ -462,10 +462,10 @@
             The request is rejected if sourced from a client outside of the
             specified IP range. Since the client IP is considered PII this field
             MUST be a JSON Web Encryption (<xref target="RFC7516">JWE</xref>)
-            Object in compact serialization form.</t>
+            Object in compact serialization form.<vspace blankLines="1"/></t>
 
             <t>Nonce (jti) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.7 MUST be followed.
-            Used to prevent replay attacks.</t>
+            Used to prevent replay attacks.<vspace blankLines="1"/></t>
 
         </list></t>
 
