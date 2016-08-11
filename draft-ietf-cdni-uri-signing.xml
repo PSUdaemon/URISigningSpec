@@ -444,36 +444,58 @@
         <section anchor="uri_container_forms" title="URI Container Forms">
           <t>The URI Container (sub) claim takes one of the following forms. More forms may be added in the future to extend the capabilities.</t>
           
-          <section anchor="uri_container_forms_uri" title="URI Simple Expression (uri:)">
-              <t>When prefixed with 'uri:', this string is the URI that MUST be matched with a simple string match to the requested URI.</t>
+          <section anchor="uri_container_forms_uri" title="URI Simple Container (uri:)">
+              <t>When prefixed with 'uri:', the string following 'uri:' is the URI that MUST be matched with a simple string match to the requested URI.</t>
           </section>
 
-          <section anchor="uri_container_forms_ptn" title="URI Pattern Expression (uri-pattern:)">
-              <t>When prefixed with 'uri-pattern:', this string for one or more URI Patterns that describes for which content the Signed URI
-              is valid. The URI Pattern Container contains an expression to
-              match against the requested URI to check whether the requested
-              content is allowed to be requested. Multiple URI Patterns may be
-              concatenated in a single URI Pattern
-              by separating them with a semi-colon (';') character. Each URI
-              Pattern follows the <xref target="RFC3986"/> URI format, including
-              the '://' that delimits the URI scheme from the hierarchy part.
-              The pattern may include the wildcards '*' and '?', where '*'
-              matches any sequence of characters (including the empty string)
-              and '?' matches exactly one character. The three literals '$', '*'
-              and '?' should be escaped as '$$', '$*' and '$?'. All other
-                characters are treated as literals. The following is an example of
-              a valid URI Pattern:
-              '*://*/folder/content-83112371/quality_*/segment????.mp4'. An
-              example of two concatenated URI Patterns is the following:
-              'http://*/folder/content-83112371/manifest/*.xml;http://*/folder/content-83112371/quality_*/segment????.mp4'.
-              In order to increase performance of string parsing of the UPC, implementations can check often-used UPC prefixes to quickly check whether certain URI components can be ignored. For example, UPC prefixes '*://*/' or '*://*:*' will be used in case the scheme and authority components of the URI are ignored for purposes of UPC enforcement.</t>
+          <section anchor="uri_container_forms_ptn" title="URI Pattern Container (uri-pattern:)">
+              <t>When prefixed with 'uri-pattern:', the string following 'uri-pattern:' contains one or more patterns to match against the requested URI to check whether the requested content is allowed to be retrieved. Each URI Pattern follows the <xref target="RFC3986"/> URI format, including the '://' that delimits the URI scheme from the hierarchy part. The pattern may include the special literals:</t>
+              
+              <t>
+                <list style="sybmols">
+                  <t>';' - separates individual patterns when the string contains multiple URI patterns.<vspace blankLines="1"/></t>
+                  <t>'*' - matches any sequence of characters, including the empty string.<vspace blankLines="1"/></t>
+                  <t>'?' - matches exactly one character.<vspace blankLines="1"/></t>
+                  <t>'$' - used to escape the special literals; MUST be followed by exactly one of ';', '*', '?', or '$'.<vspace blankLines="1"/></t>
+                </list>
+              </t>
+              
+              <t>The following is an example of a valid URI Pattern:</t>
+              <t>
+                <figure>
+                  <artwork>
+*://*/folder/content-83112371/quality_*/segment????.mp4
+                  </artwork>
+                </figure>
+              </t>
+              
+              <t>An example of two concatenated URI Patterns is the following (whitespace is inserted after the ';' for readability and should not be present int the actual representation):</t>
+              
+              <t>
+                <figure>
+                  <artwork>
+http://*/folder/content-83112371/manifest/*.xml;
+http://*/folder/content-83112371/quality_*/segment????.mp4
+                  </artwork>
+                </figure>
+              </t>
+                
+              <t>In order to increase performance of string parsing of the UPC, implementations can check often-used UPC prefixes to quickly check whether certain URI components can be ignored. For example, UPC prefixes '*://*/' or '*://*:*' will be used in case the scheme and authority components of the URI are ignored for purposes of UPC enforcement.</t>
           </section>
 
-          <section anchor="uri_container_forms_regex" title="URI Regular Expression (uri-regex:)">
+          <section anchor="uri_container_forms_regex" title="URI Regular Expression Container (uri-regex:)">
               <t>URI Regular Expression - Prefixed with 'uri-regex:', this string
               is any <xref target="PCRE839">PCRE</xref> compatible regular expression
-              used to match against the requested URI.
-              Note: Due to computation complexity of executing arbitrary regular
+              used to match against the requested URI.</t>
+              
+              <t>An example of a 'uri-regex:' is the following:</t>
+              <t>
+                <figure>
+                  <artwork>TBD</artwork>
+                </figure>
+              </t>
+              
+              <t>Note: Due to computation complexity of executing arbitrary regular
               expressions, it is RECOMMENDED to only execute after validating the
               JWT to ensure it's authenticity.</t>
           </section>
