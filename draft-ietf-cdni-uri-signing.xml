@@ -178,13 +178,15 @@
       <t>* need to validate URI signed information (e.g., Expiry time, Client
       IP address)."</t>
 
-      <t>This document proposes a URI Signing scheme that allows Surrogates in
+      <t>This document proposes a URI Signing Package that allows Surrogates in
       interconnected CDNs to enforce a per-request authorization performed by
       the CSP. Splitting the role of performing per-request authorization by
       CSP and the role of validation of this authorization by the CDN allows
       any arbitrary distribution policy to be enforced across CDNs without the
       need of CDNs to have any awareness of the actual CSP distribution
       policy.</t>
+      
+      <t>The URI Signing Package is represented as a Signed JSON Web Token (JWT) <xref target="RFC7519"/>.</t>
 
       <section title="Terminology">
         <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
@@ -377,7 +379,7 @@
     <section anchor="jwt_profile" title="JWT Format and Processing Requirements">
       <t>The concept behind URI Signing is based on embedding in the Target
       CDN URI/Redirection URI a signed <xref target="RFC7519">JSON Web Token (JWT)
-      </xref> that contains a number of claims that can be validated to ensure the
+    </xref> that contains a number of claims that can be validated to ensure the
       UA has legitimate access to the content.</t>
 
       <t>In addition, this document specifies the following URI
@@ -488,10 +490,14 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
               is any <xref target="PCRE839">PCRE</xref> compatible regular expression
               used to match against the requested URI.</t>
               
+              <t>Note: Because '\' has special meaning in JSON <xref target="RFC7159"/> the escape character within JSON strings, the regular expression character '\' MUST be escaped as '\\'.</t>
+              
               <t>An example of a 'uri-regex:' is the following:</t>
               <t>
                 <figure>
-                  <artwork>TBD</artwork>
+                  <artwork>
+.*\\://.*/folder/content-83112371/quality_.*/segment.{3}\\.mp4
+                  </artwork>
                 </figure>
               </t>
               
@@ -1409,6 +1415,8 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
       <?rfc include='reference.RFC.5226'?>
 
       <?rfc include='reference.I-D.ietf-cdni-logging'?>
+
+      <?rfc include='reference.RFC.7159'?>
 
       <?rfc include='reference.RFC.7519'?>
 
