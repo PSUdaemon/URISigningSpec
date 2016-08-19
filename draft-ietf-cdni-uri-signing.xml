@@ -414,6 +414,12 @@
         distribution policy:</t>
 
         <t><list style="symbols">
+            <t>Issuer (iss) [optional] - The semantics in
+            <xref target="RFC7519"/> Section 4.1. MUST be followed. This
+            claim MAY be used to validate authorization of the issuer of a
+            signed JWT and also MAY be used to confirm that the indicated key
+            was provided by said issuer.</t>
+
             <t>URI Container (sub) [mandatory] - The semantics in <xref target="RFC7519"/> Section 4.1.2 MUST be followed.
             Container for holding the URI representation before the URI Signing Package is added. This representation can take one of several forms detailed in <xref target="uri_container_forms"/>.<vspace blankLines="1"/></t>
 
