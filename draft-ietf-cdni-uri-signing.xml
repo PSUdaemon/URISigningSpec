@@ -1456,5 +1456,9 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
       </reference>
       
     </references>
+
+    <section title="Signed URI Package Example" anchor="sup_example">
+      <t>TBD</t>
+    </section>
   </back>
 </rfc>
