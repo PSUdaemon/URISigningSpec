@@ -449,7 +449,7 @@
           </section>
 
           <section anchor="uri_container_forms_ptn" title="URI Pattern Container (uri-pattern:)">
-              <t>When prefixed with 'uri-pattern:', the string following 'uri-pattern:' contains one or more patterns to match against the requested URI to check whether the requested content is allowed to be retrieved. Each URI Pattern follows the <xref target="RFC3986"/> URI format, including the '://' that delimits the URI scheme from the hierarchy part. The pattern may include the special literals:</t>
+              <t>Prefixed with 'uri-pattern:', this string for one or more URI Patterns that describes for which content the Signed URI is valid. Each URI Pattern contains an expression to match against the requested URI to check whether the requested content is allowed to be requested. Multiple URI Patterns may be concatenated in a single URI Pattern by separating them with a semi-colon (';') character. Each URI Pattern follows the <xref target="RFC3986"/> URI format, including the '://' that delimits the URI scheme from the hierarchy part.. The pattern may include the special literals:</t>
               
               <t>
                 <list style="sybmols">
@@ -480,7 +480,7 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
                 </figure>
               </t>
                 
-              <t>In order to increase performance of string parsing of the UPC, implementations can check often-used UPC prefixes to quickly check whether certain URI components can be ignored. For example, UPC prefixes '*://*/' or '*://*:*' will be used in case the scheme and authority components of the URI are ignored for purposes of UPC enforcement.</t>
+              <t>In order to increase the performance of string parsing the URI Pattern, implementations can check often-used URI Pattern prefixes to quickly check whether certain URI components can be ignored. For example, URI Pattern prefixes '*://*/' or '*://*:*' will be used in case the scheme and authority components of the URI are ignored for purposes of pattern enforcement.</t>
           </section>
 
           <section anchor="uri_container_forms_regex" title="URI Regular Expression Container (uri-regex:)">
