@@ -47,6 +47,8 @@
 
           <city>San Jose</city>
 
+          <region>CA</region>
+
           <code>95134</code>
 
           <country>United States</country>
@@ -58,25 +60,25 @@
       </address>
     </author>
     
-    <author fullname="Phil Sorber" initials="???" surname="Sorber">
-      <organization>Comcast</organization>
+    <author fullname="Phil Sorber" initials="P" surname="Sorber">
+      <organization>Comcast Cable Communications</organization>
 
       <address>
         <postal>
-          <street>???</street>
+          <street>1401 Wynkoop Street, Suite 300</street>
 
-          <city>???</city>
+          <city>Denver</city>
 
-          <region>???</region>
+          <region>CO</region>
 
-          <code>???</code>
+          <code>80202</code>
 
           <country>United States</country>
         </postal>
 
-        <phone>???</phone>
+        <phone>+1 720 502 3785</phone>
 
-        <email>???</email>
+        <email>phillip_sorber@comcast.com</email>
       </address>
     </author>
     
@@ -88,7 +90,9 @@
         <postal>
           <street>1899 Wynkoop Street, Suite 600</street>
 
-          <city>Denver, CO</city>
+          <city>Denver</city>
+
+          <region>CO</region>
 
           <code>80202</code>
 
