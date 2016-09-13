@@ -14,48 +14,7 @@
   <front>
     <title abbrev="CDNI URI Signing">URI Signing for CDN Interconnection
     (CDNI)</title>
-
-    <author fullname="Kent Leung" initials="K" surname="Leung">
-      <organization>Cisco Systems</organization>
-
-      <address>
-        <postal>
-          <street>3625 Cisco Way</street>
-
-          <city>San Jose</city>
-
-          <code>95134</code>
-
-          <country>USA</country>
-        </postal>
-
-        <phone>+1 408 526 5030</phone>
-
-        <email>kleung@cisco.com</email>
-      </address>
-    </author>
-
-    <author fullname="Francois Le Faucheur" initials="F. "
-            surname="Le Faucheur">
-      <organization>Cisco Systems</organization>
-
-      <address>
-        <postal>
-          <street>Greenside, 400 Avenue de Roumanille</street>
-
-          <city>Sophia Antipolis</city>
-
-          <code>06410</code>
-
-          <country>France</country>
-        </postal>
-
-        <phone>+33 4 97 23 26 19</phone>
-
-        <email>flefauch@cisco.com</email>
-      </address>
-    </author>
-
+    
     <author fullname="Ray van Brandenburg" initials="R"
             surname="van Brandenburg">
       <organization>TNO</organization>
@@ -78,48 +37,65 @@
         <email>ray.vanbrandenburg@tno.nl</email>
       </address>
     </author>
-
-    <author fullname="Bill Downey" initials="B" surname="Downey">
-      <organization>Verizon Labs</organization>
+    
+    <author fullname="Kent Leung" initials="K" surname="Leung">
+      <organization>Cisco Systems, Inc.</organization>
 
       <address>
         <postal>
-          <street>60 Sylvan Road</street>
+          <street>3625 Cisco Way</street>
 
-          <city>Waltham</city>
+          <city>San Jose</city>
 
-          <region>Massachusetts</region>
+          <code>95134</code>
 
-          <code>02451</code>
-
-          <country>USA</country>
+          <country>United States</country>
         </postal>
 
-        <phone>+1 781 466 2475</phone>
+        <phone>+1 408 526 5030</phone>
 
-        <email>william.s.downey@verizon.com</email>
+        <email>kleung@cisco.com</email>
       </address>
     </author>
-
-    <author fullname="Michel Fisher" initials="M" surname="Fisher">
-      <organization>Limelight Networks</organization>
+    
+    <author fullname="Phil Sorber" initials="???" surname="Sorber">
+      <organization>Comcast</organization>
 
       <address>
         <postal>
-          <street>222 S Mill Ave</street>
+          <street>???</street>
 
-          <city>Tempe</city>
+          <city>???</city>
 
-          <region>AZ</region>
+          <region>???</region>
 
-          <code>85281</code>
+          <code>???</code>
 
-          <country>USA</country>
+          <country>United States</country>
         </postal>
 
-        <phone>+1 360 419 5185</phone>
+        <phone>???</phone>
 
-        <email>mfisher@llnw.com</email>
+        <email>???</email>
+      </address>
+    </author>
+    
+    <author fullname="Matthew Miller" initials="M. "
+            surname="Miller">
+      <organization>Cisco Systems, Inc.</organization>
+
+      <address>
+        <postal>
+          <street>1899 Wynkoop Street, Suite 600</street>
+
+          <city>Denver, CO</city>
+
+          <code>80202</code>
+
+          <country>United States</country>
+        </postal>
+
+        <email>mamille2@cisco.com</email>
       </address>
     </author>
 
@@ -457,7 +433,7 @@
           </section>
 
           <section anchor="uri_container_forms_ptn" title="URI Pattern Container (uri-pattern:)">
-              <t>Prefixed with 'uri-pattern:', this string for one or more URI Patterns that describes for which content the Signed URI is valid. Each URI Pattern contains an expression to match against the requested URI to check whether the requested content is allowed to be requested. Multiple URI Patterns may be concatenated in a single URI Pattern by separating them with a semi-colon (';') character. Each URI Pattern follows the <xref target="RFC3986"/> URI format, including the '://' that delimits the URI scheme from the hierarchy part.. The pattern may include the special literals:</t>
+              <t>Prefixed with 'uri-pattern:', this string contains one or more URI Patterns that describes for which content the Signed URI is valid. Each URI Pattern contains an expression to match against the requested URI to check whether the requested content is allowed to be requested. Multiple URI Patterns may be concatenated in a single URI Pattern by separating them with a semi-colon (';') character. Each URI Pattern follows the <xref target="RFC3986"/> URI format, including the '://' that delimits the URI scheme from the hierarchy part. The pattern may include the special literals:</t>
               
               <t>
                 <list style="sybmols">
@@ -477,7 +453,7 @@
                 </figure>
               </t>
               
-              <t>An example of two concatenated URI Patterns is the following (whitespace is inserted after the ';' for readability and should not be present int the actual representation):</t>
+              <t>An example of two concatenated URI Patterns is the following (whitespace is inserted after the ';' for readability and should not be present in the actual representation):</t>
               
               <t>
                 <figure>
@@ -492,11 +468,9 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
           </section>
 
           <section anchor="uri_container_forms_regex" title="URI Regular Expression Container (uri-regex:)">
-              <t>URI Regular Expression - Prefixed with 'uri-regex:', this string
-              is any <xref target="PCRE839">PCRE</xref> compatible regular expression
-              used to match against the requested URI.</t>
+              <t>Prefixed with 'uri-regex:', this string is any <xref target="PCRE839">PCRE</xref> compatible regular expression used to match against the requested URI.</t>
               
-              <t>Note: Because '\' has special meaning in JSON <xref target="RFC7159"/> the escape character within JSON strings, the regular expression character '\' MUST be escaped as '\\'.</t>
+              <t>Note: Because '\' has special meaning in JSON <xref target="RFC7159"/> as the escape character within JSON strings, the regular expression character '\' MUST be escaped as '\\'.</t>
               
               <t>An example of a 'uri-regex:' is the following:</t>
               <t>
@@ -507,9 +481,7 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
                 </figure>
               </t>
               
-              <t>Note: Due to computation complexity of executing arbitrary regular
-              expressions, it is RECOMMENDED to only execute after validating the
-              JWT to ensure it's authenticity.</t>
+              <t>Note: Due to computational complexity of executing arbitrary regular expressions, it is RECOMMENDED to only execute after validating the JWT to ensure its authenticity.</t>
           </section>
         </section>
       </section>
@@ -536,43 +508,7 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
 
       <section anchor="advertisement"
                title="CDNI Footprint &amp; Capabilities Advertisement Interface">
-        <t>The Downstream CDN advertises its capability to support URI Signing
-        via the CDNI Footprint &amp; Capabilities Advertisement interface
-        (FCI).</t>
-
-        <t>In general, new information elements introduced to enhance URI
-        Signing requires a draft and a new version.</t>
-
-        <t><list>
-            <t>For Enforcement Information Elements, there is no need to
-            advertise the based information elements such as "CIP" and
-            "ET".</t>
-
-            <t>For Signature Computation Information Elements:<list>
-                <t>No need to advertise "VER" Information Element unless it's
-                not "1". In this case, a draft is needed to describe the new
-                version.</t>
-
-                <t>Advertise value of the "HF" Information Element (i.e.
-                SHA-256) to indicate support for the hash function; Need IANA
-                assignment for new hash function.</t>
-
-                <t>Advertise value of the "DSA" Information Element (i.e.
-                "ECDSA") to indicate support for the DSA; Need IANA assignment
-                for new digital signature algorithm.</t>
-
-                <t>Advertise "MD" Information Element (i.e., SHA-256) to
-                indicate support for symmetric key method; A new draft is
-                needed for an alternative method.</t>
-
-                <t>Advertise "DS" Information Element (i.e., "ECDSA") to
-                indicate support for asymmetric key method; A new draft is
-                needed for an alternative method.</t>
-              </list></t>
-
-            <t>For URI Signing Package Attribute, there is no need to
-            advertise the base attribute.</t>
-          </list></t>
+        <t>[Editor's note: Check to see if there's anything we want to advertise]</t>
       </section>
 
       <section anchor="redirection"
@@ -581,7 +517,8 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
         Redirection Interface</xref> describes the recursive request
         redirection method. For URI Signing, the Upstream CDN signs the URI
         provided by the Downstream CDN. This approach has the following
-        benefits:<list>
+          benefits:
+          <list>
             <t>Consistency with interative request routing method</t>
 
             <t>URI Signing is fully operational even when Downstream CDN does
@@ -592,10 +529,13 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
             routing interface between Upstream CDN and CSP and request routing
             interface between Upstream CDN and Downstream CDN since these two
             interfaces may not be the same</t>
-          </list></t>
+          </list>
+        </t>
       </section>
-
+      
       <section anchor="metadata" title="CDNI Metadata Interface">
+        <t>[To Do: update to match with new JWT-approach]</t>
+        
         <t>The <xref target="I-D.ietf-cdni-metadata">CDNI Metadata
         Interface</xref> describes the CDNI metadata distribution in order to
         enable content acquisition and delivery. For URI Signing, additional
@@ -1180,156 +1120,6 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
 
       </section>
       
-      <section anchor="sec.IANA.auth" title="CDNI Metadata Auth Type">
-
-        <t>This document requests the registration of the following CDNI
-        Metadata Auth type under the IANA "CDNI Metadata Auth Types" registry:</t>
-
-        <texttable>
-          <ttcol align="left">Auth type</ttcol>
-          <ttcol align="left">Description</ttcol>
-          <ttcol align="left">Specification</ttcol>
-
-          <c>MI.UriSigning.v1</c>
-          <c>URI Signing version 1</c>
-          <c>RFCthis</c>
-        </texttable>
-        
-        <t>[RFC Editor: Please replace RFCthis with the published RFC
-        number for this document.]</t>
-
-      </section>
-
-      <section anchor="sec.IANA.enforcement_ie"
-               title="CDNI URI Signing Enforcement Information Elements">
-        <t>The IANA is requested to create a new "CDNI URI Signing
-        Enforcement Information Elements" subregistry in the "Content
-        Delivery Networks Interconnection (CDNI) Parameters" registry.
-        The "CDNI URI Signing Enforcement Information Elements"
-        namespace defines the valid Enforcement Information Elements
-        that may be included in a URI Signing token.  Additions to the
-        Enforcement Information Elements namespace conform to the 
-        "Specification Required" policy as defined in <xref target="RFC5226"/>.</t>
-
-        <t>The following table defines the initial Enforcement
-        Information Elements:</t>
-        <texttable>
-          <ttcol align='left'>Element</ttcol>
-          <ttcol align='left'>Description</ttcol>
-          <ttcol align='left'>RFC</ttcol>
-
-          <c>ET</c>
-          <c>Expiry Time</c>
-          <c>RFCthis</c>
-
-          <c>CIP</c>
-          <c>Client IP Address</c>
-          <c>RFCthis</c>
-
-          <c>OUC</c>
-          <c>Original URI Container</c>
-          <c>RFCthis</c>
-
-          <c>URI Pattern Container</c>
-          <c>Client IP Address</c>
-          <c>RFCthis</c>
-        </texttable>
-
-        <t>[RFC Editor: Please replace RFCthis with the published RFC
-        number for this document.]</t>
-
-        <t>[Ed Note: are there any special instructions to the
-        designated expert reviewer?]</t>
-      </section>
-
-      <section anchor="sec.IANA.computation_ie"
-               title="CDNI URI Signing Signature Computation Information Elements">
-        <t>The IANA is requested to create a new "CDNI URI Signing
-        Signature Computation Information Elements" subregistry in the "Content
-        Delivery Networks Interconnection (CDNI) Parameters" registry.
-        The "CDNI URI Signing Signature Computation Information Elements"
-        namespace defines the valid Signature Computation Information Elements
-        that may be included in a URI Signing token.  Additions to the
-        Signature Computation Information Elements namespace conform to the 
-        "Specification Required" policy as defined in <xref target="RFC5226"/>.</t>
-
-        <t>The following table defines the initial Signature Computation
-        Information Elements:</t>
-        <texttable>
-          <ttcol align='left'>Element</ttcol>
-          <ttcol align='left'>Description</ttcol>
-          <ttcol align='left'>RFC</ttcol>
-
-          <c>VER</c>
-          <c>Version Number</c>
-          <c>RFCthis</c>
-
-          <c>KID</c>
-          <c>Non-numerical Key Identifier</c>
-          <c>RFCthis</c>
-
-          <c>KID_NUM</c>
-          <c>Numerical Key Identifier</c>
-          <c>RFCthis</c>
-
-          <c>HF</c>
-          <c>Hash Function</c>
-          <c>RFCthis</c>
-
-          <c>DSA</c>
-          <c>Digital Signature Algorithm</c>
-          <c>RFCthis</c>
-
-          <c>CEA</c>
-          <c>Client IP Encryption Algorithm</c>
-          <c>RFCthis</c>
-
-          <c>CKI</c>
-          <c>Client IP Encryption Key Identifier</c>
-          <c>RFCthis</c>
-        </texttable>
-
-        <t>[RFC Editor: Please replace RFCthis with the published RFC
-        number for this document.]</t>
-
-        <t>[Ed Note: are there any special instructions to the
-        designated expert reviewer?]</t>
-      </section>
-
-      <section anchor="sec.IANA.signature_ie"
-               title="CDNI URI Signing Signature Information Elements">
-        <t>The IANA is requested to create a new "CDNI URI Signing
-        Signature Information Elements" subregistry in the "Content
-        Delivery Networks Interconnection (CDNI) Parameters" registry.
-        The "CDNI URI Signing Signature Information Elements"
-        namespace defines the valid Signature Information Elements
-        that may be included in a URI Signing token.  Additions to the
-        Signature Information Elements namespace conform to the 
-        "Specification Required" policy as defined in <xref target="RFC5226"/>.</t>
-
-        <t>The following table defines the initial Signature
-        Information Elements:</t>
-        <texttable>
-          <ttcol align='left'>Element</ttcol>
-          <ttcol align='left'>Description</ttcol>
-          <ttcol align='left'>RFC</ttcol>
-
-          <c>MD</c>
-          <c>Message Digest for Symmetric Key</c>
-          <c>RFCthis</c>
-
-          <c>DS</c>
-          <c>Digital Signature for Asymmetric Keys</c>
-          <c>RFCthis</c>
-        </texttable>
-
-        <t>[RFC Editor: Please replace RFCthis with the published RFC
-        number for this document.]</t>
-
-        <t>[Ed Note: are there any special instructions to the
-        designated expert reviewer?]</t>
-      </section>
-
     </section>
 
     <section anchor="security" title="Security Considerations">
@@ -1417,8 +1207,6 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
       <?rfc include='reference.RFC.2119'?>
 
       <?rfc include='reference.RFC.6707'?>
-
-      <?rfc include='reference.RFC.5226'?>
 
       <?rfc include='reference.I-D.ietf-cdni-logging'?>
 
