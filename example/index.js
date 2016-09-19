@@ -46,7 +46,7 @@ var samples = {
     "iss": "Upstream CDN Inc",
     "jti": "5DAafLhZAfhsbe",
     "nbf": 1474243200,
-    "sub": "uri-regex:http://cdni.example/foo/bar/baz/[0-9]{3}.png"
+    "sub": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}.png"
   }
 };
 function generateSample(sname) {
