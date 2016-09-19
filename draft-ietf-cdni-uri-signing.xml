@@ -395,19 +395,13 @@
 
         <t><list style="symbols">
             <t>Issuer (iss) [optional] - The semantics in
-            <xref target="RFC7519"/> Section 4.1. MUST be followed. This
+            <xref target="RFC7519"/> Section 4.1.1 MUST be followed. This
             claim MAY be used to validate authorization of the issuer of a
             signed JWT and also MAY be used to confirm that the indicated key
             was provided by said issuer.</t>
 
             <t>URI Container (sub) [mandatory] - The semantics in <xref target="RFC7519"/> Section 4.1.2 MUST be followed.
             Container for holding the URI representation before the URI Signing Package is added. This representation can take one of several forms detailed in <xref target="uri_container_forms"/>.<vspace blankLines="1"/></t>
-
-            <t>Expiry Time (exp) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.4 MUST be followed.
-            Note: The time on the entities that generate and
-            validate the signed URI SHOULD be in sync. In the CDNI case, this
-            means that servers at both the CSP, uCDN and dCDN need to be
-            time-synchronized. It is RECOMMENDED to use NTP for this.<vspace blankLines="1"/></t>
 
             <t>Client IP (aud) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.3 MUST be followed.
             IP address, or IP prefix, for
@@ -418,6 +412,24 @@
             specified IP range. Since the client IP is considered PII this field
             MUST be a JSON Web Encryption (<xref target="RFC7516">JWE</xref>)
             Object in compact serialization form.<vspace blankLines="1"/></t>
+
+            <t>Expiry Time (exp) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.4 MUST be followed.
+            Note: The time on the entities that generate and
+            validate the signed URI SHOULD be in sync. In the CDNI case, this
+            means that servers at both the CSP, uCDN and dCDN need to be
+            time-synchronized. It is RECOMMENDED to use NTP for this.<vspace blankLines="1"/></t>
+
+            <t>Not Before (nbf) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.5 MUST be followed.
+            Note: The time on the entities that generate and
+            validate the signed URI SHOULD be in sync. In the CDNI case, this
+            means that servers at both the CSP, uCDN and dCDN need to be
+            time-synchronized. It is RECOMMENDED to use NTP for this.<vspace blankLines="1"/></t>
+
+            <t>Issued At (iat) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.6 MUST be followed.
+            Note: The time on the entities that generate and
+            validate the signed URI SHOULD be in sync. In the CDNI case, this
+            means that servers at both the CSP, uCDN and dCDN need to be
+            time-synchronized. It is RECOMMENDED to use NTP for this.<vspace blankLines="1"/></t>
 
             <t>Nonce (jti) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.7 MUST be followed.
             Used to prevent replay attacks.<vspace blankLines="1"/></t>
@@ -1201,7 +1213,7 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
       contributions in reviewing this document and providing feedback: Scott
       Leibrand, Kevin Ma, Ben Niven-Jenkins, Thierry Magnien, Dan York,
       Bhaskar Bhupalam, Matt Caulfield, Samuel Rajakumar, Iuniana Oprescu,
-      Leif Hedstrom, Phil Sorber and Gancho Tenev. In addition, Matt Caulfield provided
+      Leif Hedstrom and Gancho Tenev. In addition, Matt Caulfield provided
       content for the CDNI Metadata Interface section.</t>
     </section>
   </middle>
