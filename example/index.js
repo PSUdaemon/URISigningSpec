@@ -78,9 +78,10 @@ function generateSample(sname) {
     var output;
     output = JSON.stringify(claims, null, "  ");
     console.log("\nclaims DECODED:\n%s", output);
-    return output;
+    return claims;
   });
   p = p.then((claims) => {
+    claims = JSON.stringify(claims);
     return jose.JWS.createSign({format: "compact"}, keys["sign"]).
            final(claims, "utf8");
   });
