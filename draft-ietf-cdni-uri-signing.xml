@@ -1262,8 +1262,22 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
     </references>
 
     <section title="Signed URI Package Example" anchor="sup_example">
-      <t>This section contains two examples of token usage.
-      Note: Line breaks added for readability.</t>
+      <t>This section contains two examples of token usage: a simple example with only the required claims present, and a complex example which demonstrates the full JWT claims set, including an encrypted Client IP (aud).</t>
+
+      <t>Note: All of the examples have whitespace added to improve formatting and readability, but are not present in the generated content.</t>
+
+      <t>Both examples use the following signing key to generate the Signed URI Package:</t>
+      <figure><artwork><![CDATA[
+{
+  "kty": "EC",
+  "kid": "P5UpOv0eMq1wcxLf7WxIg09JdSYGYFDOWkldueaImf0",
+  "use": "sig",
+  "crv": "P-256",
+  "x": "be807S4O7dzB6I4hTiCUvmxCI6FuxWba1xYBlLSSsZ8",
+  "y": "rOGC4vI69g-WF9AGEVI37sNNwbjIzBxSjLvIL7f3RBA",
+  "d": "yaowezrCLTU6yIwUL5RQw67cHgvZeMTLVZXjUGb1A1M"
+}
+]]></artwork></figure>
 
      <section title="Simple Example" anchor="simple_example">
         <t>
@@ -1272,30 +1286,30 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
         </t>
 
         <t>
-          JWT Claim Set:
+          The JWT Claim Set before signing:
         </t>
 
         <figure><artwork><![CDATA[
-  {
-    "sub": "uri:http://cdni.example/foo/bar/baz"
-  }
+{
+  "sub": "uri:http://cdni.example/foo/bar/baz"
+}
 ]]></artwork></figure>
 
         <t>
-          Signed JWT:
+          The Signed JWT:
         </t>
 
         <figure><artwork><![CDATA[
-  eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBPdjBlTXExd2N4TGY3V3hJZzA5SmRT
-  WUdZRkRPV2tsZHVlYUltZjAifQ.ewogICJzdWIiOiAidXJpOmh0dHA6Ly9jZG5pL
-  mV4YW1wbGUvZm9vL2Jhci9iYXoiCn0.Fay99hTiMz4Ic0azF1nMBZi-BWNzMWYZI
-  zLzndipoZK_CwfU7dsKolHGJ1s0xiq2k8KQ3EOhvxuRYVHRZSlHxQ
+eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBPdjBlTXExd2N4TGY3V3hJZzA5SmRT
+WUdZRkRPV2tsZHVlYUltZjAifQ.ewogICJzdWIiOiAidXJpOmh0dHA6Ly9jZG5pL
+mV4YW1wbGUvZm9vL2Jhci9iYXoiCn0.Fay99hTiMz4Ic0azF1nMBZi-BWNzMWYZI
+zLzndipoZK_CwfU7dsKolHGJ1s0xiq2k8KQ3EOhvxuRYVHRZSlHxQ
 ]]></artwork></figure>
       </section>
 
       <section title="Complex Example" anchor="complex_example">
         <t>
-          This example uses all optional fields including Client IP (aud)
+          This example uses all optional fields, including Client IP (aud)
           which is encrpyted. This significantly increases the size of
           the signed JWT token.
         </t>
@@ -1305,13 +1319,13 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
         </t>
 
         <figure><artwork><![CDATA[
-  {
-    "kty": "oct",
-    "kid": "f-WbjxBC3dPuI3d24kP2hfvos7Qz688UTi6aB0hN998",
-    "use": "enc",
-    "alg": "A128GCM",
-    "k": "4uFxxV7fhNmrtiah2d1fFg"
-  }
+{
+  "kty": "oct",
+  "kid": "f-WbjxBC3dPuI3d24kP2hfvos7Qz688UTi6aB0hN998",
+  "use": "enc",
+  "alg": "A128GCM",
+  "k": "4uFxxV7fhNmrtiah2d1fFg"
+}
 ]]></artwork></figure>
 
         <t>
@@ -1319,45 +1333,45 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
         </t>
 
         <figure><artwork><![CDATA[
-  eyJhbGciOiJkaXIiLCJraWQiOiJmLVdianhCQzNkUHVJM2QyNGtQMmhmdm9zN1F6
-  Njg4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..GfSKEqKgKROiZLWE.a
-  pcxQc3bX0Ewp9JO3VchuA.To6hoQ6rvmBvBFv85xW_5Q
+eyJhbGciOiJkaXIiLCJraWQiOiJmLVdianhCQzNkUHVJM2QyNGtQMmhmdm9zN1F6Nj
+g4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..sbz6xVMZNptLZ8G_.XjOKI
+M2rXO3hTAEfQmQxaA.dOwxLSHK3IU8Guxa7OPvxg
 ]]></artwork></figure>
 
         <t>
-          JWT Claim Set:
+          The JWT Claim Set before signing:
         </t>
 
         <figure><artwork><![CDATA[
-  {
-    "aud": "eyJhbGciOiJkaXIiLCJraWQiOiJmLVdianhCQzNkUHVJM2QyNGtQMm
-  hmdm9zN1F6Njg4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..GfSKEqKg
-  KROiZLWE.apcxQc3bX0Ewp9JO3VchuA.To6hoQ6rvmBvBFv85xW_5Q",
-    "exp": 1474243500,
-    "iat": 1474243200,
-    "iss": "Upstream CDN Inc",
-    "jti": "5DAafLhZAfhsbe",
-    "nbf": 1474243200,
-    "sub": "uri-regex:http://cdni.example/foo/bar/baz/[0-9]{3}.png"
-  }
+{
+  "aud": "eyJhbGciOiJkaXIiLCJraWQiOiJmLVdianhCQzNkUHVJM2QyNGtQMmhm
+dm9zN1F6Njg4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..sbz6xVMZNptL
+Z8G_.XjOKIM2rXO3hTAEfQmQxaA.dOwxLSHK3IU8Guxa7OPvxg",
+  "exp": 1474243500,
+  "iat": 1474243200,
+  "iss": "Upstream CDN Inc",
+  "jti": "5DAafLhZAfhsbe",
+  "nbf": 1474243200,
+  "sub": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}\\.png"
+}
 ]]></artwork></figure>
 
         <t>
-          Signed JWT:
+          The Signed JWT:
         </t>
 
         <figure><artwork><![CDATA[
-  eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBPdjBlTXExd2N4TGY3V3hJZzA5SmRT
-  WUdZRkRPV2tsZHVlYUltZjAifQ.ewogICJhdWQiOiAiZXlKaGJHY2lPaUprYVhJa
-  UxDSnJhV1FpT2lKbUxWZGlhbmhDUXpOa1VIVkpNMlF5Tkd0UU1taG1kbTl6TjFGN
-  k5qZzRWVlJwTm1GQ01HaE9PVGs0SWl3aVpXNWpJam9pUVRFeU9FZERUU0o5Li5HZ
-  lNLRXFLZ0tST2laTFdFLmFwY3hRYzNiWDBFd3A5Sk8zVmNodUEuVG82aG9RNnJ2b
-  UJ2QkZ2ODV4V181USIsCiAgImV4cCI6IDE0NzQyNDM1MDAsCiAgImlhdCI6IDE0N
-  zQyNDMyMDAsCiAgImlzcyI6ICJVcHN0cmVhbSBDRE4gSW5jIiwKICAianRpIjogI
-  jVEQWFmTGhaQWZoc2JlIiwKICAibmJmIjogMTQ3NDI0MzIwMCwKICAic3ViIjogI
-  nVyaS1yZWdleDpodHRwOi8vY2RuaS5leGFtcGxlL2Zvby9iYXIvYmF6L1swLTlde
-  zN9LnBuZyIKfQ.6NhiS3jkR4zxxpPzxaPU2nIbrshaUGaHujgAtwN2PtXoghwFxj
-  qxlKiMDGSimF7JQiW2bM0NcuVgulM8xOZUFw
+eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBPdjBlTXExd2N4TGY3V3hJZzA5SmRTWU
+dZRkRPV2tsZHVlYUltZjAifQ.ewogICJhdWQiOiAiZXlKaGJHY2lPaUprYVhJaUxDS
+nJhV1FpT2lKbUxWZGlhbmhDUXpOa1VIVkpNMlF5Tkd0UU1taG1kbTl6TjFGNk5qZzR
+WVlJwTm1GQ01HaE9PVGs0SWl3aVpXNWpJam9pUVRFeU9FZERUU0o5Li5zYno2eFZNW
+k5wdExaOEdfLlhqT0tJTTJyWE8zaFRBRWZRbVF4YUEuZE93eExTSEszSVU4R3V4YTd
+PUHZ4ZyIsCiAgImV4cCI6IDE0NzQyNDM1MDAsCiAgImlhdCI6IDE0NzQyNDMyMDAsC
+iAgImlzcyI6ICJVcHN0cmVhbSBDRE4gSW5jIiwKICAianRpIjogIjVEQWFmTGhaQWZ
+oc2JlIiwKICAibmJmIjogMTQ3NDI0MzIwMCwKICAic3ViIjogInVyaS1yZWdleDpod
+HRwOi8vY2RuaVxcLmV4YW1wbGUvZm9vL2Jhci9iYXovWzAtOV17M31cXC5wbmciCn0
+.BU27LglaRMePLTacOCi5DE20_ovlEtMZj3bNPS4cRKDdaITPWVCREAE5nllNyjneL
+OnqJ9JVKO46wJ9Af5dKbw
 ]]></artwork></figure>
 
 
