@@ -395,19 +395,13 @@
 
         <t><list style="symbols">
             <t>Issuer (iss) [optional] - The semantics in
-            <xref target="RFC7519"/> Section 4.1. MUST be followed. This
+            <xref target="RFC7519"/> Section 4.1.1 MUST be followed. This
             claim MAY be used to validate authorization of the issuer of a
             signed JWT and also MAY be used to confirm that the indicated key
             was provided by said issuer.</t>
 
             <t>URI Container (sub) [mandatory] - The semantics in <xref target="RFC7519"/> Section 4.1.2 MUST be followed.
             Container for holding the URI representation before the URI Signing Package is added. This representation can take one of several forms detailed in <xref target="uri_container_forms"/>.<vspace blankLines="1"/></t>
-
-            <t>Expiry Time (exp) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.4 MUST be followed.
-            Note: The time on the entities that generate and
-            validate the signed URI SHOULD be in sync. In the CDNI case, this
-            means that servers at both the CSP, uCDN and dCDN need to be
-            time-synchronized. It is RECOMMENDED to use NTP for this.<vspace blankLines="1"/></t>
 
             <t>Client IP (aud) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.3 MUST be followed.
             IP address, or IP prefix, for
@@ -418,6 +412,24 @@
             specified IP range. Since the client IP is considered PII this field
             MUST be a JSON Web Encryption (<xref target="RFC7516">JWE</xref>)
             Object in compact serialization form.<vspace blankLines="1"/></t>
+
+            <t>Expiry Time (exp) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.4 MUST be followed.
+            Note: The time on the entities that generate and
+            validate the signed URI SHOULD be in sync. In the CDNI case, this
+            means that servers at both the CSP, uCDN and dCDN need to be
+            time-synchronized. It is RECOMMENDED to use NTP for this.<vspace blankLines="1"/></t>
+
+            <t>Not Before (nbf) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.5 MUST be followed.
+            Note: The time on the entities that generate and
+            validate the signed URI SHOULD be in sync. In the CDNI case, this
+            means that servers at both the CSP, uCDN and dCDN need to be
+            time-synchronized. It is RECOMMENDED to use NTP for this.<vspace blankLines="1"/></t>
+
+            <t>Issued At (iat) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.6 MUST be followed.
+            Note: The time on the entities that generate and
+            validate the signed URI SHOULD be in sync. In the CDNI case, this
+            means that servers at both the CSP, uCDN and dCDN need to be
+            time-synchronized. It is RECOMMENDED to use NTP for this.<vspace blankLines="1"/></t>
 
             <t>Nonce (jti) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.7 MUST be followed.
             Used to prevent replay attacks.<vspace blankLines="1"/></t>
@@ -1201,7 +1213,7 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
       contributions in reviewing this document and providing feedback: Scott
       Leibrand, Kevin Ma, Ben Niven-Jenkins, Thierry Magnien, Dan York,
       Bhaskar Bhupalam, Matt Caulfield, Samuel Rajakumar, Iuniana Oprescu,
-      Leif Hedstrom, Phil Sorber and Gancho Tenev. In addition, Matt Caulfield provided
+      Leif Hedstrom and Gancho Tenev. In addition, Matt Caulfield provided
       content for the CDNI Metadata Interface section.</t>
     </section>
   </middle>
@@ -1250,7 +1262,119 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
     </references>
 
     <section title="Signed URI Package Example" anchor="sup_example">
-      <t>TBD</t>
+      <t>This section contains two examples of token usage: a simple example with only the required claims present, and a complex example which demonstrates the full JWT claims set, including an encrypted Client IP (aud).</t>
+
+      <t>Note: All of the examples have whitespace added to improve formatting and readability, but are not present in the generated content.</t>
+
+      <t>Both examples use the following signing key to generate the Signed URI Package:</t>
+      <figure><artwork><![CDATA[
+{
+  "kty": "EC",
+  "kid": "P5UpOv0eMq1wcxLf7WxIg09JdSYGYFDOWkldueaImf0",
+  "use": "sig",
+  "crv": "P-256",
+  "x": "be807S4O7dzB6I4hTiCUvmxCI6FuxWba1xYBlLSSsZ8",
+  "y": "rOGC4vI69g-WF9AGEVI37sNNwbjIzBxSjLvIL7f3RBA",
+  "d": "yaowezrCLTU6yIwUL5RQw67cHgvZeMTLVZXjUGb1A1M"
+}
+]]></artwork></figure>
+
+     <section title="Simple Example" anchor="simple_example">
+        <t>
+          This example is the simplest possible example containing
+          the only required field (sub).
+        </t>
+
+        <t>
+          The JWT Claim Set before signing:
+        </t>
+
+        <figure><artwork><![CDATA[
+{
+  "sub": "uri:http://cdni.example/foo/bar/baz"
+}
+]]></artwork></figure>
+
+        <t>
+          The Signed JWT:
+        </t>
+
+        <figure><artwork><![CDATA[
+eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBPdjBlTXExd2N4TGY3V3hJZzA5SmRTWU
+dZRkRPV2tsZHVlYUltZjAifQ.eyJzdWIiOiJ1cmk6aHR0cDovL2NkbmkuZXhhbXBsZ
+S9mb28vYmFyL2JheiJ9.oC4yKwUchowx4KhMsI8MQ-Sq_1s3fC8NCi-IWcmNEE9MQz
+EEQfurJ1su2Op_dtYuc_fG8NixSVubz3HWKM4Rsw
+]]></artwork></figure>
+      </section>
+
+      <section title="Complex Example" anchor="complex_example">
+        <t>
+          This example uses all optional fields, including Client IP (aud)
+          which is encrpyted. This significantly increases the size of
+          the signed JWT token.
+        </t>
+
+        <t>
+          Shared key used for encrpyting the Client IP (aud):
+        </t>
+
+        <figure><artwork><![CDATA[
+{
+  "kty": "oct",
+  "kid": "f-WbjxBC3dPuI3d24kP2hfvos7Qz688UTi6aB0hN998",
+  "use": "enc",
+  "alg": "A128GCM",
+  "k": "4uFxxV7fhNmrtiah2d1fFg"
+}
+]]></artwork></figure>
+
+        <t>
+          JWE for client IP (aud) of [2001:db8::1/32]:
+        </t>
+
+        <figure><artwork><![CDATA[
+eyJhbGciOiJkaXIiLCJraWQiOiJmLVdianhCQzNkUHVJM2QyNGtQMmhmdm9zN1F6Nj
+g4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..Ewl05cq3jmUe1Bv1.CHif9
+OMPmsMPgJ8tZgvD0A.R3I2C8nfppY2wBfc4xEPPQ
+]]></artwork></figure>
+
+        <t>
+          The JWT Claim Set before signing:
+        </t>
+
+        <figure><artwork><![CDATA[
+{
+  "aud": "eyJhbGciOiJkaXIiLCJraWQiOiJmLVdianhCQzNkUHVJM2QyNGtQMmhm
+dm9zN1F6Njg4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..Ewl05cq3jmUe
+1Bv1.CHif9OMPmsMPgJ8tZgvD0A.R3I2C8nfppY2wBfc4xEPPQ",
+  "exp": 1474243500,
+  "iat": 1474243200,
+  "iss": "Upstream CDN Inc",
+  "jti": "5DAafLhZAfhsbe",
+  "nbf": 1474243200,
+  "sub": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}\\.png"
+}
+]]></artwork></figure>
+
+        <t>
+          The Signed JWT:
+        </t>
+
+        <figure><artwork><![CDATA[
+eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBPdjBlTXExd2N4TGY3V3hJZzA5SmRTWU
+dZRkRPV2tsZHVlYUltZjAifQ.eyJhdWQiOiJleUpoYkdjaU9pSmthWElpTENKcmFXU
+WlPaUptTFZkaWFuaENRek5rVUhWSk0yUXlOR3RRTW1obWRtOXpOMUY2TmpnNFZWUnB
+ObUZDTUdoT09UazRJaXdpWlc1aklqb2lRVEV5T0VkRFRTSjkuLkV3bDA1Y3Ezam1VZ
+TFCdjEuQ0hpZjlPTVBtc01QZ0o4dFpndkQwQS5SM0kyQzhuZnBwWTJ3QmZjNHhFUFB
+RIiwiZXhwIjoxNDc0MjQzNTAwLCJpYXQiOjE0NzQyNDMyMDAsImlzcyI6IlVwc3RyZ
+WFtIENETiBJbmMiLCJqdGkiOiI1REFhZkxoWkFmaHNiZSIsIm5iZiI6MTQ3NDI0MzI
+wMCwic3ViIjoidXJpLXJlZ2V4Omh0dHA6Ly9jZG5pXFwuZXhhbXBsZS9mb28vYmFyL
+2Jhei9bMC05XXszfVxcLnBuZyJ9.AtDNW7mwFIJPqsWAn9ojzj4imE-vTowR-FRzil
+vnSQuQMz_u4sIspxe6RoXo_Ti8rVMgJ0jOdSvVnQUJZdfRUQ
+]]></artwork></figure>
+
+
+      </section>
     </section>
   </back>
 </rfc>
