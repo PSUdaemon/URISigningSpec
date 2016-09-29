@@ -586,7 +586,11 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
 
       <section anchor="advertisement"
                title="CDNI Footprint &amp; Capabilities Advertisement Interface">
-        <t>[Editor's note: Check to see if there's anything we want to advertise]</t>
+        <t>The CDNI Request Routing: Footprint and Capabilities
+        Semantics document <xref target="I-D.ietf-cdni-footprint-capabilities-semantics"/> defines support for
+        advertising CDNI Metadata capabilities, via CDNI Payload
+        Type. The CDNI Payload Type registered in <xref target="sec.IANA.payload"/>
+        can be used for capability advertisement.</t>
       </section>
 
       <section anchor="redirection"
@@ -594,31 +598,15 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
         <t>The <xref target="I-D.ietf-cdni-redirection">CDNI Request Routing
         Redirection Interface</xref> describes the recursive request
         redirection method. For URI Signing, the uCDN signs the URI
-        provided by the dCDN. This approach has the following
-          benefits:
-          <list>
-            <t>Consistency with interative request routing method</t>
-
-            <t>URI Signing is fully operational even when dCDN does
-            not have the signing function (which may be the case when the
-            dCDN operates only as a delivering CDN)</t>
-
-            <t>uCDN can act as a conversion gateway for the requesting
-            routing interface between uCDN and CSP and request routing
-            interface between uCDN and dCDN since these two
-            interfaces may not be the same</t>
-          </list>
-        </t>
+        provided by the dCDN. URI Signing therefore has has no impact
+        on this interface.</t> 
       </section>
       
       <section anchor="metadata" title="CDNI Metadata Interface">
-        <t>[To Do: update to match with new JWT-approach]</t>
-        
         <t>The <xref target="I-D.ietf-cdni-metadata">CDNI Metadata
         Interface</xref> describes the CDNI metadata distribution in order to
-        enable content acquisition and delivery. For URI Signing, additional
-        CDNI metadata objects are specified. In general, an Empty set means
-        "all". These are the CDNI metadata objects used for URI Signing.</t>
+        enable content acquisition and delivery. For URI Signing, a new
+        CDNI metadata object is specified.</t>
 
         <t>The UriSigning Metadata object contains information to enable URI
         signing and validation by a dCDN. The UriSigning properties are
@@ -629,87 +617,28 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
                 <t>Description: URI Signing enforcement flag. Specifically,
                 this flag indicates if the access to content is subject to URI
                 Signing. URI Signing requires the dCDN to ensure
-                that the URI must be signed and validated before content
-                delivery. Otherwise, dCDN does not perform
-                validation regardless if URI is signed or not.</t>
+                that the URI must be signed and validated before
+                delivering content. Otherwise, the dCDN does not perform
+                validation, regardless of whether or not the URI is signed.</t>
 
                 <t>Type: Boolean</t>
 
-                <t>Mandatory-to-Specify: No. If a UriSigning object is present
-                in the metadata for a piece of content (even if the object is
-                empty), then URI signing should be enforced. If no UriSigning
-                object is present in the metadata for a piece of content, then
-                the signed JWT should not be validated.</t>
+                <t>Mandatory-to-Specify: No. The default is true.</t>
               </list></t>
 
-            <t>Property: key-id<list style="empty">
-                <t>Description: Designated key identifier used for URI Signing
-                computation when the Signed URI does not contain the Key ID
-                information element.</t>
+            <t>Property: issuers<list style="empty">
+                <t>Description: A list of valid Issuers against which
+                the Issuer claim in the signed JWT may be validated.</t>
 
-                <t>Type: String</t>
+                <t>Type: Array of Strings</t>
 
-                <t>Mandatory-to-Specify: No. A Key ID is not essential for all
-                implementations of URI signing.</t>
-              </list></t>
-
-            <t>Property: key-id-set<list style="empty">
-                <t>Description: Allowable Key ID set that the Signed URI's Key
-                ID information element can reference.</t>
-
-                <t>Type: List of Strings</t>
-
-                <t>Mandatory-to-Specify: No. Default is to allow any Key
-                ID.</t>
-              </list></t>
-
-            <t>Property: hash-function<list style="empty">
-                <t>Description: Designated hash function used for URI Signing
-                computation when the Signed URI does not contain the Hash
-                Function information element.</t>
-
-                <t>Type: String (limited to the hash function strings in the
-                registry defined by the <xref target="sec.IANA">IANA
-                Considerations</xref> section)</t>
-
-                <t>Mandatory-to-Specify: No. Default is SHA-256.</t>
-              </list></t>
-
-            <t>Property: hash-function-set<list style="empty">
-                <t>Description: Allowable Hash Function set that the Signed
-                URI's Hash Function information element can reference.</t>
-
-                <t>Type: List of Strings</t>
-
-                <t>Mandatory-to-Specify: No. Default is to allow any hash
-                function.</t>
-              </list></t>
-
-            <t>Property: digital-signature-algorithm<list style="empty">
-                <t>Description: Designated digital signature function used for
-                URI Signing computation when the Signed URI does not contain
-                the Digital Signature Algorithm information element.</t>
-
-                <t>Type: String (limited to the digital signature algorithm
-                strings in the registry defined by the <xref
-                target="sec.IANA">IANA Considerations</xref> section).</t>
-
-                <t>Mandatory-to-Specify: No. Default is "ECDSA".</t>
-              </list></t>
-
-            <t>Property: digital-signature-algorithm-set<list style="empty">
-                <t>Description: Allowable digital signature function set that
-                the Signed URI's Digital Signature Algorithm information
-                element can reference.</t>
-
-                <t>Type: List of Strings</t>
-
-                <t>Mandatory-to-Specify: No. Default is to allow any DSA.</t>
+                <t>Mandatory-to-Specify: No. The default is an empty
+                list.  An empty list means that any Issuer is acceptable.</t>
               </list></t>
 
             <t>Property: package-attribute<list style="empty">
-                <t>Description: Overwrite the default name for the URL Signing
-                Package Attribute.</t>
+                <t>Description: The name to use for the URI Signing
+                Package.</t>
 
                 <t>Type: String</t>
 
@@ -718,24 +647,13 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
               </list></t>
           </list></t>
 
-        <t>Note that the Key ID information element is not needed if only one
-        key is provided by the CSP or the uCDN for the content item or
-        set of content items covered by the CDNI Metadata object. In the case
-        of asymmetric keys, it's easy for any entity to sign the URI for
-        content with a private key and provide the public key in the Signed
-        URI. This just confirms that the URI Signer authorized the delivery.
-        But it's necessary for the URI Signer to be the content owner. So, the
-        CDNI Metadata interface or configuration MUST provide the allowable
-        Key ID set to authorize the Key ID information element embedded in the
-          Signed URI.</t>
-        
         <t>The following is an example of a URI Signing metadata payload with all default values:</t>
         
         <figure>
           <artwork><![CDATA[
 
 {
-  "generic-metadata-type": "MI.UriSigning.v1"
+  "generic-metadata-type": "MI.UriSigning"
   "generic-metadata-value": {}
 }
 ]]>
@@ -748,16 +666,11 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
           <artwork><![CDATA[
 
 {
-  "generic-metadata-type": "MI.UriSigning.v1"
+  "generic-metadata-type": "MI.UriSigning"
   "generic-metadata-value":
     {
       "enforce": true,
-      "key-id": "1",
-      "key-id-set": ["1", "2", "3"],
-      "hash-function": "SHA-512",
-      "hash-function-set": ["SHA-384", "SHA-512"],
-      "digital-signature-algorithm": "ECDSA",
-      "digital-signature-algorithm-set": ["ECDSA"],
+      "issuers": ["csp", "ucdn1", "ucdn2"],
       "package-attribute": "usp"
     }
 }
@@ -775,7 +688,9 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
 
         <t>The following CDNI Logging field for URI Signing SHOULD be
         supported in the HTTP Request Logging Record as specified in <xref
-        target="I-D.ietf-cdni-logging">CDNI Logging Interface</xref>.</t>
+        target="I-D.ietf-cdni-logging">CDNI Logging Interface</xref>,
+        using the new "cdni_http_request_v2" record-type registered in
+        <xref target="sec.IANA.record_type.cdni_http_request_v2"/>.</t>
 
         <t><list style="symbols">
             <t>s-uri-signing (mandatory): <list>
@@ -800,6 +715,12 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
 
                     <t>"403" : signed JWT validation performed and rejected
                     because of URI Pattern enforcement</t>
+
+                    <t>"404" : signed JWT validation performed and rejected
+                    because of Issuer enforcement</t>
+
+                    <t>"405" : signed JWT validation performed and rejected
+                    because of Not Before enforcement</t>
 
                     <t>"500" : unable to perform signed JWT validation
                     because of malformed URI</t>
@@ -1121,7 +1042,7 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
           <ttcol align="left">Payload Type</ttcol>
           <ttcol align="left">Specification</ttcol>
 
-          <c>MI.UriSigning.v1</c>
+          <c>MI.UriSigning</c>
           <c>RFCthis</c>
         </texttable>
 
@@ -1299,6 +1220,8 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
       <?rfc include='reference.RFC.7337'?>
 
       <?rfc include='reference.I-D.ietf-cdni-metadata'?>
+
+      <?rfc include='reference.I-D.ietf-cdni-footprint-capabilities-semantics'?>
 
       <?rfc include='reference.I-D.ietf-cdni-redirection'?>
 
