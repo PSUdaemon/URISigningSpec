@@ -388,7 +388,7 @@
         the exact subset of claims used in a given signed JWT is a runtime decision. 
         Claim requirements are defined in the
         CDNI Metadata. If the CDNI Metadata interface is not used, or
-        does not include a claim requirements, the claim requirements
+        does not include claim requirements, the claim requirements
         can be set by configuration (out of scope of this document).</t>
 
         <t>The following claims (where the "JSON Web Token Claims" registry
@@ -410,18 +410,18 @@
             signed JWT does not support Issuer validation, or if the
             Issuer in the signed JWT does not match the list of known
             acceptable Issuers, the CDN MUST reject the request.  When
-            resigning a URI, the CDN generating the new signed JWT
+            redirecting a URI, the CDN generating the new signed JWT
             MUST change the Issuer value to specify themself.  If the
             received signed JWT contains an Issuer claim, then any
-            resigned URL JWTs MUST contain an Issuer claim.  If the
+            redirected URL JWTs MUST contain an Issuer claim.  If the
             received signed JWT does not contain an Issuer claim,
-            the CDN MAY add an Issuer claim in the resigned URL's JWT.</t>
+            the CDN MAY add an Issuer claim in the redirected URL's JWT.</t>
 
             <t>URI Container (sub) [mandatory] - The semantics in <xref target="RFC7519"/> Section 4.1.2 MUST be followed.
             Container for holding the URI representation before the URI Signing Package is added. This representation can take one of several forms detailed in <xref target="uri_container_forms"/>. If the
             URI pattern/regex in the signed JWT does not match the URI of
-            the content request request,  the CDN validating the
-            signed JWT MUST reject the request.  When resigning a URI, the CDN
+            the content request,  the CDN validating the
+            signed JWT MUST reject the request.  When redirecting a URI, the CDN
             generating the new signed JWT MAY change the URI Container
             to comport with the URI being used in the redirection.</t>
 
@@ -438,11 +438,11 @@
             signed JWT does not support Client IP validation, or if the
             Client IP in the signed JWT does not match the source IP
             address in the content request request, the CDN MUST
-            reject the request.  When resigning a URI, the CDN
+            reject the request.  When redirecting a URI, the CDN
             generating the new signed JWT MUST NOT change the Client
             IP value.  If the
             received signed JWT contains a Client IP claim, then any
-            resigned URL JWTs MUST contain the same Client IP claim.</t>
+            redirected URL JWTs MUST contain the same Client IP claim.</t>
 
             <t>Expiry Time (exp) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.4 MUST be followed, though URI Signing implementations MUST not allow for any time synchronization leeway.
             Note: The time on the entities that generate and
@@ -453,10 +453,10 @@
             Expiry Time validation, or if the Expiry Time in the
             signed JWT corresponds to a time earlier than the time of
             the content request request, the CDN MUST reject the
-            request.  When resigning a URI, the CDN generating the new
+            request.  When redirecting a URI, the CDN generating the new
             signed JWT MUST NOT change the Expiry Time value.  If the
             received signed JWT contains a Expiry Time claim, then any
-            resigned URL JWTs MUST contain the same Expiry Time claim.</t>
+            redirected URL JWTs MUST contain the same Expiry Time claim.</t>
 
             <t>Not Before (nbf) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.5 MUST be followed, though URI Signing implementations MUST not allow for any time synchronization leeway.
             Note: The time on the entities that generate and
@@ -467,22 +467,22 @@
             Not Before time validation, or if the Not Before time in the
             signed JWT corresponds to a time later than the time of
             the content request request, the CDN MUST reject the
-            request.  When resigning a URI, the CDN generating the new
+            request.  When redirecting a URI, the CDN generating the new
             signed JWT MUST NOT change the Not Before time value.  If the
             received signed JWT contains a Not Before claim, then any
-            resigned URL JWTs MUST contain the same Not Before claim.</t>
+            redirected URL JWTs MUST contain the same Not Before claim.</t>
 
             <t>Issued At (iat) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.6 MUST be followed.
             Note: The time on the entities that generate and
             validate the signed URI SHOULD be in sync. In the CDNI case, this
             means that CSP, uCDN, and dCDN servers need to be
             time-synchronized. It is RECOMMENDED to use NTP for time synchronization.
-            When resigning a URI, the CDN generating the new signed JWT
+            When redirecting a URI, the CDN generating the new signed JWT
             MUST update the Issued At value to the current time.  If the
             received signed JWT contains an Issued At claim, then any
-            resigned URL JWTs MUST contain an Issued At claim.  If the
+            redirected URL JWTs MUST contain an Issued At claim.  If the
             received signed JWT does not contain an Issued At claim,
-            the CDN MAY add an Issued At claim in the resigned URL's JWT.</t>
+            the CDN MAY add an Issued At claim in the redirected URL's JWT.</t>
 
             <t>Nonce (jti) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.7 MUST be followed.
             Can be used to prevent replay attacks if the CDN stores a
@@ -491,10 +491,10 @@
             before.  If the signed JWT contains the Nonce claim and the
             CDN validating the signed JWT does not support Nonce
             storage, then the CDN MUST reject the request.  When
-            resigning a URI, the CDN generating the new signed JWT
+            redirecting a URI, the CDN generating the new signed JWT
             MUST NOT change the Nonce value.  If the
             received signed JWT contains a Nonce claim, then any
-            resigned URL JWTs MUST contain the same Nonce claim.</t>
+            redirected URL JWTs MUST contain the same Nonce claim.</t>
 
         </list></t>
 
