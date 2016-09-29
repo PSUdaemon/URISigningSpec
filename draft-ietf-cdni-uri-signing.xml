@@ -444,7 +444,7 @@
             received signed JWT contains a Client IP claim, then any
             redirected URL JWTs MUST contain the same Client IP claim.</t>
 
-            <t>Expiry Time (exp) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.4 MUST be followed, though URI Signing implementations MUST not allow for any time synchronization leeway.
+            <t>Expiry Time (exp) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.4 MUST be followed, though URI Signing implementations MUST not allow for any time synchronization "leeway".
             Note: The time on the entities that generate and
             validate the signed URI SHOULD be in sync. In the CDNI case, this
             means that CSP, uCDN and dCDN servers need to be
@@ -458,7 +458,7 @@
             received signed JWT contains a Expiry Time claim, then any
             redirected URL JWTs MUST contain the same Expiry Time claim.</t>
 
-            <t>Not Before (nbf) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.5 MUST be followed, though URI Signing implementations MUST not allow for any time synchronization leeway.
+            <t>Not Before (nbf) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.5 MUST be followed, though URI Signing implementations MUST not allow for any time synchronization "leeway".
             Note: The time on the entities that generate and
             validate the signed URI SHOULD be in sync. In the CDNI case, this
             means that the CSP, uCDN, and dCDN servers need to be
