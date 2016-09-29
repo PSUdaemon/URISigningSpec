@@ -1330,7 +1330,7 @@ dm9zN1F6Njg4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..Ewl05cq3jmUe
 1Bv1.CHif9OMPmsMPgJ8tZgvD0A.R3I2C8nfppY2wBfc4xEPPQ",
   "exp": 1474243500,
   "iat": 1474243200,
-  "iss": "uCDN Inc",
+  "iss": "Upstream CDN Inc",
   "jti": "5DAafLhZAfhsbe",
   "nbf": 1474243200,
   "sub": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}\\.png"
