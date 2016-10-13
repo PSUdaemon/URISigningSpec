@@ -3,7 +3,7 @@
  */
 
 var jose = require("node-jose");
-    
+
 var store = jose.JWK.createKeyStore();
 
 // load keys
@@ -37,10 +37,12 @@ function loadKey(kname) {
 
 var samples = {
   "simple": {
+    "cdniv": 1,
     "sub": "uri:http://cdni.example/foo/bar/baz"
   },
   "complex": {
     "aud": "[2001:db8::1/32]",
+    "cdniv": 1,
     "exp": 1474243500,
     "iat": 1474243200,
     "iss": "Upstream CDN Inc",
@@ -62,7 +64,7 @@ function generateSample(sname) {
     if (!claims.aud) {
       return claims;
     }
-    
+
     console.log("'aud' DECRYPTED:  %s", claims.aud);
     return jose.JWE.createEncrypt({format: "compact"}, keys["encrypt"]).
            final(claims.aud, "utf8").
