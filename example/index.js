@@ -45,7 +45,7 @@ var samples = {
     "cdniv": 1,
     "exp": 1474243500,
     "iat": 1474243200,
-    "iss": "Upstream CDN Inc",
+    "iss": "uCDN Inc",
     "jti": "5DAafLhZAfhsbe",
     "nbf": 1474243200,
     "sub": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}\\.png"
