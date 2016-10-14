@@ -526,9 +526,9 @@
         <section anchor="cdniv_claim" title="CDNI Claim Set Version (cdniv) claim">
             <t>CDNI Claim Set Version (cdniv) [mandatory] - The CDNI Claim Set Version (cdniv)
             claim provides a means within a Signed JWT to tie the claim set to a specific version
-            of a specificiation. This intended to allow changes in the future and facilitate
-            upgrades across versions. The value for this must be "1" and MUST be rejected if it
-            is not.</t>
+            of a specificiation. This is intended to allow changes in and facilitate
+            upgrades across specifications. The type is JSON integer and the value for this version of
+            the specification is "1". Implementations MUST reject unsupported versions.</t>
         </section>
 
         <section anchor="uri_container_forms" title="URI Container Forms">
