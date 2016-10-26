@@ -399,7 +399,7 @@
         "mandatory" identifiers in square brackets refer to whether or
         not a given claim MUST be present in a URI Signing JWT.)
         A CDN MUST be able to parse and process all of the claims
-        listed below.  If the signed JWT contains any claims which the
+        listed below.  If the signed JWT contains any other claims which the
         CDN does not understand (i.e., is unable to parse and
         process), the CDN SHOULD ignore them.</t>
 
@@ -527,8 +527,8 @@
             <t>CDNI Claim Set Version (cdniv) [mandatory] - The CDNI Claim Set Version (cdniv)
             claim provides a means within a Signed JWT to tie the claim set to a specific version
             of a specificiation. This is intended to allow changes in and facilitate
-            upgrades across specifications. The type is JSON integer and the value for this version of
-            the specification is "1". Implementations MUST reject unsupported versions.</t>
+            upgrades across specifications. The type is JSON integer and the value MUST be set to "1",
+            for this version of the specification. Implementations MUST reject unsupported versions.</t>
         </section>
 
         <section anchor="uri_container_forms" title="URI Container Forms">
