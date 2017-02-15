@@ -84,22 +84,10 @@
     
     <author fullname="Matthew Miller" initials="M. "
             surname="Miller">
-      <organization>Cisco Systems, Inc.</organization>
+      <organization>Mozilla</organization>
 
       <address>
-        <postal>
-          <street>1899 Wynkoop Street, Suite 600</street>
-
-          <city>Denver</city>
-
-          <region>CO</region>
-
-          <code>80202</code>
-
-          <country>United States</country>
-        </postal>
-
-        <email>mamille2@cisco.com</email>
+        <email>linuxwolf@outer-planes.net</email>
       </address>
     </author>
 
