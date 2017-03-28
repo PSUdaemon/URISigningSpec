@@ -508,12 +508,13 @@
             generated for CDNI redirection.</t>
         </section>
         <section anchor="cdniv_claim" title="CDNI Claim Set Version (cdniv) claim">
-            <t>CDNI Claim Set Version (cdniv) [mandatory] - The CDNI Claim Set Version (cdniv)
+            <t>CDNI Claim Set Version (cdniv) [optional] - The CDNI Claim Set Version (cdniv)
             claim provides a means within a signed JWT to tie the claim set to a specific version
             of a specificiation. This is intended to allow changes in and facilitate
             upgrades across specifications. The type is JSON integer and the value MUST be set to "1",
-            for this version of the specification. Implementations MUST reject signed JWTs with
-            unsupported CDNI Claim Set versions.</t>
+            for this version of the specification. In the absence of this claim, the value is assumed
+            to be "1". For future versions this claim will be mandatory. Implementations MUST reject
+            signed JWTs with unsupported CDNI Claim Set versions.</t>
         </section>
 
         <section anchor="uri_container_forms" title="URI Container Forms">
@@ -574,7 +575,19 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
               
               <t>Note: Due to computational complexity of executing arbitrary regular expressions, it is RECOMMENDED to only execute after validating the JWT to ensure its authenticity.</t>
           </section>
+
+          <section anchor="uri_container_forms_hash" title="URI Hash Container (uri-hash:)">
+              <t>Prefixed with 'uri-hash:', this string is a URL Segment form (<xref target="RFC6920"/> Section 5) of the URI.</t>
+          </section>
         </section>
+      </section>
+
+      <section anchor="jwt_header" title="JWT Header">
+      <t>The header of the JWT MAY be passed via the CDNI Metadata interface instead of
+      being included in the URISigningPackage. The header value must be transmitted in
+      the serialized encoded form and prepended to the JWT payload and signature passed in
+      the URISigningPackage prior to validation. This allows the token passed to the user
+      agent to be smaller.</t>
       </section>
     </section>
 
@@ -1243,6 +1256,8 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
       <?rfc include='reference.RFC.7516'?>
 
       <?rfc include='reference.RFC.8006'?>
+
+      <?rfc include='reference.RFC.6920'?>
     </references>
 
     <references title="Informative References">
