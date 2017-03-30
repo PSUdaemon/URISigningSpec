@@ -117,7 +117,7 @@
       authorized User Agents (UAs) are able to access the content, with a CSP
       being able to authorize every individual request. It should be noted
       that URI Signing is not a content protection scheme; if a CSP wants to
-      protect the content itself, other mechanisms, such as DRM, are more
+      protect the content itself, other mechanisms, such as Digital Rights Management (DRM), are more
       appropriate. In addition to access control, URI Signing also has
       benefits in reducing the impact of denial-of-service attacks.</t>
 
@@ -138,13 +138,11 @@
       <t>In particular, the following requirement is listed in <xref
       target="RFC7337">CDNI Requirements</xref>:</t>
 
-      <t>"MI-16 [HIGH] The CDNI Metadata Distribution interface shall allow
-      signaling of authorization checks and validation that are to be
-      performed by the surrogate before delivery. For example, this could
-      potentially include:</t>
-
-      <t>* need to validate URI signed information (e.g., Expiry time, Client
-      IP address)."</t>
+      <t>MI-16 {HIGH} The CDNI Metadata interface shall allow signaling of
+      authorization checks and validation that are to be performed by the
+      Surrogate before delivery.  For example, this could potentially
+      include the need to validate information (e.g., Expiry time, Client
+      IP address) required for access authorization.</t>
 
       <t>This document proposes a method of signing URIs that allows Surrogates in
       interconnected CDNs to enforce a per-request authorization performed by
@@ -172,14 +170,14 @@
         document:</t>
 
         <t><list style="symbols">
-            <t>Signed URI: A URI that contains a signed JWT for itself.</t>
+            <t>Signed URI: A URI for which a signed JWT is provided.</t>
 
-            <t>Target CDN URI: URI created by the CSP to direct UA
+            <t>Target CDN URI: URI created by the CSP to direct a UA
             towards the Upstream CDN (uCDN). The Target CDN URI can be signed by the
-            CSP and verified by the uCDN.</t>
+            CSP and verified by the uCDN and possibly further Downstream CDNs (dCDNs).</t>
 
-            <t>Redirection URI: URI created by the uCDN to redirect UA
-            towards the Downstream CDN (dCDN). The Redirection URI can be signed by
+            <t>Redirection URI: URI created by the uCDN to redirect a UA
+            towards the dCDN. The Redirection URI can be signed by
             the uCDN and verified by the dCDN. In a cascaded
             CDNI scenario, there can be more than one Redirection URI.</t>
           </list></t>
@@ -313,13 +311,13 @@
         dCDN are not able to exchange symmetric shared secret keys), or
         the CSP needs
         to allow the uCDN to redistribute shared keys
-        to a subset of their dCDNs .</t>
+        to a subset of their dCDNs.</t>
 
         <t>For HTTP-based request routing, the Signed URI (i.e., Target CDN
         URI) provided by the CSP reaches the uCDN. After this URI has
         been verified to be correct by the uCDN, the uCDN
         creates and signs a new Redirection URI to redirect the UA to the
-        dCDN. Since this new URI also has a new signed JWT, this
+        dCDN. Since this new URI could have a new signed JWT, a
         new signature can be based around the trust relationship between the
         uCDN and dCDN, and the relationship between the
         dCDN and CSP is not relevant. Given the fact that such a
@@ -345,12 +343,10 @@
 
     <section anchor="jwt_profile" title="JWT Format and Processing Requirements">
       <t>The concept behind URI Signing is based on embedding a signed <xref target="RFC7519">JSON Web Token (JWT)
-    </xref> in the Target
-      CDN URI/Redirection URI.  The signed JWT contains a number of claims that can be validated to ensure the
+    </xref> in the UA request: The signed JWT contains a number of claims that can be validated to ensure the
       UA has legitimate access to the content.</t>
 
-      <t>In addition, this document specifies the following URI
-      attribute:</t>
+      <t>This document specifies the following attribute for embedding a signed JWT in a Target CDN URI or Redirection URI:</t>
 
       <t>
         <list style="symbols">
@@ -362,7 +358,7 @@
       </t>
 
       <t>The parameter name of the URI Signing Package Attribute is
-      defined in the CDNI Metadata. If the CDNI Metadata interface
+      defined in the <xref target="metadata">CDNI Metadata</xref>. If the CDNI Metadata interface
       is not used, or does not include a parameter name for the URI Signing
       Package Attribute, the parameter name can be set by configuration (out of
       scope of this document).</t>
@@ -374,8 +370,8 @@
 
         <t>In order to provide distribution policy flexibility,
         the exact subset of claims used in a given signed JWT is a runtime decision. 
-        Claim requirements are defined in the
-        CDNI Metadata. If the CDNI Metadata interface is not used, or
+        Claim requirements are defined in the <xref target="metadata">CDNI Metadata</xref>
+        If the CDNI Metadata interface is not used, or
         does not include claim requirements, the claim requirements
         can be set by configuration (out of scope of this document).</t>
 
@@ -414,7 +410,7 @@
         </section>
         <section anchor="sub_claim" title="URI Container (sub) claim">
             <t>URI Container (sub) [mandatory] - The semantics in <xref target="RFC7519"/> Section 4.1.2 MUST be followed.
-            Container for holding the URI representation before the URI Signing Package is added. This representation can take one of several forms detailed in <xref target="uri_container_forms"/>. If the
+            Container for holding the URI representation before a URI Signing Package is added. This representation can take one of several forms detailed in <xref target="uri_container_forms"/>. If the
             URI pattern/regex in the signed JWT does not match the URI of
             the content request,  the CDN validating the
             signed JWT MUST reject the request.  When redirecting a URI, the CDN
@@ -434,7 +430,7 @@
             Object in compact serialization form.  If the CDN validating the
             signed JWT does not support Client IP validation, or if the
             Client IP in the signed JWT does not match the source IP
-            address in the content request request, the CDN MUST
+            address in the content request, the CDN MUST
             reject the request.
             If the received signed JWT contains a Client IP claim, then any
             JWT subsequently generated for CDNI redirection MUST also
@@ -445,15 +441,15 @@
             signed JWT.</t>
         </section>
         <section anchor="exp_claim" title="Expiry Time (exp) claim">
-            <t>Expiry Time (exp) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.4 MUST be followed, though URI Signing implementations MUST not allow for any time synchronization "leeway".
+            <t>Expiry Time (exp) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.4 MUST be followed, though URI Signing implementations MUST NOT allow for any time synchronization "leeway".
             Note: The time on the entities that generate and
             validate the signed URI SHOULD be in sync. In the CDNI case, this
-            means that CSP, uCDN and dCDN servers need to be
-            time-synchronized. It is RECOMMENDED to use NTP for time synchronization.
+            means that CSP, uCDN, and dCDN servers need to be
+            time-synchronized. It is RECOMMENDED to use <xref target="RFC5905">NTP</xref> for time synchronization.
             If the CDN validating the signed JWT does not support
             Expiry Time validation, or if the Expiry Time in the
             signed JWT corresponds to a time earlier than the time of
-            the content request request, the CDN MUST reject the
+            the content request, the CDN MUST reject the
             request.
             If the received signed JWT contains a Expiry Time claim, then any
             JWT subsequently generated for CDNI redirection MUST also
@@ -468,11 +464,11 @@
             Note: The time on the entities that generate and
             validate the signed URI SHOULD be in sync. In the CDNI case, this
             means that the CSP, uCDN, and dCDN servers need to be
-            time-synchronized. It is RECOMMENDED to use NTP for time synchronization.
+            time-synchronized. It is RECOMMENDED to use <xref target="RFC5905">NTP</xref> for time synchronization.
             If the CDN validating the signed JWT does not support
             Not Before time validation, or if the Not Before time in the
             signed JWT corresponds to a time later than the time of
-            the content request request, the CDN MUST reject the
+            the content request, the CDN MUST reject the
             request.
             If the received signed JWT contains a Not Before time claim, then any
             JWT subsequently generated for CDNI redirection MUST also
@@ -487,7 +483,7 @@
             Note: The time on the entities that generate and
             validate the signed URI SHOULD be in sync. In the CDNI case, this
             means that CSP, uCDN, and dCDN servers need to be
-            time-synchronized. It is RECOMMENDED to use NTP for time synchronization.
+            time-synchronized. It is RECOMMENDED to use <xref target="RFC5905">NTP</xref> for time synchronization.
             If the received signed JWT contains an Issued At claim, then any
             JWT subsequently generated for CDNI redirection MUST also contain an Issued At
             claim, and the Issuer value MUST be updated to identify the
@@ -497,7 +493,7 @@
         </section>
         <section anchor="jti_claim" title="Nonce (jti) claim">
             <t>Nonce (jti) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.7 MUST be followed.
-            Can be used to prevent replay attacks if the CDN stores a
+            A Nonce can be used to prevent replay attacks if the CDN stores a
             list of all previously used Nonce values, and validates
             that the Nonce in the current JWT has never been used
             before.  If the signed JWT contains a Nonce claim and the
@@ -508,15 +504,16 @@
             contain a Nonce claim, and the Nonce value MUST be the
             same as in the received signed JWT.
             If the received signed JWT does not contain a
-            Nonce claim, a Nonce claim MAY be added to a signed JWT
+            Nonce claim, a Nonce claim MUST NOT be added to a signed JWT
             generated for CDNI redirection.</t>
         </section>
         <section anchor="cdniv_claim" title="CDNI Claim Set Version (cdniv) claim">
             <t>CDNI Claim Set Version (cdniv) [mandatory] - The CDNI Claim Set Version (cdniv)
-            claim provides a means within a Signed JWT to tie the claim set to a specific version
+            claim provides a means within a signed JWT to tie the claim set to a specific version
             of a specificiation. This is intended to allow changes in and facilitate
             upgrades across specifications. The type is JSON integer and the value MUST be set to "1",
-            for this version of the specification. Implementations MUST reject unsupported versions.</t>
+            for this version of the specification. Implementations MUST reject signed JWTs with
+            unsupported CDNI Claim Set versions.</t>
         </section>
 
         <section anchor="uri_container_forms" title="URI Container Forms">
@@ -1267,6 +1264,8 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
       <?rfc include='reference.RFC.5952'?>
 
       <?rfc include='reference.RFC.6983'?>
+
+      <?rfc include='reference.RFC.5905'?>
 
       <?rfc include='reference.I-D.brandenburg-cdni-uri-signing-for-has'?>
 
