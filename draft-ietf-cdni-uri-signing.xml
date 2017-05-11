@@ -521,12 +521,12 @@
             signed JWTs with unsupported CDNI Claim Set versions.</t>
         </section>
         
-        <section anchor="ets_claim" title="CDNI Expiration Time Setting (ets) claim">
-          <t>CDNI Expiration Time Setting (ets) [optional] - The CDNI Expiration Time Setting (ets) claim provides a means for setting the value of the Expiration Time (ets) claim when generating a subsequent Signed JWT in Signed Token Chain for HTTP Adaptive streaming. Its type is a JSON integer denoting the number of seconds with which the Expiration Time (ets) claim shall be increased for the next JWT. The Expiration Time Setting (ets) SHOULD NOT be used when not using a Signed Token Chain as defined in <xref target="uri_signing_for_has"/>.</t>
+        <section anchor="cdniets_claim" title="CDNI Expiration Time Setting (cdniets) claim">
+          <t>CDNI Expiration Time Setting (cdniets) [optional] - The CDNI Expiration Time Setting (cdniets) claim provides a means for setting the value of the Expiry Time (exp) claim when generating a subsequent Signed JWT in Signed Token Chain for HTTP Adaptive streaming. Its type is a JSON integer denoting the number of seconds with which the Expiry Time (exp) claim shall be increased for the next JWT. The CDNI Expiration Time Setting (cdniets) SHOULD NOT be used when not using a Signed Token Chain as defined in <xref target="uri_signing_for_has"/>.</t>
         </section>
         
-        <section anchor="stt_claim" title="CDNI Signed Token Transport (stt) claim">
-          <t>CDNI Signed Token Transport (stt) [optional] - The CDNI CDNI Signed Token Transport (stt) claim provides a means signalling the method through which the Signed Token Chain is transported from the CDN to the UA and vice versa. Its type is a JSON integer. This document only defines setting its value to '1', which means the signed JWTs making up the Signed Token Chain are transported via HTTP Cookies in both directions. .</t>
+        <section anchor="cdnistt_claim" title="CDNI Signed Token Transport (cdnistt) claim">
+          <t>CDNI Signed Token Transport (cdnistt) [optional] - The CDNI Signed Token Transport (cdnistt) claim provides a means signalling the method through which the Signed Token Chain is transported from the CDN to the UA and vice versa. Its type is a JSON integer. This document only defines setting its value to '1', which means the signed JWTs making up the Signed Token Chain are transported via HTTP Cookies in both directions.</t>
         </section>
 
         <section anchor="uri_container_forms" title="URI Container Forms">
@@ -619,7 +619,7 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
       </section>
       
       <section anchor="communicating_token" title="Communicating a signed JWTs in a Signed Token Chain">
-        <t>This section assumes the value of the CDNI Signed Token Transport (stt) claim has been set to 1. Other values of STT are out of scope of this document. </t>
+        <t>This section assumes the value of the CDNI Signed Token Transport (cdnistt) claim has been set to 1. Other values of cdnistt are out of scope of this document. </t>
         
         <t>When using the Signed Token Chain mechanism, the signed JWT shall transported to the UA via a 'URISigningPackage' cookie added to the HTTP 2xx Successful message along with the content being returned to the UA, or to the HTTP 3xx Redirection message in case the UA is redirected to a different server.</t>
       
