@@ -179,7 +179,9 @@
             <t>Redirection URI: URI created by the uCDN to redirect a UA
             towards the dCDN. The Redirection URI can be signed by
             the uCDN and verified by the dCDN. In a cascaded
-            CDNI scenario, there can be more than one Redirection URI.</t>
+              CDNI scenario, there can be more than one Redirection URI.</t>
+            
+            <t>Signed Token Chain: A chain of signed JWTs that are used for subsequent access to a set of related resources in a CDN, such as a set of HTTP Adaptive Streaming files. Every time a signed JWT is used to access a particular resource, a new signed JWT is sent along with the resource that can be used to request the next resource in the set. When generating a new signed JWT in a Signed Token Chain, parameters are carried over from one signed JWT to the next.</t>
           </list></t>
       </section>
 
@@ -518,6 +520,14 @@
             to be "1". For future versions this claim will be mandatory. Implementations MUST reject
             signed JWTs with unsupported CDNI Claim Set versions.</t>
         </section>
+        
+        <section anchor="ets_claim" title="CDNI Expiration Time Setting (ets) claim">
+          <t>CDNI Expiration Time Setting (ets) [optional] - The CDNI Expiration Time Setting (ets) claim provides a means for setting the value of the Expiration Time (ets) claim when generating a subsequent Signed JWT in Signed Token Chain for HTTP Adaptive streaming. Its type is a JSON integer denoting the number of seconds with which the Expiration Time (ets) claim shall be increased for the next JWT. The Expiration Time Setting (ets) SHOULD NOT be used when not using a Signed Token Chain as defined in <xref target="uri_signing_for_has"/>.</t>
+        </section>
+        
+        <section anchor="stt_claim" title="CDNI Signed Token Transport (stt) claim">
+          <t>CDNI Signed Token Transport (stt) [optional] - The CDNI CDNI Signed Token Transport (stt) claim provides a means signalling the method through which the Signed Token Chain is transported from the CDN to the UA and vice versa. Its type is a JSON integer. This document only defines setting its value to '1', which means the signed JWTs making up the Signed Token Chain are transported via HTTP Cookies in both directions. .</t>
+        </section>
 
         <section anchor="uri_container_forms" title="URI Container Forms">
           <t>The URI Container (sub) claim takes one of the following forms. More forms may be added in the future to extend the capabilities.</t>
@@ -591,6 +601,36 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
       the URISigningPackage prior to validation. This reduces the size of the signed JWT
       token.</t>
       </section>
+    </section>
+    
+    <section anchor="uri_signing_for_has" title="URI Signing for HAS">
+      <section anchor="has_intro" title="Overview">
+        <t>For content that is delivered via an HTTP Adaptive Streaming (HAS) protocol, such as MPEG DASH or HLS [Editor's Note: Include reference], special provisions need to be made in order to ensure URI Signing can be applied. In general, HAS protocols work by breaking large objects (e.g. videos) into a sequence of small independent chunks. Such chunks are then referenced by a separate manifest file, which either includes a list of URLs to the chunks or specifies an algorithm through which a User Agent can construct the URLs to the chunks. Requests for chunks therefore originate from the manifest file and, unless the URLs in the manifest file point to the CSP, are not subjected to redirection and URI Signing. This opens up the vulnerability of malicious User Agents sharing the manifest file and deep-linking to the chunks.</t>
+        
+        <t>One method for dealing with this vulnerability would be to include in the manifest itself Signed URIs that point to the individual chunks. There exist a number of issues with that approach. First, it requires the CDN delivering the manifest to rewrite the manifest file for each User Agent, which would require the CDN to be aware of the exact HAS protocol and version used. Secondly, it would require the expiration time of the Signed URIs to be valid for at least the full duration of the content described by the manifest. Since it is not uncommon for a manifest file to contain a video item of more than 30 minutes in length, this would require the Signed URIs to be valid for a long time, thereby reducing their effectiveness and that of the URI Signing mechanism in general. For a more detailed analysis of how HAS protocols affect CDNI, see <xref target="RFC6983">Models for HTTP-Adaptive-Streaming-Aware CDNI</xref>.</t>
+      
+        <t>The method described in this section allows CDNs to use URI Signing for HTTP Adaptive Streaming content without having to include the Signed URIs in the manifest files themselves.</t>    
+      </section>
+      
+      <section anchor="uri_signing_mechanism" title="Signed Token Chain mechanism">
+        <t>In order to allow for effective access control of HAS content, the URI signing scheme defined in this section is based on a mechanism through which subsequent HAS chunk requests can be chained together. As part of the JWT validation procedure, the CDN can generate a new signed JWT that the UA can use to do a subsequent request. More specifically, whenever a UA successfully retrieves an HAS chunk, it receives, in the HTTP 2xx Successful message, a signed JWT that it can use whenever it requests the next chunk. As long as each signed JWT in such a Signed Token Chain is correctly validated before a new one is generated, the chain is not broken and the User Agent can successfully retrieve additional chunks. Given the fact that with HAS protocols, it is usually not possible to determine a priori which chunk will be requested next (i.e. to allow for seeking within the content and for switching to a different quality level), the Signed Token Chain uses the URI Pattern Container and/or the URI Regular Expression Container scoping mechanisms in the URI Container (sub) claim to allow the Signed Token Chain to be valid for more than one URL.</t>
+        
+        <t>In order for this chaining of Signed JWTs to work, it is necessary for a UA to extract the Signed JWT from the HTTP 2xx Successful message of an earlier request and use it to retrieve the next chunk. The exact mechanism by which the client does this depends on the exact HAS protocol and since this document is only concerned with the generation and validation of incoming request, this process is outside the scope of this document. However, in order to also support legacy UAs that do not include any specific provisions for the handling of Signed JWTs, the folowing section defines a mechanism using HTTP Cookies that allows such UAs to support the concept of chained Signed JWTs without requiring any support on the UA side.</t>
+      </section>
+      
+      <section anchor="communicating_token" title="Communicating a signed JWTs in a Signed Token Chain">
+        <t>This section assumes the value of the CDNI Signed Token Transport (stt) claim has been set to 1. Other values of STT are out of scope of this document. </t>
+        
+        <t>When using the Signed Token Chain mechanism, the signed JWT shall transported to the UA via a 'URISigningPackage' cookie added to the HTTP 2xx Successful message along with the content being returned to the UA, or to the HTTP 3xx Redirection message in case the UA is redirected to a different server.</t>
+      
+      <section title="Support for cross-domain redirection">
+          <t>For security purposes, use of cross-domain cookies is not supported in some application environments. Because of this, the Cookie-based method for transport of the Signed Token described in the previous section might break if used in combination with a HTTP 3xx Redirection response where the target URL is in a different domain. In such scenarios, a signed JWT of a Signed Token Chain SHOULD be communicated via the query string instead, in a similar fashion to how regular signed JWT (outside a Signed Token Chain) are communicated. Note that this mechanism MUST NOT be used in HTTP 2xx Successful messages, since UAs might not know how to extract the signed JWTs.</t>
+          
+          <t>Note that the process described below only works in cases where both the manifest file and segments constituting the HTTP Adaptive Streaming content are delivered from the same domain. In other words, any redirection between different domains needs to be carried out while retrieving the manifest file.</t>
+            
+        </section>
+      </section>
+        
     </section>
 
     <section anchor="cdni_interfaces"
@@ -1063,15 +1103,6 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
         Signing with symmetric keys in case of DNS-based inter-CDN request
         routing.</t>
       </section>
-    </section>
-
-    <section title="HTTP Adaptive Streaming">
-      <t>The authors note that in order to perform URI signing for individual
-      content segments of HTTP Adaptive Bitrate content, specific URI signing
-      mechanisms are needed. Such mechanisms are currently out-of-scope of
-      this document. More details on this topic is covered in <xref
-      target="RFC6983">Models for HTTP-Adaptive-Streaming-Aware CDNI</xref>. In addition, 
-      <xref target="I-D.brandenburg-cdni-uri-signing-for-has"/> provides an extension to the algorithm defined in this document that deals specifically with URI signing of segmented content.</t>
     </section>
 
     <section anchor="sec.IANA" title="IANA Considerations">
