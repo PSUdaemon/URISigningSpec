@@ -600,7 +600,7 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
       <section anchor="advertisement"
                title="CDNI Footprint &amp; Capabilities Advertisement Interface">
         <t>The CDNI Request Routing: Footprint and Capabilities
-        Semantics document <xref target="I-D.ietf-cdni-footprint-capabilities-semantics"/> defines support for
+        Semantics document <xref target="RFC8008"/> defines support for
         advertising CDNI Metadata capabilities, via CDNI Payload
         Type. The CDNI Payload Type registered in <xref target="sec.IANA.payload"/>
         can be used for capability advertisement.</t>
@@ -608,7 +608,7 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
 
       <section anchor="redirection"
                title="CDNI Request Routing Redirection Interface">
-        <t>The <xref target="I-D.ietf-cdni-redirection">CDNI Request Routing
+        <t>The <xref target="RFC7975">CDNI Request Routing
         Redirection Interface</xref> describes the recursive request
         redirection method. For URI Signing, the uCDN signs the URI
         provided by the dCDN. URI Signing therefore has has no impact
@@ -616,8 +616,8 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
       </section>
       
       <section anchor="metadata" title="CDNI Metadata Interface">
-        <t>The <xref target="I-D.ietf-cdni-metadata">CDNI Metadata
-        Interface</xref> describes the CDNI metadata distribution in order to
+        <t>The <xref target="RFC8006">CDNI Metadata
+        Interface</xref> describes the CDNI metadata distribution needed to
         enable content acquisition and delivery. For URI Signing, a new
         CDNI metadata object is specified.</t>
 
@@ -701,7 +701,7 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
 
         <t>The following CDNI Logging field for URI Signing SHOULD be
         supported in the HTTP Request Logging Record as specified in <xref
-        target="I-D.ietf-cdni-logging">CDNI Logging Interface</xref>,
+        target="RFC7937">CDNI Logging Interface</xref>,
         using the new "cdni_http_request_v2" record-type registered in
         <xref target="sec.IANA.record_type.cdni_http_request_v2"/>.</t>
 
@@ -772,8 +772,8 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
         <t>For HTTP-based request routing, a set of
         information that is unique to a given end user content request
         is included in a signed JWT, using
-        key information that is specific to a pair of adjacent CDNI hops (e.g.
-        between the CSP and the uCDN, between the
+        key information that is specific to a pair of adjacent CDNI hops (e.g.,
+        between the CSP and the uCDN or between the
         uCDN and a dCDN). This allows a CDNI hop to ascertain the
         authenticity of a given request received from a previous CDNI hop.</t>
 
@@ -854,10 +854,11 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
 
             <t>When a UA requests a piece of protected content from the CSP,
             the CSP makes a specific authorization decision for this unique
-            request based on its arbitrary distribution policy.</t>
+            request based on its personal distribution policy.</t>
 
             <t>If the authorization decision is negative, the CSP rejects the
-            request.</t>
+            request and sends an error code (e.g., 403 Forbidden) in the HTTP
+            response.</t>
 
             <t>If the authorization decision is positive, the CSP computes a
             Signed URI that is based on unique parameters of that request and
@@ -869,11 +870,12 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
             information provided by the CSP.</t>
 
             <t>If the validation is negative, the uCDN rejects
-            the request.</t>
+            the request and sends an error code (e.g., 403 Forbidden) in the HTTP
+            response.</t>
 
             <t>If the validation is positive, the uCDN computes a
             Signed URI that is based on unique parameters of that request and
-            provides to the end user as the URI to use to further request the
+            provides it to the end user as the URI to use to further request the
             content from the dCDN.</t>
 
             <t>On receipt of the corresponding content request, the
@@ -888,8 +890,8 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
             <t>If the validation is positive, the dCDN serves the
             request and delivers the content.</t>
 
-            <t>At a later time, dCDN reports logging events that
-            includes URI signing information.</t>
+            <t>At a later time, the dCDN reports logging events that
+            include URI signing information.</t>
           </list></t>
 
         <t>With HTTP-based request routing, URI Signing matches well the
@@ -1024,15 +1026,16 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
         <t>With DNS-based request routing, URI Signing matches well the
         general chain of trust model of CDNI when used with asymmetric keys
         because the only key information that needs to be distributed across
-        multiple, possibly non-adjacent, CDNI hops is the public key, which
+        multiple, possibly untrusted, CDNI hops is the public key, which
         is generally not confidential.</t>
 
         <t>With DNS-based request routing, URI Signing does not match well the
         general chain of trust model of CDNI when used with symmetric keys
         because the symmetric key information needs to be distributed across
-        multiple CDNI hops, including non-adjacent hops. This raises a security
-        concern for applicability of URI Signing with symmetric keys in case
-        of DNS-based inter-CDN request routing.</t>
+        multiple CDNI hops, to CDNs with which the CSP may not have a trust
+        relationship. This raises a security concern for applicability of URI
+        Signing with symmetric keys in case of DNS-based inter-CDN request
+        routing.</t>
       </section>
     </section>
 
@@ -1094,7 +1097,7 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
                  title="CDNI Logging Record Version 2 for HTTP">
           <t>The "cdni_http_request_v2" record-type supports all of
           the fields supported by the "cdni_http_request_v1"
-          record-type <xref target="I-D.ietf-cdni-logging"/> plus the
+          record-type <xref target="RFC7937"/> plus the
           two additional fields "s-uri-signing" and
           "s-uri-signing-deny-reason", registered by this document in
           <xref target="sec.IANA.fields"/>.  The name,
@@ -1204,19 +1207,11 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
       to dCDNs - including cascaded CDNs. Since this key can be used
       to legitimately sign a URL for content access authorization, it is
       important to know the implications of a compromised shared key.</t>
-
-      <t>In the case where asymmetric keys are used, the KID information
-      element might contain the URL to the public key. To prevent malicious
-      clients from signing their own URIs and inserting the associated public
-      key URL in the KID field, thereby passing URI validation, it is
-      important that CDNs check whether the URI conveyed in the KID field is
-      in the allowable set of KIDs as listed in the CDNI metadata or set via
-      configuration.</t>
     </section>
 
     <section title="Privacy">
       <t>The privacy protection concerns described in <xref
-      target="I-D.ietf-cdni-logging">CDNI Logging Interface</xref> apply when
+      target="RFC7937">CDNI Logging Interface</xref> apply when
       the client's IP address (aud) is embedded in the Signed URI.
       For this reason, the mechanism described in <xref
       target="jwt_profile"/> encrypts the Client IP before
@@ -1239,13 +1234,15 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
 
       <?rfc include='reference.RFC.6707'?>
 
-      <?rfc include='reference.I-D.ietf-cdni-logging'?>
+      <?rfc include='reference.RFC.7937'?>
 
       <?rfc include='reference.RFC.7159'?>
 
       <?rfc include='reference.RFC.7519'?>
 
       <?rfc include='reference.RFC.7516'?>
+
+      <?rfc include='reference.RFC.8006'?>
     </references>
 
     <references title="Informative References">
@@ -1255,11 +1252,9 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
 
       <?rfc include='reference.RFC.7337'?>
 
-      <?rfc include='reference.I-D.ietf-cdni-metadata'?>
+      <?rfc include='reference.RFC.8008'?>
 
-      <?rfc include='reference.I-D.ietf-cdni-footprint-capabilities-semantics'?>
-
-      <?rfc include='reference.I-D.ietf-cdni-redirection'?>
+      <?rfc include='reference.RFC.7975'?>
 
       <?rfc include='reference.RFC.5952'?>
 
