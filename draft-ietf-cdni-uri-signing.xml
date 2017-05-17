@@ -586,8 +586,8 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
       <t>The header of the JWT MAY be passed via the CDNI Metadata interface instead of
       being included in the URISigningPackage. The header value must be transmitted in
       the serialized encoded form and prepended to the JWT payload and signature passed in
-      the URISigningPackage prior to validation. This allows the token passed to the user
-      agent to be smaller.</t>
+      the URISigningPackage prior to validation. This reduces the size of the signed JWT
+      token.</t>
       </section>
     </section>
 
@@ -670,6 +670,17 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
 
                 <t>Mandatory-to-Specify: No. Default is
                 "URISigningPackage".</t>
+              </list></t>
+
+            <t>Property: jwt-header<list style="empty">
+                <t>Description: The header part of JWT that is used for generating
+                or validating a signed JWT when the JWT token in the URI Signing
+                Package does not contain a header part.</t>
+
+                <t>Type: String</t>
+
+                <t>Mandatory-to-Specify: No. A jwt-header is not essential for all
+                implementations of URI signing.</t>
               </list></t>
           </list></t>
 
