@@ -17,7 +17,7 @@
     
     <author fullname="Ray van Brandenburg" initials="R"
             surname="van Brandenburg">
-      <organization>TNO</organization>
+      <organization>Tiledmedia</organization>
 
       <address>
         <postal>
@@ -27,14 +27,14 @@
 
           <region/>
 
-          <code>2595DC</code>
+          <code>2595DA</code>
 
-          <country>the Netherlands</country>
+          <country>The Netherlands</country>
         </postal>
 
         <phone>+31 88 866 7000</phone>
 
-        <email>ray.vanbrandenburg@tno.nl</email>
+        <email>ray@tiledmedia.com</email>
       </address>
     </author>
     
