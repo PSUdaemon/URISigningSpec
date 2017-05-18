@@ -414,9 +414,10 @@
             added. This representation can take one of several forms detailed in
             <xref target="uri_container_forms"/>. If the URI pattern/regex in the signed
             JWT does not match the URI of the content request,  the CDN validating the
-            signed JWT MUST reject the request. When comparing the URI the URL encoded form
-            MUST be used. When redirecting a URI, the CDN generating the new signed JWT MAY
-            change the URI Container to comport with the URI being used in the redirection.</t>
+            signed JWT MUST reject the request. When comparing the URI the percent encoded
+            form as defined in <xref target="RFC3986"/> Section 2.1 MUST be used. When
+            redirecting a URI, the CDN generating the new signed JWT MAY change the URI
+            Container to comport with the URI being used in the redirection.</t>
         </section>
         <section anchor="aud_claim" title="Client IP (aud) claim">
             <t>Client IP (aud) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.3 MUST be followed.
