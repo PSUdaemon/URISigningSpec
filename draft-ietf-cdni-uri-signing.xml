@@ -10,7 +10,7 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc category="std" docName="draft-ietf-cdni-uri-signing-10" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-cdni-uri-signing-11" ipr="trust200902">
   <front>
     <title abbrev="CDNI URI Signing">URI Signing for CDN Interconnection
     (CDNI)</title>
