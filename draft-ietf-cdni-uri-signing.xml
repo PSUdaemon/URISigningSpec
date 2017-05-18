@@ -183,8 +183,14 @@
             the uCDN and verified by the dCDN. In a cascaded
               CDNI scenario, there can be more than one Redirection URI.</t>
             
-            <t>Signed Token Chain: A chain of signed JWTs that are used for subsequent access to a set of related resources in a CDN, such as a set of HTTP Adaptive Streaming files. Every time a signed JWT is used to access a particular resource, a new signed JWT is sent along with the resource that can be used to request the next resource in the set. When generating a new signed JWT in a Signed Token Chain, parameters are carried over from one signed JWT to the next.</t>
-          </list></t>
+           <t>Signed Token Chain: A chain of signed JWTs that are used for subsequent
+           access to a set of related resources in a CDN, such as a set of HTTP
+           Adaptive Streaming files. Every time a signed JWT is used to
+           access a particular resource, a new signed JWT is sent along
+           with the resource that can be used to request the next resource
+	   in the set. When generating a new signed JWT in a Signed Token Chain,
+           parameters are carried over from one signed JWT to the next.</t>
+           </list></t>
       </section>
 
       <section anchor="background"
@@ -593,7 +599,18 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
     
     <section anchor="uri_signing_for_has" title="URI Signing for HAS">
       <section anchor="has_intro" title="Overview">
-        <t>For content that is delivered via an HTTP Adaptive Streaming (HAS) protocol, such as MPEG DASH or HLS [Editor's Note: Include reference], special provisions need to be made in order to ensure URI Signing can be applied. In general, HAS protocols work by breaking large objects (e.g. videos) into a sequence of small independent chunks. Such chunks are then referenced by a separate manifest file, which either includes a list of URLs to the chunks or specifies an algorithm through which a User Agent can construct the URLs to the chunks. Requests for chunks therefore originate from the manifest file and, unless the URLs in the manifest file point to the CSP, are not subjected to redirection and URI Signing. This opens up the vulnerability of malicious User Agents sharing the manifest file and deep-linking to the chunks.</t>
+        <t>For content that is delivered via an HTTP Adaptive Streaming (HAS) protocol,
+        such as <xref target="MPEG-DASH">MPEG-DASH</xref> or <xref target="I-D.ietf-pantos-http-live-streaming-22"> HTTP Live Streaming (HLS)<xref>,
+        special provisions need to be made in order to ensure URI Signing can be
+        applied. In general, HAS protocols work by breaking large objects
+        (e.g. videos) into a sequence of small independent chunks. Such chunks
+        are then referenced by a separate manifest file, which either includes
+        a list of URLs to the chunks or specifies an algorithm through which
+        a User Agent can construct the URLs to the chunks. Requests for chunks
+        therefore originate from the manifest file and, unless the URLs in the
+        manifest file point to the CSP, are not subjected to redirection and URI Signing.
+        This opens up the vulnerability of malicious User Agents sharing the
+        manifest file and deep-linking to the chunks.</t>
         
         <t>One method for dealing with this vulnerability would be to include in the manifest itself Signed URIs that point to the individual chunks. There exist a number of issues with that approach. First, it requires the CDN delivering the manifest to rewrite the manifest file for each User Agent, which would require the CDN to be aware of the exact HAS protocol and version used. Secondly, it would require the expiration time of the Signed URIs to be valid for at least the full duration of the content described by the manifest. Since it is not uncommon for a manifest file to contain a video item of more than 30 minutes in length, this would require the Signed URIs to be valid for a long time, thereby reducing their effectiveness and that of the URI Signing mechanism in general. For a more detailed analysis of how HAS protocols affect CDNI, see <xref target="RFC6983">Models for HTTP-Adaptive-Streaming-Aware CDNI</xref>.</t>
       
@@ -1299,6 +1316,8 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
 
       <?rfc include='reference.RFC.6983'?>
 
+      <?rfc include='reference.I-D.ietf-pantos-http-live-streaming-22'?>
+
       <?rfc include='reference.I-D.brandenburg-cdni-uri-signing-for-has'?>
 
       <reference anchor="PCRE839" target="http://www.pcre.org/">
@@ -1318,6 +1337,20 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
           </author>
 	  <date/>
         </front>
+      </reference>
+
+      <reference anchor="MPEG-DASH" target="http://www.iso.org/standard/65274.html">
+        <front>
+          <title>Information technology -- Dynamic adaptive streaming
+          over HTTP (DASH) -- Part 1: Media presentation description
+          and segment format</title>
+          <author>
+            <organization>ISO</organization>
+          </author>
+	  <date month="05" year="2014"/>
+        </front>
+        <refcontent>ISO/IEC 23009-1:2014</refcontent>
+        <seriesInfo name="Edition" value="2"/>
       </reference>
 
     </references>
