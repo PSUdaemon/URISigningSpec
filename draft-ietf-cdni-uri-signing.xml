@@ -634,7 +634,19 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
         This opens up the vulnerability of malicious User Agents sharing the
         manifest file and deep-linking to the chunks.</t>
         
-        <t>One method for dealing with this vulnerability would be to include in the manifest itself Signed URIs that point to the individual chunks. There exist a number of issues with that approach. First, it requires the CDN delivering the manifest to rewrite the manifest file for each User Agent, which would require the CDN to be aware of the exact HAS protocol and version used. Secondly, it would require the expiration time of the Signed URIs to be valid for at least the full duration of the content described by the manifest. Since it is not uncommon for a manifest file to contain a video item of more than 30 minutes in length, this would require the Signed URIs to be valid for a long time, thereby reducing their effectiveness and that of the URI Signing mechanism in general. For a more detailed analysis of how HAS protocols affect CDNI, see <xref target="RFC6983">Models for HTTP-Adaptive-Streaming-Aware CDNI</xref>.</t>
+        <t>One method for dealing with this vulnerability would be to include in
+        the manifest itself Signed URIs that point to the individual chunks.
+        There exist a number of issues with that approach. First, it requires the
+        CDN delivering the manifest to rewrite the manifest file for each User Agent,
+        which would require the CDN to be aware of the exact HAS protocol and
+        version used. Secondly, it would require the expiration time of the
+        Signed URIs to be valid for at least the full duration of the content
+        described by the manifest. Since it is not uncommon for a manifest file
+        to contain a video item of more than 30 minutes in length, this would
+        require the Signed URIs to be valid for a long time, thereby reducing
+        their effectiveness and that of the URI Signing mechanism in general.
+        For a more detailed analysis of how HAS protocols affect CDNI,
+        see <xref target="RFC6983">Models for HTTP-Adaptive-Streaming-Aware CDNI</xref>.</t>
       
         <t>The method described in this section allows CDNs to use URI Signing for HTTP Adaptive Streaming content without having to include the Signed URIs in the manifest files themselves.</t>    
       </section>
