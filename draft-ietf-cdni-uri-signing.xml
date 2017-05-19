@@ -694,7 +694,16 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
         redirected to a different server.</t>
       
       <section title="Support for cross-domain redirection">
-          <t>For security purposes, use of cross-domain cookies is not supported in some application environments. Because of this, the Cookie-based method for transport of the Signed Token described in the previous section might break if used in combination with a HTTP 3xx Redirection response where the target URL is in a different domain. In such scenarios, a signed JWT of a Signed Token Chain SHOULD be communicated via the query string instead, in a similar fashion to how regular signed JWT (outside a Signed Token Chain) are communicated. Note that this mechanism MUST NOT be used in HTTP 2xx Successful messages, since UAs might not know how to extract the signed JWTs.</t>
+        <t>For security purposes, the use of cross-domain cookies is not supported
+        in some application environments. As a result, the Cookie-based
+        method for transport of the Signed Token described in the previous
+        section might break if used in combination with a HTTP 3xx Redirection
+        response where the target URL is in a different domain. In such
+        scenarios, a Signed Token Chain signed JWT SHOULD be communicated
+        via the query string instead, in a similar fashion to how regular
+        signed JWTs (outside a Signed Token Chain) are communicated. Note that
+        the use of URL embedded signed JWTs SHOULD NOT be used in HTTP 2xx Successful
+        messages, since UAs might not know how to extract the signed JWTs.</t>
           
           <t>Note that the process described below only works in cases where both the manifest file and segments constituting the HTTP Adaptive Streaming content are delivered from the same domain. In other words, any redirection between different domains needs to be carried out while retrieving the manifest file.</t>
             
