@@ -538,7 +538,11 @@
         </section>
         
         <section anchor="cdnistt_claim" title="CDNI Signed Token Transport (cdnistt) claim">
-          <t>CDNI Signed Token Transport (cdnistt) [optional] - The CDNI Signed Token Transport (cdnistt) claim provides a means signalling the method through which the Signed Token Chain is transported from the CDN to the UA and vice versa. Its type is a JSON integer. This document only defines setting its value to '1', which means the signed JWTs making up the Signed Token Chain are transported via HTTP Cookies in both directions.</t>
+          <t>CDNI Signed Token Transport (cdnistt) [optional] - The CDNI Signed Token Transport (cdnistt) claim
+          provides a means of signalling the method through which the Signed Token Chain
+          is transported from the CDN to the UA and vice versa. Its type is a JSON integer.
+          This document only defines setting its value to '1', which means the signed JWTs
+          making up the Signed Token Chain are transported via HTTP Cookies in both directions.</t>
         </section>
 
         <section anchor="uri_container_forms" title="URI Container Forms">
