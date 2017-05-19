@@ -654,7 +654,22 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
       </section>
       
       <section anchor="uri_signing_mechanism" title="Signed Token Chain mechanism">
-        <t>In order to allow for effective access control of HAS content, the URI signing scheme defined in this section is based on a mechanism through which subsequent HAS chunk requests can be chained together. As part of the JWT validation procedure, the CDN can generate a new signed JWT that the UA can use to do a subsequent request. More specifically, whenever a UA successfully retrieves an HAS chunk, it receives, in the HTTP 2xx Successful message, a signed JWT that it can use whenever it requests the next chunk. As long as each signed JWT in such a Signed Token Chain is correctly validated before a new one is generated, the chain is not broken and the User Agent can successfully retrieve additional chunks. Given the fact that with HAS protocols, it is usually not possible to determine a priori which chunk will be requested next (i.e. to allow for seeking within the content and for switching to a different quality level), the Signed Token Chain uses the URI Pattern Container and/or the URI Regular Expression Container scoping mechanisms in the URI Container (sub) claim to allow the Signed Token Chain to be valid for more than one URL.</t>
+        <t>In order to allow for effective access control of HAS content, the
+        URI signing scheme defined in this section is based on a mechanism
+        through which subsequent HAS chunk requests can be chained together.
+        As part of the JWT validation procedure, the CDN can generate a new
+        signed JWT that the UA can use to do a subsequent request. More specifically,
+        whenever a UA successfully retrieves an HAS chunk, it receives, in the
+        HTTP 2xx Successful message, a signed JWT that it can use whenever it
+        requests the next chunk. As long as each signed JWT in such a Signed Token Chain
+        is correctly validated before a new one is generated, the chain is not
+        broken and the User Agent can successfully retrieve additional chunks.
+        Given the fact that with HAS protocols, it is usually not possible to
+        determine a priori which chunk will be requested next (i.e., to allow for
+        seeking within the content and for switching to a different quality level),
+        the Signed Token Chain uses the URI Pattern Container and/or the
+        URI Regular Expression Container scoping mechanisms in the URI Container
+        (sub) claim to allow the Signed Token Chain to be valid for more than one URL.</t>
         
         <t>In order for this chaining of Signed JWTs to work, it is necessary for a UA to extract the Signed JWT from the HTTP 2xx Successful message of an earlier request and use it to retrieve the next chunk. The exact mechanism by which the client does this depends on the exact HAS protocol and since this document is only concerned with the generation and validation of incoming request, this process is outside the scope of this document. However, in order to also support legacy UAs that do not include any specific provisions for the handling of Signed JWTs, the folowing section defines a mechanism using HTTP Cookies that allows such UAs to support the concept of chained Signed JWTs without requiring any support on the UA side.</t>
       </section>
