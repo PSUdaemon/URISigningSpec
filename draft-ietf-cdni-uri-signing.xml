@@ -671,7 +671,17 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
         URI Regular Expression Container scoping mechanisms in the URI Container
         (sub) claim to allow the Signed Token Chain to be valid for more than one URL.</t>
         
-        <t>In order for this chaining of Signed JWTs to work, it is necessary for a UA to extract the Signed JWT from the HTTP 2xx Successful message of an earlier request and use it to retrieve the next chunk. The exact mechanism by which the client does this depends on the exact HAS protocol and since this document is only concerned with the generation and validation of incoming request, this process is outside the scope of this document. However, in order to also support legacy UAs that do not include any specific provisions for the handling of Signed JWTs, the folowing section defines a mechanism using HTTP Cookies that allows such UAs to support the concept of chained Signed JWTs without requiring any support on the UA side.</t>
+        <t>In order for this chaining of signed JWTs to work, it is necessary for
+        a UA to extract the signed JWT from the HTTP 2xx Successful message of an
+        earlier request and use it to retrieve the next chunk. The exact mechanism
+        by which the client does this depends on the exact HAS protocol and since
+        this document is only concerned with the generation and validation of
+        incoming request, this process is outside the scope of this document.
+        However, in order to also support legacy UAs that do not include any
+        specific provisions for the handling of signed JWTs, the folowing section
+        defines a mechanism using HTTP Cookies that allows such UAs to support
+        the concept of chained signed JWTs without requiring any support on
+        the UA side.</t>
       </section>
       
       <section anchor="communicating_token" title="Communicating a signed JWTs in a Signed Token Chain">
@@ -1452,7 +1462,7 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
 ]]></artwork></figure>
 
         <t>
-          The Signed JWT:
+          The signed JWT:
         </t>
 
         <figure><artwork><![CDATA[
@@ -1514,7 +1524,7 @@ zZkm.SJcZ7g5hXas-eDNsCOIQLQ._Hwi9VSHsWQGuataOdQJYQ",
 ]]></artwork></figure>
 
         <t>
-          The Signed JWT:
+          The signed JWT:
         </t>
 
         <figure><artwork><![CDATA[
