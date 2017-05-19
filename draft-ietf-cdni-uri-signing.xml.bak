@@ -470,7 +470,7 @@
             signed JWT.</t>
         </section>
         <section anchor="nbf_claim" title="Not Before (nbf) claim">
-            <t>Not Before (nbf) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.5 MUST be followed, though URI Signing implementations MUST NOT allow for any time synchronization "leeway".
+            <t>Not Before (nbf) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.5 MUST be followed, though URI Signing implementations MUST not allow for any time synchronization "leeway".
             Note: The time on the entities that generate and
             validate the signed URI SHOULD be in sync. In the CDNI case, this
             means that the CSP, uCDN, and dCDN servers need to be
@@ -538,7 +538,11 @@
         </section>
         
         <section anchor="cdnistt_claim" title="CDNI Signed Token Transport (cdnistt) claim">
-          <t>CDNI Signed Token Transport (cdnistt) [optional] - The CDNI Signed Token Transport (cdnistt) claim provides a means signalling the method through which the Signed Token Chain is transported from the CDN to the UA and vice versa. Its type is a JSON integer. This document only defines setting its value to '1', which means the signed JWTs making up the Signed Token Chain are transported via HTTP Cookies in both directions.</t>
+          <t>CDNI Signed Token Transport (cdnistt) [optional] - The CDNI Signed Token Transport (cdnistt) claim 
+          provides a means signalling the method through which the Signed Token Chain
+          is transported from the CDN to the UA and vice versa. Its type is a JSON integer.
+          This document only defines setting its value to '1', which means the signed JWTs
+          making up the Signed Token Chain are transported via HTTP Cookies in both directions.</t>
         </section>
 
         <section anchor="uri_container_forms" title="URI Container Forms">
@@ -1312,6 +1316,8 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
     <references title="Normative References">
       <?rfc include='reference.RFC.2119'?>
 
+      <?rfc include='reference.RFC.6707'?>
+
       <?rfc include='reference.RFC.7937'?>
 
       <?rfc include='reference.RFC.7159'?>
@@ -1326,8 +1332,6 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
     </references>
 
     <references title="Informative References">
-      <?rfc include='reference.RFC.6707'?>
-
       <?rfc include='reference.RFC.3986'?>
 
       <?rfc include='reference.RFC.7336'?>
