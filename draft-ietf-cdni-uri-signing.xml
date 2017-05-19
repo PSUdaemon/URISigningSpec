@@ -462,7 +462,7 @@
             signed JWT.</t>
         </section>
         <section anchor="nbf_claim" title="Not Before (nbf) claim">
-            <t>Not Before (nbf) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.5 MUST be followed, though URI Signing implementations MUST not allow for any time synchronization "leeway".
+            <t>Not Before (nbf) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.5 MUST be followed, though URI Signing implementations MUST NOT allow for any time synchronization "leeway".
             Note: The time on the entities that generate and
             validate the signed URI SHOULD be in sync. In the CDNI case, this
             means that the CSP, uCDN, and dCDN servers need to be
@@ -1258,8 +1258,6 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
     <references title="Normative References">
       <?rfc include='reference.RFC.2119'?>
 
-      <?rfc include='reference.RFC.6707'?>
-
       <?rfc include='reference.RFC.7937'?>
 
       <?rfc include='reference.RFC.7159'?>
@@ -1274,6 +1272,8 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
     </references>
 
     <references title="Informative References">
+      <?rfc include='reference.RFC.6707'?>
+
       <?rfc include='reference.RFC.3986'?>
 
       <?rfc include='reference.RFC.7336'?>
