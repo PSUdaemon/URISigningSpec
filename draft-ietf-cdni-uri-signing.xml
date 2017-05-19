@@ -1316,6 +1316,8 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
 
       <?rfc include='reference.RFC.6983'?>
 
+      <?rfc include='reference.RFC.5905'?>
+
       <?rfc include='reference.I-D.ietf-pantos-http-live-streaming-22'?>
 
       <?rfc include='reference.I-D.brandenburg-cdni-uri-signing-for-has'?>
