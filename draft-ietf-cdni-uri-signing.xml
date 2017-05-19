@@ -528,7 +528,14 @@
         </section>
         
         <section anchor="cdniets_claim" title="CDNI Expiration Time Setting (cdniets) claim">
-          <t>CDNI Expiration Time Setting (cdniets) [optional] - The CDNI Expiration Time Setting (cdniets) claim provides a means for setting the value of the Expiry Time (exp) claim when generating a subsequent Signed JWT in Signed Token Chain for HTTP Adaptive streaming. Its type is a JSON integer denoting the number of seconds with which the Expiry Time (exp) claim shall be increased for the next JWT. The CDNI Expiration Time Setting (cdniets) SHOULD NOT be used when not using a Signed Token Chain as defined in <xref target="uri_signing_for_has"/>.</t>
+            <t>CDNI Expiration Time Setting (cdniets) [optional] - The CDNI Expiration
+            Time Setting (cdniets) claim provides a means for setting the value
+            of the Expiry Time (exp) claim when generating a subsequent Signed JWT
+            in Signed Token Chain for HTTP Adaptive streaming. Its type is a JSON integer
+            denoting the number of seconds with which the Expiry Time (exp) claim
+            shall be increased for the next JWT. The CDNI Expiration Time Setting (cdniets)
+            SHOULD NOT be used when not using a Signed Token Chain as defined
+            in <xref target="uri_signing_for_has"/>.</t>
         </section>
         
         <section anchor="cdnistt_claim" title="CDNI Signed Token Transport (cdnistt) claim">
