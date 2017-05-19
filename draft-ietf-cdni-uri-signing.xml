@@ -687,7 +687,11 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
       <section anchor="communicating_token" title="Communicating a signed JWTs in a Signed Token Chain">
         <t>This section assumes the value of the CDNI Signed Token Transport (cdnistt) claim has been set to 1. Other values of cdnistt are out of scope of this document. </t>
         
-        <t>When using the Signed Token Chain mechanism, the signed JWT shall transported to the UA via a 'URISigningPackage' cookie added to the HTTP 2xx Successful message along with the content being returned to the UA, or to the HTTP 3xx Redirection message in case the UA is redirected to a different server.</t>
+	<t>When using the Signed Token Chain mechanism, the signed JWT is
+        transported to the UA via a 'URISigningPackage' cookie added to the
+        HTTP 2xx Successful message along with the content being returned to
+        the UA, or to the HTTP 3xx Redirection message in case the UA is
+        redirected to a different server.</t>
       
       <section title="Support for cross-domain redirection">
           <t>For security purposes, use of cross-domain cookies is not supported in some application environments. Because of this, the Cookie-based method for transport of the Signed Token described in the previous section might break if used in combination with a HTTP 3xx Redirection response where the target URL is in a different domain. In such scenarios, a signed JWT of a Signed Token Chain SHOULD be communicated via the query string instead, in a similar fashion to how regular signed JWT (outside a Signed Token Chain) are communicated. Note that this mechanism MUST NOT be used in HTTP 2xx Successful messages, since UAs might not know how to extract the signed JWTs.</t>
