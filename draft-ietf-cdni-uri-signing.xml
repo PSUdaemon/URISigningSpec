@@ -1402,8 +1402,6 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
 
       <?rfc include='reference.I-D.ietf-pantos-http-live-streaming-22'?>
 
-      <?rfc include='reference.I-D.brandenburg-cdni-uri-signing-for-has'?>
-
       <reference anchor="PCRE839" target="http://www.pcre.org/">
         <front>
           <title>Perl Compatible Regular Expressions</title>
