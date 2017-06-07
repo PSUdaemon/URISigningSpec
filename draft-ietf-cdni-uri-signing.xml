@@ -179,16 +179,16 @@
             <t>Redirection URI: URI created by the uCDN to redirect a UA
             towards the dCDN. The Redirection URI can be signed by
             the uCDN and verified by the dCDN. In a cascaded
-              CDNI scenario, there can be more than one Redirection URI.</t>
-            
-           <t>Signed Token Chain: A chain of signed JWTs that are used for subsequent
-           access to a set of related resources in a CDN, such as a set of HTTP
-           Adaptive Streaming files. Every time a signed JWT is used to
-           access a particular resource, a new signed JWT is sent along
-           with the resource that can be used to request the next resource
-	   in the set. When generating a new signed JWT in a Signed Token Chain,
-           parameters are carried over from one signed JWT to the next.</t>
-           </list></t>
+            CDNI scenario, there can be more than one Redirection URI.</t>
+
+            <t>Signed Token Chain: A chain of signed JWTs that are used for subsequent
+            access to a set of related resources in a CDN, such as a set of HTTP
+            Adaptive Streaming files. Every time a signed JWT is used to
+            access a particular resource, a new signed JWT is sent along
+            with the resource that can be used to request the next resource
+            in the set. When generating a new signed JWT in a Signed Token Chain,
+            parameters are carried over from one signed JWT to the next.</t>
+          </list></t>
       </section>
 
       <section anchor="background"
@@ -526,7 +526,6 @@
             to be "1". For future versions this claim will be mandatory. Implementations MUST reject
             signed JWTs with unsupported CDNI Claim Set versions.</t>
         </section>
-        
         <section anchor="cdniets_claim" title="CDNI Expiration Time Setting (cdniets) claim">
             <t>CDNI Expiration Time Setting (cdniets) [optional] - The CDNI Expiration
             Time Setting (cdniets) claim provides a means for setting the value
@@ -536,7 +535,6 @@
             of the previous signed JWT that gives the value of the Expiry Time (exp) claim of the next signed JWT.
             The CDNI Expiration Time Setting (cdniets) SHOULD NOT be used when not using a Signed Token Chain.</t>
         </section>
-        
         <section anchor="cdnistt_claim" title="CDNI Signed Token Transport (cdnistt) claim">
           <t>CDNI Signed Token Transport (cdnistt) [optional] - The CDNI Signed Token Transport (cdnistt) claim
           provides a means of signalling the method through which the Signed Token Chain
@@ -544,10 +542,9 @@
           This document only defines setting its value to '1', which means the signed JWTs
           making up the Signed Token Chain are transported via HTTP Cookies in both directions.</t>
         </section>
-
         <section anchor="uri_container_forms" title="URI Container Forms">
           <t>The URI Container (sub) claim takes one of the following forms. More forms may be added in the future to extend the capabilities.</t>
-          
+
           <section anchor="uri_container_forms_uri" title="URI Simple Container (uri:)">
               <t>When prefixed with 'uri:', the string following 'uri:' is the URI that MUST be matched with a simple string match to the requested URI.</t>
           </section>
@@ -618,11 +615,11 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
       token.</t>
       </section>
     </section>
-    
+
     <section anchor="uri_signing_for_has" title="URI Signing for HAS">
       <section anchor="has_intro" title="Overview">
         <t>For content that is delivered via an HTTP Adaptive Streaming (HAS) protocol,
-        such as <xref target="MPEG-DASH">MPEG-DASH</xref> or <xref target="I-D.ietf-pantos-http-live-streaming-22"> HTTP Live Streaming (HLS)<xref>,
+        such as <xref target="MPEG-DASH">MPEG-DASH</xref> or <xref target="I-D.pantos-http-live-streaming"> HTTP Live Streaming (HLS)</xref>,
         special provisions need to be made in order to ensure URI Signing can be
         applied. In general, HAS protocols work by breaking large objects
         (e.g. videos) into a sequence of small independent chunks. Such chunks
@@ -633,7 +630,7 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
         manifest file point to the CSP, are not subjected to redirection and URI Signing.
         This opens up the vulnerability of malicious User Agents sharing the
         manifest file and deep-linking to the chunks.</t>
-        
+
         <t>One method for dealing with this vulnerability would be to include in
         the manifest itself Signed URIs that point to the individual chunks.
         There exist a number of issues with that approach. First, it requires the
@@ -647,12 +644,12 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
         their effectiveness and that of the URI Signing mechanism in general.
         For a more detailed analysis of how HAS protocols affect CDNI,
         see <xref target="RFC6983">Models for HTTP-Adaptive-Streaming-Aware CDNI</xref>.</t>
-      
+
         <t>The method described in this section allows CDNs to use URI Signing
         for HTTP Adaptive Streaming content (or other chunked content) without
         having to include the Signed URIs in the manifest files themselves.</t>
       </section>
-      
+
       <section anchor="uri_signing_mechanism" title="Signed Token Chain mechanism">
         <t>In order to allow for effective access control of HAS content, the
         URI signing scheme defined in this section is based on a mechanism
@@ -670,7 +667,7 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
         the Signed Token Chain uses the URI Pattern Container and/or the
         URI Regular Expression Container scoping mechanisms in the URI Container
         (sub) claim to allow the Signed Token Chain to be valid for more than one URL.</t>
-        
+
         <t>In order for this chaining of signed JWTs to work, it is necessary for
         a UA to extract the signed JWT from the HTTP 2xx Successful message of an
         earlier request and use it to retrieve the next chunk. The exact mechanism
@@ -683,16 +680,16 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
         the concept of chained signed JWTs without requiring any support on
         the UA side.</t>
       </section>
-      
+
       <section anchor="communicating_token" title="Communicating a signed JWTs in a Signed Token Chain">
         <t>This section assumes the value of the CDNI Signed Token Transport (cdnistt) claim has been set to 1. Other values of cdnistt are out of scope of this document. </t>
-        
+
 	<t>When using the Signed Token Chain mechanism, the signed JWT is
         transported to the UA via a 'URISigningPackage' cookie added to the
         HTTP 2xx Successful message along with the content being returned to
         the UA, or to the HTTP 3xx Redirection message in case the UA is
         redirected to a different server.</t>
-      
+
       <section title="Support for cross-domain redirection">
         <t>For security purposes, the use of cross-domain cookies is not supported
         in some application environments. As a result, the Cookie-based
@@ -704,12 +701,12 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
         signed JWTs (outside a Signed Token Chain) are communicated. Note that
         the use of URL embedded signed JWTs SHOULD NOT be used in HTTP 2xx Successful
         messages, since UAs might not know how to extract the signed JWTs.</t>
-          
+
           <t>Note that the process described below only works in cases where both the manifest file and segments constituting the HTTP Adaptive Streaming content are delivered from the same domain. In other words, any redirection between different domains needs to be carried out while retrieving the manifest file.</t>
-            
+
         </section>
       </section>
-        
+
     </section>
 
     <section anchor="cdni_interfaces"
@@ -1400,7 +1397,7 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
 
       <?rfc include='reference.RFC.5905'?>
 
-      <?rfc include='reference.I-D.ietf-pantos-http-live-streaming-22'?>
+      <?rfc include='reference.I-D.pantos-http-live-streaming'?>
 
       <reference anchor="PCRE839" target="http://www.pcre.org/">
         <front>
@@ -1431,7 +1428,6 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
           </author>
 	  <date month="05" year="2014"/>
         </front>
-        <refcontent>ISO/IEC 23009-1:2014</refcontent>
         <seriesInfo name="Edition" value="2"/>
       </reference>
 
