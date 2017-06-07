@@ -682,7 +682,8 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
       </section>
 
       <section anchor="communicating_token" title="Communicating a signed JWTs in a Signed Token Chain">
-        <t>This section assumes the value of the CDNI Signed Token Transport (cdnistt) claim has been set to 1. Other values of cdnistt are out of scope of this document. </t>
+        <t>This section assumes the value of the CDNI Signed Token Transport (cdnistt) claim
+        has been set to 1. Other values of cdnistt are out of scope of this document. </t>
 
 	<t>When using the Signed Token Chain mechanism, the signed JWT is
         transported to the UA via a 'URISigningPackage' cookie added to the
@@ -702,7 +703,10 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
         the use of URL embedded signed JWTs SHOULD NOT be used in HTTP 2xx Successful
         messages, since UAs might not know how to extract the signed JWTs.</t>
 
-          <t>Note that the process described below only works in cases where both the manifest file and segments constituting the HTTP Adaptive Streaming content are delivered from the same domain. In other words, any redirection between different domains needs to be carried out while retrieving the manifest file.</t>
+          <t>Note that the process described below only works in cases where both the manifest
+          file and segments constituting the HTTP Adaptive Streaming content are delivered from
+          the same domain. In other words, any redirection between different domains needs to be
+          carried out while retrieving the manifest file.</t>
 
         </section>
       </section>
@@ -1281,6 +1285,26 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
 	      <t>Claim Description: CDNI Claim Set Version</t>
 	      <t>Change Controller: IESG</t>
 	      <t>Specification Document(s): <xref target="cdniv_claim"/> of [[ this specification ]]</t>
+	    </list>
+	  </t>
+	  <?rfc subcompact="no"?>
+	  <t>
+	    <?rfc subcompact="yes"?>
+	    <list style='symbols'>
+	      <t>Claim Name: <spanx style="verb">cdniets</spanx></t>
+	      <t>Claim Description: CDNI Expiration Time Setting for Signed Token Chain</t>
+	      <t>Change Controller: IESG</t>
+	      <t>Specification Document(s): <xref target="cdniets_claim"/> of [[ this specification ]]</t>
+	    </list>
+	  </t>
+	  <?rfc subcompact="no"?>
+	  <t>
+	    <?rfc subcompact="yes"?>
+	    <list style='symbols'>
+	      <t>Claim Name: <spanx style="verb">cdnistt</spanx></t>
+	      <t>Claim Description: CDNI Signed Token Transport Method for Signed Token Chain</t>
+	      <t>Change Controller: IESG</t>
+	      <t>Specification Document(s): <xref target="cdnistt_claim"/> of [[ this specification ]]</t>
 	    </list>
 	  </t>
 	  <?rfc subcompact="no"?>
