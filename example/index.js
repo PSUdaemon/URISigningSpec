@@ -25,6 +25,7 @@ var keys = {
         "d": "yaowezrCLTU6yIwUL5RQw67cHgvZeMTLVZXjUGb1A1M"
       }
     };
+
 function loadKey(kname) {
   var p;
   p = store.add(keys[kname]);
@@ -37,7 +38,6 @@ function loadKey(kname) {
 
 var samples = {
   "simple": {
-    "cdniv": 1,
     "sub": "uri:http://cdni.example/foo/bar/baz"
   },
   "complex": {
@@ -49,8 +49,21 @@ var samples = {
     "jti": "5DAafLhZAfhsbe",
     "nbf": 1474243200,
     "sub": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}\\.png"
+  },
+  "chained-1": {
+    "cdniets": 30,
+    "cdnistt": 1,
+    "exp": 1474243500,
+    "sub": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}\\.ts"
+  },
+  "chained-2": {
+    "cdniets": 30,
+    "cdnistt": 1,
+    "exp": 1474243530,
+    "sub": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}\\.ts"
   }
 };
+
 function generateSample(sname) {
   var p;
   p = Promise.resolve(samples[sname]);

@@ -1459,11 +1459,14 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
     </references>
 
     <section title="Signed URI Package Example" anchor="sup_example">
-      <t>This section contains two examples of token usage: a simple example with only the required claims present, and a complex example which demonstrates the full JWT claims set, including an encrypted Client IP (aud).</t>
+      <t>This section contains three examples of token usage: a simple example with only the
+      required claim present, a complex example which demonstrates the full JWT claims set,
+      including an encrypted Client IP (aud), and one that uses a Signed Token Chain.</t>
 
-      <t>Note: All of the examples have whitespace added to improve formatting and readability, but are not present in the generated content.</t>
+      <t>Note: All of the examples have whitespace added to improve formatting and readability,
+      but are not present in the generated content.</t>
 
-      <t>Both examples use the following signing key to generate the Signed URI Package:</t>
+      <t>All examples use the following signing key to generate the Signed URI Package:</t>
       <figure><artwork><![CDATA[
 {
   "kty": "EC",
@@ -1488,7 +1491,6 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
 
         <figure><artwork><![CDATA[
 {
-  "cdniv": 1,
   "sub": "uri:http://cdni.example/foo/bar/baz"
 }
 ]]></artwork></figure>
@@ -1499,17 +1501,18 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
 
         <figure><artwork><![CDATA[
 eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBPdjBlTXExd2N4TGY3V3hJZzA5SmRTWU
-dZRkRPV2tsZHVlYUltZjAifQ.eyJjZG5pdiI6MSwic3ViIjoidXJpOmh0dHA6Ly9jZ
-G5pLmV4YW1wbGUvZm9vL2Jhci9iYXoifQ.RMPznuLnO3B9jTYJRQE_HFXD4CTBfTLZ
-M03BkHK7wTMSSOOhJL6dORy1Avx3BJW2NNa-SsytYzM7tGCcsAJUFA
+dZRkRPV2tsZHVlYUltZjAifQ.eyJzdWIiOiJ1cmk6aHR0cDovL2NkbmkuZXhhbXBsZ
+S9mb28vYmFyL2JheiJ9.LTizGd7zCb17Qp_80ClGApLCieRIq3dCjcRckNfLqiJ4BT
+GSfVXoDtm0Z6L5Jx4EmwM1w-WkznNajUy11iMAcA
 ]]></artwork></figure>
       </section>
 
       <section title="Complex Example" anchor="complex_example">
         <t>
-          This example uses all optional fields, including Client IP (aud)
-          which is encrpyted. This significantly increases the size of
-          the signed JWT token.
+          This example uses all optional fields except for those dealing
+          with Signed Token Chaining, including Client IP (aud) which is
+          encrpyted. This significantly increases the size of the signed
+          JWT token.
         </t>
 
         <t>
@@ -1532,8 +1535,8 @@ M03BkHK7wTMSSOOhJL6dORy1Avx3BJW2NNa-SsytYzM7tGCcsAJUFA
 
         <figure><artwork><![CDATA[
 eyJhbGciOiJkaXIiLCJraWQiOiJmLVdianhCQzNkUHVJM2QyNGtQMmhmdm9zN1F6Nj
-g4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..iirjVvKXFc_NzZkm.SJcZ7
-g5hXas-eDNsCOIQLQ._Hwi9VSHsWQGuataOdQJYQ
+g4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..oGLsnF8fLlFcUXK0.KFfBB
+H_FPYFu-RBFBR3rhQ.6_MVaa4t7JiVX2IgUkZ3jA
 ]]></artwork></figure>
 
         <t>
@@ -1543,8 +1546,8 @@ g5hXas-eDNsCOIQLQ._Hwi9VSHsWQGuataOdQJYQ
         <figure><artwork><![CDATA[
 {
   "aud": "eyJhbGciOiJkaXIiLCJraWQiOiJmLVdianhCQzNkUHVJM2QyNGtQMmhm
-dm9zN1F6Njg4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..iirjVvKXFc_N
-zZkm.SJcZ7g5hXas-eDNsCOIQLQ._Hwi9VSHsWQGuataOdQJYQ",
+dm9zN1F6Njg4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..oGLsnF8fLlFc
+UXK0.KFfBBH_FPYFu-RBFBR3rhQ.6_MVaa4t7JiVX2IgUkZ3jA",
   "cdniv": 1,
   "exp": 1474243500,
   "iat": 1474243200,
@@ -1563,16 +1566,78 @@ zZkm.SJcZ7g5hXas-eDNsCOIQLQ._Hwi9VSHsWQGuataOdQJYQ",
 eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBPdjBlTXExd2N4TGY3V3hJZzA5SmRTWU
 dZRkRPV2tsZHVlYUltZjAifQ.eyJhdWQiOiJleUpoYkdjaU9pSmthWElpTENKcmFXU
 WlPaUptTFZkaWFuaENRek5rVUhWSk0yUXlOR3RRTW1obWRtOXpOMUY2TmpnNFZWUnB
-ObUZDTUdoT09UazRJaXdpWlc1aklqb2lRVEV5T0VkRFRTSjkuLmlpcmpWdktYRmNfT
-npaa20uU0pjWjdnNWhYYXMtZUROc0NPSVFMUS5fSHdpOVZTSHNXUUd1YXRhT2RRSll
-RIiwiY2RuaXYiOjEsImV4cCI6MTQ3NDI0MzUwMCwiaWF0IjoxNDc0MjQzMjAwLCJpc
+ObUZDTUdoT09UazRJaXdpWlc1aklqb2lRVEV5T0VkRFRTSjkuLm9HTHNuRjhmTGxGY
+1VYSzAuS0ZmQkJIX0ZQWUZ1LVJCRkJSM3JoUS42X01WYWE0dDdKaVZYMklnVWtaM2p
+BIiwiY2RuaXYiOjEsImV4cCI6MTQ3NDI0MzUwMCwiaWF0IjoxNDc0MjQzMjAwLCJpc
 3MiOiJ1Q0ROIEluYyIsImp0aSI6IjVEQWFmTGhaQWZoc2JlIiwibmJmIjoxNDc0MjQ
 zMjAwLCJzdWIiOiJ1cmktcmVnZXg6aHR0cDovL2NkbmlcXC5leGFtcGxlL2Zvby9iY
-XIvYmF6L1swLTldezN9XFwucG5nIn0.k_lX_z_E4-rdzjJ6DuSnoVtvifaz-W4xN0I
-PdU6IoDZvBeu_lv39xsgfnvTO_wcflaO9MkbWyzarw3MtnITxQA
+XIvYmF6L1swLTldezN9XFwucG5nIn0.r2FiSdfnGRw_RC2roGwh4LEYlfsWGF972-M
+f3He_LhGr2_3eRXP0jP_OFPj5NEtTZFY4PX_iD7vPD12_HPDJCQ
 ]]></artwork></figure>
 
+      </section>
 
+      <section title="Signed Token Chain Example" anchor="token_chain_example">
+        <t>
+          This example uses fields for Signed Token Chaining.
+        </t>
+
+        <t>
+          The JWT Claim Set before signing:
+        </t>
+
+        <figure><artwork><![CDATA[
+{
+  "cdniets": 30,
+  "cdnistt": 1,
+  "exp": 1474243500,
+  "sub": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}\\.ts"
+}
+]]></artwork></figure>
+
+        <t>
+          The signed JWT:
+        </t>
+
+        <figure><artwork><![CDATA[
+eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBPdjBlTXExd2N4TGY3V3hJZzA5SmRTWU
+dZRkRPV2tsZHVlYUltZjAifQ.eyJjZG5pZXRzIjozMCwiY2RuaXN0dCI6MSwiZXhwI
+joxNDc0MjQzNTAwLCJzdWIiOiJ1cmktcmVnZXg6aHR0cDovL2NkbmlcXC5leGFtcGx
+lL2Zvby9iYXIvYmF6L1swLTldezN9XFwudHMifQ.VYF7Eqk1WhRWdvDVUx5mXDJaS-
+r6jbjgiYuwIEAYmbLWsF2dUDohrV70sz7TC09n-oNf_ws4eeH_A6AnvF4FTQ
+]]></artwork></figure>
+
+        <t>
+          Once the server validates the signed JWT it will return a
+          new signed JWT with an updated expiry time (exp) as shown
+          below. Note the expiry time is increased by the expiration
+          time setting (cdniets) value.
+        </t>
+
+        <t>
+          The JWT Claim Set before signing:
+        </t>
+
+        <figure><artwork><![CDATA[
+{
+  "cdniets": 30,
+  "cdnistt": 1,
+  "exp": 1474243530,
+  "sub": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}\\.ts"
+}
+]]></artwork></figure>
+
+        <t>
+          The signed JWT:
+        </t>
+
+        <figure><artwork><![CDATA[
+eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBPdjBlTXExd2N4TGY3V3hJZzA5SmRTWU
+dZRkRPV2tsZHVlYUltZjAifQ.eyJjZG5pZXRzIjozMCwiY2RuaXN0dCI6MSwiZXhwI
+joxNDc0MjQzNTMwLCJzdWIiOiJ1cmktcmVnZXg6aHR0cDovL2NkbmlcXC5leGFtcGx
+lL2Zvby9iYXIvYmF6L1swLTldezN9XFwudHMifQ.zzXhYg6b7_8MylW-RS97qZv3hQ
+QlYg-TxhC-wigdB4moxlFEjndDvv0EDxl42faQaE39BCHZq7H-DXVpBrhxTw
+]]></artwork></figure>
       </section>
     </section>
   </back>
