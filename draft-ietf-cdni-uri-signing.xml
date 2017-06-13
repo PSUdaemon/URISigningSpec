@@ -553,7 +553,7 @@
               <t>Prefixed with 'uri-pattern:', this string contains one or more URI Patterns that describes for which content the Signed URI is valid. Each URI Pattern contains an expression to match against the requested URI, to check whether the requested content is allowed to be served. Multiple URI Patterns may be concatenated in a single URI Pattern by separating them with a semi-colon (';') character. Each URI Pattern follows the <xref target="RFC3986"/> URI format, including the '://' that delimits the URI scheme from the hierarchy part. The pattern may include the special literals:</t>
               
               <t>
-                <list style="sybmols">
+                <list style="symbols">
                   <t>';' - separates individual patterns when the string contains multiple URI patterns.</t>
                   <t>'*' - matches any sequence of characters, including the empty string.</t>
                   <t>'?' - matches exactly one character.</t>
@@ -1380,8 +1380,18 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
       contributions in reviewing this document and providing feedback: Scott
       Leibrand, Kevin Ma, Ben Niven-Jenkins, Thierry Magnien, Dan York,
       Bhaskar Bhupalam, Matt Caulfield, Samuel Rajakumar, Iuniana Oprescu,
-      Leif Hedstrom, Gancho Tenev, and Brian Campbell. In addition, Matt
-      Caulfield provided content for the CDNI Metadata Interface section.</t>
+      Leif Hedstrom, Gancho Tenev, and Brian Campbell.</t>
+    </section>
+
+    <section title="Contributors">
+      <t>In addition, the authors would also like to make special mentions for certain
+      people who contributed significant sections to this document.</t>
+
+      <t><list style="symbols">
+        <t>Matt Caulfield provided content for the CDNI Metadata Interface
+        section.</t>
+        <t>Emmanuel Thomas provided content for HTTP Adaptive Streaming.</t>
+      </list></t>
     </section>
   </middle>
 
