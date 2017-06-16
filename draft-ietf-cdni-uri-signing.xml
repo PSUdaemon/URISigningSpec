@@ -82,15 +82,6 @@
       </address>
     </author>
     
-    <author fullname="Matthew Miller" initials="M. "
-            surname="Miller">
-      <organization>Mozilla</organization>
-
-      <address>
-        <email>linuxwolf@outer-planes.net</email>
-      </address>
-    </author>
-
     <date day="" month="" year=""/>
 
     <workgroup>CDNI</workgroup>
@@ -1391,6 +1382,8 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
         <t>Matt Caulfield provided content for the CDNI Metadata Interface
         section.</t>
         <t>Emmanuel Thomas provided content for HTTP Adaptive Streaming.</t>
+        <t>Matt Miller provided consultation on JWT usage as well as code to
+        generate working JWT examples.</t>
       </list></t>
     </section>
   </middle>
