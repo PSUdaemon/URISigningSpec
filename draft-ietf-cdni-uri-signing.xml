@@ -122,18 +122,22 @@
       <t>Specifically, <xref target="RFC7336">CDNI Framework</xref>
       states:</t>
 
-      <t>"The CSP may also trust the CDN operator to perform actions such as
-      ..., and to enforce per-request authorization performed by the CSP using
-      techniques such as URI signing."</t>
+      <t><list style="empty">
+        <t>The CSP may also trust the CDN operator to perform actions such as
+        ..., and to enforce per-request authorization performed by the CSP using
+        techniques such as URI signing.</t>
+      </list></t>
 
       <t>In particular, the following requirement is listed in <xref
       target="RFC7337">CDNI Requirements</xref>:</t>
 
-      <t>MI-16 {HIGH} The CDNI Metadata interface shall allow signaling of
-      authorization checks and validation that are to be performed by the
-      Surrogate before delivery.  For example, this could potentially
-      include the need to validate information (e.g., Expiry time, Client
-      IP address) required for access authorization.</t>
+      <t><list style="empty">
+        <t>MI-16 {HIGH} The CDNI Metadata interface shall allow signaling of
+        authorization checks and validation that are to be performed by the
+        Surrogate before delivery.  For example, this could potentially
+        include the need to validate information (e.g., Expiry time, Client
+        IP address) required for access authorization.</t>
+      </list></t>
 
       <t>This document proposes a method of signing URIs that allows Surrogates in
       interconnected CDNs to enforce a per-request authorization performed by
@@ -1271,7 +1275,7 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
 
 	  <t>
 	    <?rfc subcompact="yes"?>
-	    <list style='symbols'>
+	    <list style="symbols">
 	      <t>Claim Name: <spanx style="verb">cdniv</spanx></t>
 	      <t>Claim Description: CDNI Claim Set Version</t>
 	      <t>Change Controller: IESG</t>
@@ -1281,7 +1285,7 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
 	  <?rfc subcompact="no"?>
 	  <t>
 	    <?rfc subcompact="yes"?>
-	    <list style='symbols'>
+	    <list style="symbols">
 	      <t>Claim Name: <spanx style="verb">cdniets</spanx></t>
 	      <t>Claim Description: CDNI Expiration Time Setting for Signed Token Chain</t>
 	      <t>Change Controller: IESG</t>
@@ -1291,7 +1295,7 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
 	  <?rfc subcompact="no"?>
 	  <t>
 	    <?rfc subcompact="yes"?>
-	    <list style='symbols'>
+	    <list style="symbols">
 	      <t>Claim Name: <spanx style="verb">cdnistt</spanx></t>
 	      <t>Claim Description: CDNI Signed Token Transport Method for Signed Token Chain</t>
 	      <t>Change Controller: IESG</t>
@@ -1326,7 +1330,7 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
       security offered by URI Signing and that anybody implementing URI
       Signing should be aware of.</t>
 
-      <t><list>
+      <t><list style="symbols">
           <t>Replay attacks: A (valid) Signed URI may be used to perform
           replay attacks. The vulnerability to replay attacks can be reduced
           by picking a relatively short window between the Not Before time and Expiration Time
