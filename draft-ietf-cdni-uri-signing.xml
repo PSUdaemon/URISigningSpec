@@ -535,7 +535,8 @@
           provides a means of signalling the method through which the Signed Token Chain
           is transported from the CDN to the UA and vice versa. Its type is a JSON integer.
           This document only defines setting its value to '1', which means the signed JWTs
-          making up the Signed Token Chain are transported via HTTP Cookies in both directions.</t>
+          making up the Signed Token Chain are transported via HTTP Cookies in both directions.
+          Additional values for this claim can be defined in <xref target="sec.IANA.cdnistt"/>.</t>
         </section>
         <section anchor="uri_container_forms" title="URI Container Forms">
           <t>The URI Container (sub) claim takes one of the following forms. More forms may be added in the future to extend the capabilities.</t>
@@ -1262,6 +1263,37 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
         number for this document.]</t>
 
       </section>
+
+      <section anchor="sec.IANA.cdnistt"
+               title="CDNI URI Signing Signed Token Transport">
+        <t>The IANA is requested to create a new "CDNI URI Signing
+        Signed Token Transport" subregistry in the "Content
+        Delivery Networks Interconnection (CDNI) Parameters" registry.
+        The "CDNI URI Signing Signed Token Transport"
+        namespace defines the valid values
+        that may be included in a URI Signing token.  Additions to the
+        Signed Token Transport namespace conform to the
+        "Specification Required" policy as defined in <xref target="RFC5226"/>.</t>
+
+        <t>The following table defines the initial Enforcement
+        Information Elements:</t>
+        <texttable>
+          <ttcol align='left'>Value</ttcol>
+          <ttcol align='left'>Description</ttcol>
+          <ttcol align='left'>RFC</ttcol>
+
+          <c>1</c>
+          <c>Designates token transport via cookie</c>
+          <c>RFCthis</c>
+        </texttable>
+
+        <t>[RFC Editor: Please replace RFCthis with the published RFC
+        number for this document.]</t>
+
+        <t>[Ed Note: are there any special instructions to the
+        designated expert reviewer?]</t>
+      </section>
+
       <section anchor="ClaimsReg" title="JSON Web Token Claims Registration">
 
 	<t>
@@ -1407,6 +1439,8 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
       <?rfc include='reference.RFC.8006'?>
 
       <?rfc include='reference.RFC.6920'?>
+
+      <?rfc include='reference.RFC.5226'?>
     </references>
 
     <references title="Informative References">
