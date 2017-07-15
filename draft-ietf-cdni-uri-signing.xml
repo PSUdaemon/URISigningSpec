@@ -1271,8 +1271,8 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
         Delivery Networks Interconnection (CDNI) Parameters" registry.
         The "CDNI URI Signing Signed Token Transport"
         namespace defines the valid values
-        that may be included in a URI Signing token.  Additions to the
-        Signed Token Transport namespace conform to the
+        that may be in the Signed Token Transport (cdnistt) JWT claim.
+        Additions to the Signed Token Transport namespace conform to the
         "Specification Required" policy as defined in <xref target="RFC5226"/>.</t>
 
         <t>The following table defines the initial Enforcement
