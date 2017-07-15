@@ -329,6 +329,24 @@
         can be used for URI Signing with HTTP-based request routing. Note that the signed Redirection URI MUST
         maintain the same, or higher, level of security as the original Signed
         URI.</t>
+
+        <t>Two types of keys can be used for URI Signing: asymmetric keys and
+        symmetric keys. Asymmetric keys are based on a public/private key pair
+        mechanism and always contain a private key only known to the entity
+        signing the URI (either CSP or uCDN) and a public key for the
+        verification of the Signed URI. With symmetric keys, the same key is
+        used by both the signing entity for signing the URI as well as by the
+        validating entity for validating the Signed URI. Regardless of the type
+        of keys used, the validating entity has to obtain the key (either the
+        public or the symmetric key). There are very different requirements for
+        key distribution (out of scope of this document) with asymmetric keys
+        and with symmetric keys. Key distribution for symmetric keys requires
+        confidentiality to prevent another party from getting access to the key,
+        since it could then generate valid Signed URIs for unauthorized
+        requests. Key distribution for asymmetric keys does not require
+        confidentiality since public keys can typically be distributed openly
+        (because they cannot be used for URI signing) and private keys are kept
+        by the URI signing function.</t>
       </section>
 
       <section title="URI Signing in a non-CDNI context">
