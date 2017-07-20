@@ -1462,6 +1462,8 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
 
       <?rfc include='reference.RFC.5905'?>
 
+      <?rfc include='reference.RFC.7517'?>
+
       <?rfc include='reference.I-D.pantos-http-live-streaming'?>
 
       <reference anchor="PCRE839" target="http://www.pcre.org/">
@@ -1507,18 +1509,42 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
       <t>Note: All of the examples have whitespace added to improve formatting and readability,
       but are not present in the generated content.</t>
 
-      <t>All examples use the following signing key to generate the Signed URI Package:</t>
+      <t>All examples use the following JWK Set <xref target="RFC7517"/>:</t>
       <figure><artwork><![CDATA[
-{
-  "kty": "EC",
-  "kid": "P5UpOv0eMq1wcxLf7WxIg09JdSYGYFDOWkldueaImf0",
-  "use": "sig",
-  "crv": "P-256",
-  "x": "be807S4O7dzB6I4hTiCUvmxCI6FuxWba1xYBlLSSsZ8",
-  "y": "rOGC4vI69g-WF9AGEVI37sNNwbjIzBxSjLvIL7f3RBA",
-  "d": "yaowezrCLTU6yIwUL5RQw67cHgvZeMTLVZXjUGb1A1M"
-}
+{ "keys": [
+  {
+    "kty": "EC",
+    "kid": "P5UpOv0eMq1wcxLf7WxIg09JdSYGYFDOWkldueaImf0",
+    "use": "sig",
+    "alg": "ES256",
+    "crv": "P-256",
+    "x": "be807S4O7dzB6I4hTiCUvmxCI6FuxWba1xYBlLSSsZ8",
+    "y": "rOGC4vI69g-WF9AGEVI37sNNwbjIzBxSjLvIL7f3RBA"
+  },
+  {
+    "kty": "EC",
+    "kid": "P5UpOv0eMq1wcxLf7WxIg09JdSYGYFDOWkldueaImf0",
+    "use": "sig",
+    "alg": "ES256",
+    "crv": "P-256",
+    "x": "be807S4O7dzB6I4hTiCUvmxCI6FuxWba1xYBlLSSsZ8",
+    "y": "rOGC4vI69g-WF9AGEVI37sNNwbjIzBxSjLvIL7f3RBA",
+    "d": "yaowezrCLTU6yIwUL5RQw67cHgvZeMTLVZXjUGb1A1M"
+  },
+  {
+    "kty": "oct",
+    "kid": "f-WbjxBC3dPuI3d24kP2hfvos7Qz688UTi6aB0hN998",
+    "use": "enc",
+    "alg": "A128GCM",
+    "k": "4uFxxV7fhNmrtiah2d1fFg"
+  }
+]}
 ]]></artwork></figure>
+
+     <t>Note: They are the public signing key, the private signing
+     key, and the shared secret enctyption key, respectively. The public and private signing
+     keys have the same fingerprint and only vary by the 'd' parameter that is missing from the
+     public signing key.</t>
 
      <section title="Simple Example" anchor="simple_example">
         <t>
@@ -1555,20 +1581,6 @@ GSfVXoDtm0Z6L5Jx4EmwM1w-WkznNajUy11iMAcA
           encrpyted. This significantly increases the size of the signed
           JWT token.
         </t>
-
-        <t>
-          Shared key used for encrpyting the Client IP (aud):
-        </t>
-
-        <figure><artwork><![CDATA[
-{
-  "kty": "oct",
-  "kid": "f-WbjxBC3dPuI3d24kP2hfvos7Qz688UTi6aB0hN998",
-  "use": "enc",
-  "alg": "A128GCM",
-  "k": "4uFxxV7fhNmrtiah2d1fFg"
-}
-]]></artwork></figure>
 
         <t>
           JWE for client IP (aud) of [2001:db8::1/32]:
