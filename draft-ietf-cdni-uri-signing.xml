@@ -501,7 +501,7 @@
             claim if no Not Before time claim existed in the received
             signed JWT.</t>
         </section>
-        <section anchor="iat_claim" title="Issued At (ait) claim">
+        <section anchor="iat_claim" title="Issued At (iat) claim">
             <t>Issued At (iat) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.6 MUST be followed.
             Note: The time on the entities that generate and
             validate the signed URI SHOULD be in sync. In the CDNI case, this
