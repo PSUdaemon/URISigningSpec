@@ -150,10 +150,11 @@
       <t>The representation of this method is a Signed JSON Web Token (JWT) <xref target="RFC7519"/>.</t>
 
       <section title="Terminology">
-        <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-        "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
-        document are to be interpreted as described in <xref
-        target="RFC2119"/>.</t>
+        <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
+        NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED",
+        "MAY", and "OPTIONAL" in this document are to be interpreted as
+        described in BCP 14 <xref target="RFC2119"/> <xref target="RFC8174"/>
+        when, and only when, they appear in all capitals, as shown here.</t>
 
         <t>This document uses the terminology defined in <xref
         target="RFC6707">CDNI Problem Statement</xref>.</t>
@@ -633,7 +634,7 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
     <section anchor="uri_signing_for_has" title="URI Signing for HAS">
       <section anchor="has_intro" title="Overview">
         <t>For content that is delivered via an HTTP Adaptive Streaming (HAS) protocol,
-        such as <xref target="MPEG-DASH">MPEG-DASH</xref> or <xref target="I-D.pantos-http-live-streaming"> HTTP Live Streaming (HLS)</xref>,
+        such as <xref target="MPEG-DASH">MPEG-DASH</xref> or <xref target="RFC8216"> HTTP Live Streaming (HLS)</xref>,
         special provisions need to be made in order to ensure URI Signing can be
         applied. In general, HAS protocols work by breaking large objects
         (e.g. videos) into a sequence of small independent chunks. Such chunks
@@ -1446,6 +1447,8 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
     <references title="Normative References">
       <?rfc include='reference.RFC.2119'?>
 
+      <?rfc include='reference.RFC.8174'?>
+
       <?rfc include='reference.RFC.7937'?>
 
       <?rfc include='reference.RFC.7159'?>
@@ -1482,7 +1485,7 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
 
       <?rfc include='reference.RFC.7517'?>
 
-      <?rfc include='reference.I-D.pantos-http-live-streaming'?>
+      <?rfc include='reference.RFC.8216'?>
 
       <reference anchor="PCRE839" target="http://www.pcre.org/">
         <front>
