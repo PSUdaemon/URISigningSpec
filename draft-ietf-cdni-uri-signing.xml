@@ -544,7 +544,7 @@
             <t>CDNI Expiration Time Setting (cdniets) [optional] - The CDNI Expiration
             Time Setting (cdniets) claim provides a means for setting the value
             of the Expiry Time (exp) claim when generating a subsequent signed JWT
-            in a Signed Token Chain. Its type is a JSON integer
+            in a Signed Token Chain. Its type is a JSON numeric value. It
             denotes the number of seconds to be added to the time at which the JWT is validated
             that gives the value of the Expiry Time (exp) claim of the next signed JWT.
             The CDNI Expiration Time Setting (cdniets) SHOULD NOT be used when not using a Signed Token Chain.</t>
