@@ -608,7 +608,7 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
               <t>
                 <figure>
                   <artwork>
-.*\\://.*/folder/content-83112371/quality_.*/segment.{3}\\.mp4
+[^:]*\\://[^/]*/folder/content-83112371/quality_[^/]*/segment.{3}\\.mp4(\?.*)?
                   </artwork>
                 </figure>
               </t>
