@@ -385,6 +385,18 @@
       Package Attribute, the parameter name can be set by configuration (out of
       scope of this document).</t>
 
+      <t>The URI Signing Package will be found by searching the URI, left-to-right,
+      for the following sequence:
+      <list style="symbols">
+        <t>a reserved character (as defined in <xref target="RFC3986"/> Section 2.2),</t>
+        <t>the URI Signing Package Attribute name,</t>
+        <t>if the last character of the URI Singing Package Attribute name is not a reserved character, an equal symbol ('='),</t>
+        <t>and a sequence of non-reserved characters that will be interpreted as a signed JWT,</t>
+        <t>terminated by either a reserved character or the end of the URI.</t>
+     </list>
+     The first such match will be taken to provide the signed JWT; the URI will not be searched
+     for multiple signed JWTs.</t>
+
       <section anchor="jwt_claims" title="JWT Claims">
         <t>This section identifies the set of claims that can be
         used to enforce the CSP distribution policy. New claims can be introduced in the future to extend the
