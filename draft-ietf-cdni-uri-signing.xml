@@ -1420,7 +1420,7 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
     <section title="Privacy">
       <t>The privacy protection concerns described in <xref
       target="RFC7937">CDNI Logging Interface</xref> apply when
-      the client's IP address (cdniets) is embedded in the Signed URI.
+      the client's IP address (cdniip) is embedded in the Signed URI.
       For this reason, the mechanism described in <xref
       target="jwt_profile"/> encrypts the Client IP before
       including it in the URI Signing Package (and thus the URL itself).</t>
@@ -1530,7 +1530,7 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
     <section title="Signed URI Package Example" anchor="sup_example">
       <t>This section contains three examples of token usage: a simple example with only the
       required claim present, a complex example which demonstrates the full JWT claims set,
-      including an encrypted Client IP (cdniets), and one that uses a Signed Token Chain.</t>
+      including an encrypted Client IP (cdniip), and one that uses a Signed Token Chain.</t>
 
       <t>Note: All of the examples have whitespace added to improve formatting and readability,
       but are not present in the generated content.</t>
@@ -1603,13 +1603,13 @@ GSfVXoDtm0Z6L5Jx4EmwM1w-WkznNajUy11iMAcA
       <section title="Complex Example" anchor="complex_example">
         <t>
           This example uses all optional fields except for those dealing
-          with Signed Token Chaining, including Client IP (cdniets) which is
+          with Signed Token Chaining, including Client IP (cdniip) which is
           encrpyted. This significantly increases the size of the signed
           JWT token.
         </t>
 
         <t>
-          JWE for client IP (cdniets) of [2001:db8::1/32]:
+          JWE for client IP (cdniip) of [2001:db8::1/32]:
         </t>
 
         <figure><artwork><![CDATA[
