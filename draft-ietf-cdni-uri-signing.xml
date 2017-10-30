@@ -559,6 +559,15 @@
         </section>
         <section anchor="uri_container_forms" title="URI Container Forms">
           <t>The URI Container (sub) claim takes one of the following forms. More forms may be added in the future to extend the capabilities.</t>
+          <t>Before comparing a URI against this container, the signed JWT must be removed from
+          the URI. This removal is only for the purpose of determining if the URI matches; all
+          other purposes will use the original URI. If the signed JWT is terminated by anything
+          other than a sub-delimiter (as definined in <xref target="RFC3986"/> Section 2.2),
+          everything from the reserved character (as defined in <xref target="RFC3986"/> Section 2.2)
+          that precedes the URI Signing Package Attribute to the last character of the signed
+          JWT will be removed, inclusive. Otherwise, everything from the first character of the
+          URI Signing Package Attribute to the sub-delimiter that terminates the signed
+          JWT will be removed, inclusive.</t>
 
           <section anchor="uri_container_forms_uri" title="URI Simple Container (uri:)">
               <t>When prefixed with 'uri:', the string following 'uri:' is the URI that MUST be matched with a simple string match to the requested URI.</t>
