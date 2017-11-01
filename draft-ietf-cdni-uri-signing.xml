@@ -570,9 +570,10 @@
               <t>
                 <list style="symbols">
                   <t>';' - separates individual patterns when the string contains multiple URI patterns.</t>
-                  <t>'*' - matches any sequence of characters, including the empty string.</t>
-                  <t>'?' - matches exactly one character.</t>
-                  <t>'$' - used to escape the special literals; MUST be followed by exactly one of ';', '*', '?', or '$'.</t>
+                  <t>'*' - matches any sequence of unreserved or sub-delim characters (as defined by <xref target="RFC3985"/> Section 2.2), including the empty string.</t>
+                  <t>'?' - matches exactly one unreserved or sub-delem character.</t>
+                  <t>'~' - matches any sequence of zero or more characters up to the end. This may only be used at the end of the URI pattern.</t>
+                  <t>'$' - used to escape the special literals; MUST be followed by exactly one of ';', '*', '?', '~', or '$'.</t>
                 </list>
               </t>
               
