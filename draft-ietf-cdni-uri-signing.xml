@@ -434,7 +434,7 @@
             <t>URI Container (sub) [mandatory] - The semantics in <xref target="RFC7519"/> Section 4.1.2 MUST be followed.
             Container for holding the URI representation before a URI Signing Package is
             added. This representation can take one of several forms detailed in
-            <xref target="uri_container_forms"/>. If the URI pattern/regex in the signed
+            <xref target="uri_container_forms"/>. If the URI regex in the signed
             JWT does not match the URI of the content request,  the CDN validating the
             signed JWT MUST reject the request. When comparing the URI the percent encoded
             form as defined in <xref target="RFC3986"/> Section 2.1 MUST be used. When
@@ -564,41 +564,6 @@
               <t>When prefixed with 'uri:', the string following 'uri:' is the URI that MUST be matched with a simple string match to the requested URI.</t>
           </section>
 
-          <section anchor="uri_container_forms_ptn" title="URI Pattern Container (uri-pattern:)">
-              <t>Prefixed with 'uri-pattern:', this string contains one or more URI Patterns that describes for which content the Signed URI is valid. Each URI Pattern contains an expression to match against the requested URI, to check whether the requested content is allowed to be served. Multiple URI Patterns may be concatenated in a single URI Pattern by separating them with a semi-colon (';') character. Each URI Pattern follows the <xref target="RFC3986"/> URI format, including the '://' that delimits the URI scheme from the hierarchy part. The pattern may include the special literals:</t>
-              
-              <t>
-                <list style="symbols">
-                  <t>';' - separates individual patterns when the string contains multiple URI patterns.</t>
-                  <t>'*' - matches any sequence of characters, including the empty string.</t>
-                  <t>'?' - matches exactly one character.</t>
-                  <t>'$' - used to escape the special literals; MUST be followed by exactly one of ';', '*', '?', or '$'.</t>
-                </list>
-              </t>
-              
-              <t>The following is an example of a valid URI Pattern:</t>
-              <t>
-                <figure>
-                  <artwork>
-*://*/folder/content-83112371/quality_*/segment????.mp4
-                  </artwork>
-                </figure>
-              </t>
-              
-              <t>An example of two concatenated URI Patterns is the following (whitespace is inserted after the ';' for readability and should not be present in the actual representation):</t>
-              
-              <t>
-                <figure>
-                  <artwork>
-http://*/folder/content-83112371/manifest/*.xml;
-http://*/folder/content-83112371/quality_*/segment????.mp4
-                  </artwork>
-                </figure>
-              </t>
-                
-              <t>In order to increase the performance of string parsing the URI Pattern, implementations can check often-used URI Pattern prefixes to quickly check whether certain URI components can be ignored. For example, URI Pattern prefixes '*://*/' or '*://*:*' will be used in case the scheme and authority components of the URI are ignored for purposes of pattern enforcement.</t>
-          </section>
-
           <section anchor="uri_container_forms_regex" title="URI Regular Expression Container (uri-regex:)">
               <t>Prefixed with 'uri-regex:', this string is any <xref target="PCRE839">PCRE</xref> compatible regular expression used to match against the requested URI.</t>
               
@@ -679,7 +644,7 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
         Given the fact that with segmented protocols, it is usually not possible to
         determine a priori which segment will be requested next (i.e., to allow for
         seeking within the content and for switching to a different representation),
-        the Signed Token Renewal uses the URI Pattern Container and/or the
+        the Signed Token Renewal uses the
         URI Regular Expression Container scoping mechanisms in the URI Container
         (sub) claim to allow a signed JWT to be valid for more than one URL.</t>
 
@@ -888,7 +853,7 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
                     because of Client IP enforcement</t>
 
                     <t>"403" : signed JWT validation performed and rejected
-                    because of URI Pattern enforcement</t>
+                    because of URI Regular Expression enforcement</t>
 
                     <t>"404" : signed JWT validation performed and rejected
                     because of Issuer enforcement</t>
