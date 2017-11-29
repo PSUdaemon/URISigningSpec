@@ -41,7 +41,7 @@ var samples = {
     "sub": "uri:http://cdni.example/foo/bar/baz"
   },
   "complex": {
-    "aud": "[2001:db8::1/32]",
+    "cdniip": "[2001:db8::1/32]",
     "cdniv": 1,
     "exp": 1474243500,
     "iat": 1474243200,
@@ -72,18 +72,18 @@ function generateSample(sname) {
     return claims;
   });
 
-  // OPTIONAL -- exchange 'aud' claim for encrypted
+  // OPTIONAL -- exchange 'cdniip' claim for encrypted
   p = p.then((claims) => {
-    if (!claims.aud) {
+    if (!claims.cdniip) {
       return claims;
     }
 
-    console.log("'aud' DECRYPTED:  %s", claims.aud);
+    console.log("'cdniip' DECRYPTED:  %s", claims.cdniip);
     return jose.JWE.createEncrypt({format: "compact"}, keys["encrypt"]).
-           final(claims.aud, "utf8").
+           final(claims.cdniip, "utf8").
            then((result) => {
-             console.log("'aud' ENCRYPTED:  %s", result);
-             claims.aud = result;
+             console.log("'cdniip' ENCRYPTED:  %s", result);
+             claims.cdniip = result;
              return claims;
            });
   })
