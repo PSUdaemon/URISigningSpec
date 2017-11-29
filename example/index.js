@@ -38,7 +38,7 @@ function loadKey(kname) {
 
 var samples = {
   "simple": {
-    "sub": "uri:http://cdni.example/foo/bar/baz"
+    "cdniuc": "uri:http://cdni.example/foo/bar/baz"
   },
   "complex": {
     "aud": "[2001:db8::1/32]",
@@ -48,19 +48,19 @@ var samples = {
     "iss": "uCDN Inc",
     "jti": "5DAafLhZAfhsbe",
     "nbf": 1474243200,
-    "sub": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}\\.png"
+    "cdniuc": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}\\.png"
   },
   "chained-1": {
     "cdniets": 30,
     "cdnistt": 1,
     "exp": 1474243500,
-    "sub": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}\\.ts"
+    "cdniuc": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}\\.ts"
   },
   "chained-2": {
     "cdniets": 30,
     "cdnistt": 1,
     "exp": 1474243530,
-    "sub": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}\\.ts"
+    "cdniuc": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}\\.ts"
   }
 };
 
