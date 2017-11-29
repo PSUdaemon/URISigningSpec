@@ -1368,6 +1368,16 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
 	    </list>
 	  </t>
 	  <?rfc subcompact="no"?>
+	  <t>
+	    <?rfc subcompact="yes"?>
+	    <list style="symbols">
+	      <t>Claim Name: <spanx style="verb">cdniuc</spanx></t>
+	      <t>Claim Description: CDNI URI Container</t>
+	      <t>Change Controller: IESG</t>
+	      <t>Specification Document(s): <xref target="cdniuc_claim"/> of [[ this specification ]]</t>
+	    </list>
+	  </t>
+	  <?rfc subcompact="no"?>
 
 	</section>
       </section>
