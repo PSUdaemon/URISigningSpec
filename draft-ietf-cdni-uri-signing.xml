@@ -10,7 +10,7 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc category="std" docName="draft-ietf-cdni-uri-signing-12" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-cdni-uri-signing-13" ipr="trust200902">
   <front>
     <title abbrev="CDNI URI Signing">URI Signing for CDN Interconnection
     (CDNI)</title>
@@ -177,12 +177,12 @@
             the uCDN and verified by the dCDN. In a cascaded
             CDNI scenario, there can be more than one Redirection URI.</t>
 
-            <t>Signed Token Chain: A chain of signed JWTs that are used for subsequent
+            <t>Signed Token Renewal: A series of signed JWTs that are used for subsequent
             access to a set of related resources in a CDN, such as a set of HTTP
             Adaptive Streaming files. Every time a signed JWT is used to
             access a particular resource, a new signed JWT is sent along
             with the resource that can be used to request the next resource
-            in the set. When generating a new signed JWT in a Signed Token Chain,
+            in the set. When generating a new signed JWT in Signed Token Renewal,
             parameters are carried over from one signed JWT to the next.</t>
           </list></t>
       </section>
@@ -434,7 +434,7 @@
             <t>URI Container (sub) [mandatory] - The semantics in <xref target="RFC7519"/> Section 4.1.2 MUST be followed.
             Container for holding the URI representation before a URI Signing Package is
             added. This representation can take one of several forms detailed in
-            <xref target="uri_container_forms"/>. If the URI pattern/regex in the signed
+            <xref target="uri_container_forms"/>. If the URI regex in the signed
             JWT does not match the URI of the content request,  the CDN validating the
             signed JWT MUST reject the request. When comparing the URI the percent encoded
             form as defined in <xref target="RFC3986"/> Section 2.1 MUST be used. When
@@ -549,17 +549,17 @@
             <t>CDNI Expiration Time Setting (cdniets) [optional] - The CDNI Expiration
             Time Setting (cdniets) claim provides a means for setting the value
             of the Expiry Time (exp) claim when generating a subsequent signed JWT
-            in a Signed Token Chain. Its type is a JSON integer
-            denotes the number of seconds to be added to the Expiry Time (exp) claim
-            of the previous signed JWT that gives the value of the Expiry Time (exp) claim of the next signed JWT.
-            The CDNI Expiration Time Setting (cdniets) SHOULD NOT be used when not using a Signed Token Chain.</t>
+            in Signed Token Renewal. Its type is a JSON numeric value. It
+            denotes the number of seconds to be added to the time at which the JWT is validated
+            that gives the value of the Expiry Time (exp) claim of the next signed JWT.
+            The CDNI Expiration Time Setting (cdniets) SHOULD NOT be used when not using Signed Token Renewal.</t>
         </section>
         <section anchor="cdnistt_claim" title="CDNI Signed Token Transport (cdnistt) claim">
           <t>CDNI Signed Token Transport (cdnistt) [optional] - The CDNI Signed Token Transport (cdnistt) claim
-          provides a means of signalling the method through which the Signed Token Chain
-          is transported from the CDN to the UA and vice versa. Its type is a JSON integer.
+          provides a means of signalling the method through which a new signed JWT
+          is transported from the CDN to the UA and vice versa for the purpose of Signed Token Renewal. Its type is a JSON integer.
           This document only defines setting its value to '1', which means the signed JWTs
-          making up the Signed Token Chain are transported via HTTP Cookies in both directions.
+          are transported via HTTP Cookies in both directions.
           Additional values for this claim can be defined in <xref target="sec.IANA.cdnistt"/>.</t>
         </section>
         <section anchor="uri_container_forms" title="URI Container Forms">
@@ -567,41 +567,6 @@
 
           <section anchor="uri_container_forms_uri" title="URI Simple Container (uri:)">
               <t>When prefixed with 'uri:', the string following 'uri:' is the URI that MUST be matched with a simple string match to the requested URI.</t>
-          </section>
-
-          <section anchor="uri_container_forms_ptn" title="URI Pattern Container (uri-pattern:)">
-              <t>Prefixed with 'uri-pattern:', this string contains one or more URI Patterns that describes for which content the Signed URI is valid. Each URI Pattern contains an expression to match against the requested URI, to check whether the requested content is allowed to be served. Multiple URI Patterns may be concatenated in a single URI Pattern by separating them with a semi-colon (';') character. Each URI Pattern follows the <xref target="RFC3986"/> URI format, including the '://' that delimits the URI scheme from the hierarchy part. The pattern may include the special literals:</t>
-              
-              <t>
-                <list style="symbols">
-                  <t>';' - separates individual patterns when the string contains multiple URI patterns.</t>
-                  <t>'*' - matches any sequence of characters, including the empty string.</t>
-                  <t>'?' - matches exactly one character.</t>
-                  <t>'$' - used to escape the special literals; MUST be followed by exactly one of ';', '*', '?', or '$'.</t>
-                </list>
-              </t>
-              
-              <t>The following is an example of a valid URI Pattern:</t>
-              <t>
-                <figure>
-                  <artwork>
-*://*/folder/content-83112371/quality_*/segment????.mp4
-                  </artwork>
-                </figure>
-              </t>
-              
-              <t>An example of two concatenated URI Patterns is the following (whitespace is inserted after the ';' for readability and should not be present in the actual representation):</t>
-              
-              <t>
-                <figure>
-                  <artwork>
-http://*/folder/content-83112371/manifest/*.xml;
-http://*/folder/content-83112371/quality_*/segment????.mp4
-                  </artwork>
-                </figure>
-              </t>
-                
-              <t>In order to increase the performance of string parsing the URI Pattern, implementations can check often-used URI Pattern prefixes to quickly check whether certain URI components can be ignored. For example, URI Pattern prefixes '*://*/' or '*://*:*' will be used in case the scheme and authority components of the URI are ignored for purposes of pattern enforcement.</t>
           </section>
 
           <section anchor="uri_container_forms_regex" title="URI Regular Expression Container (uri-regex:)">
@@ -613,7 +578,7 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
               <t>
                 <figure>
                   <artwork>
-.*\\://.*/folder/content-83112371/quality_.*/segment.{3}\\.mp4
+[^:]*\\://[^/]*/folder/content/quality_[^/]*/segment.{3}\\.mp4(\?.*)?
                   </artwork>
                 </figure>
               </t>
@@ -636,76 +601,76 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
       </section>
     </section>
 
-    <section anchor="uri_signing_for_has" title="URI Signing for HAS">
-      <section anchor="has_intro" title="Overview">
-        <t>For content that is delivered via an HTTP Adaptive Streaming (HAS) protocol,
+    <section anchor="uri_signing_token_renewal" title="URI Signing Token Renewal">
+      <section anchor="token_renewal_intro" title="Overview">
+        <t>For content that is delivered via HTTP in a segmented fashion,
         such as <xref target="MPEG-DASH">MPEG-DASH</xref> or <xref target="RFC8216"> HTTP Live Streaming (HLS)</xref>,
         special provisions need to be made in order to ensure URI Signing can be
-        applied. In general, HAS protocols work by breaking large objects
-        (e.g. videos) into a sequence of small independent chunks. Such chunks
+        applied. In general, segmented protocols work by breaking large objects
+        (e.g. videos) into a sequence of small independent segments. Such segments
         are then referenced by a separate manifest file, which either includes
-        a list of URLs to the chunks or specifies an algorithm through which
-        a User Agent can construct the URLs to the chunks. Requests for chunks
+        a list of URLs to the segments or specifies an algorithm through which
+        a User Agent can construct the URLs to the segments. Requests for segments
         therefore originate from the manifest file and, unless the URLs in the
         manifest file point to the CSP, are not subjected to redirection and URI Signing.
         This opens up the vulnerability of malicious User Agents sharing the
-        manifest file and deep-linking to the chunks.</t>
+        manifest file and deep-linking to the segments.</t>
 
-        <t>One method for dealing with this vulnerability would be to include in
-        the manifest itself Signed URIs that point to the individual chunks.
+        <t>One method for dealing with this vulnerability would be to include, in
+        the manifest itself, Signed URIs that point to the individual segments.
         There exist a number of issues with that approach. First, it requires the
         CDN delivering the manifest to rewrite the manifest file for each User Agent,
-        which would require the CDN to be aware of the exact HAS protocol and
-        version used. Secondly, it would require the expiration time of the
-        Signed URIs to be valid for at least the full duration of the content
-        described by the manifest. Since it is common for a manifest file
-        to contain a video item of more than 30 minutes in length,
-        Signed URIs would require to be valid for a long time, thereby reducing
+        which would require the CDN to be aware of the exact segmentation protocol
+        used. Secondly, it could also require the expiration time of the
+        Signed URIs to be valid for an extended duration if the content
+        described by the manifest is meant to be consumed in real time. For instance, if the manifest file were
+        to contain a segmented video stream of more than 30 minutes in length,
+        Signed URIs would require to be valid for a at least 30 minutes, thereby reducing
         their effectiveness and that of the URI Signing mechanism in general.
-        For a more detailed analysis of how HAS protocols affect CDNI,
+        For a more detailed analysis of how segmented protocols such as HTTP Adaptive Streaming protocols affect CDNI,
         see <xref target="RFC6983">Models for HTTP-Adaptive-Streaming-Aware CDNI</xref>.</t>
 
         <t>The method described in this section allows CDNs to use URI Signing
-        for HTTP Adaptive Streaming content (or other chunked content) without
+        for segmented content without
         having to include the Signed URIs in the manifest files themselves.</t>
       </section>
 
-      <section anchor="uri_signing_mechanism" title="Signed Token Chain mechanism">
-        <t>In order to allow for effective access control of HAS content, the
+      <section anchor="uri_signing_mechanism" title="Signed Token Renewal mechanism">
+        <t>In order to allow for effective access control of segmented content, the
         URI signing scheme defined in this section is based on a mechanism
-        through which subsequent HAS chunk requests can be chained together.
+        through which subsequent segment requests can be linked together.
         As part of the JWT validation procedure, the CDN can generate a new
         signed JWT that the UA can use to do a subsequent request. More specifically,
-        whenever a UA successfully retrieves an HAS chunk, it receives, in the
+        whenever a UA successfully retrieves a segment, it receives, in the
         HTTP 2xx Successful message, a signed JWT that it can use whenever it
-        requests the next chunk. As long as each signed JWT in such a Signed Token Chain
-        is correctly validated before a new one is generated, the chain is not
-        broken and the User Agent can successfully retrieve additional chunks.
-        Given the fact that with HAS protocols, it is usually not possible to
-        determine a priori which chunk will be requested next (i.e., to allow for
-        seeking within the content and for switching to a different quality level),
-        the Signed Token Chain uses the URI Pattern Container and/or the
+        requests the next segment. As long as each successive signed JWT
+        is correctly validated before a new one is generated, the model is not
+        broken and the User Agent can successfully retrieve additional segments.
+        Given the fact that with segmented protocols, it is usually not possible to
+        determine a priori which segment will be requested next (i.e., to allow for
+        seeking within the content and for switching to a different representation),
+        the Signed Token Renewal uses the
         URI Regular Expression Container scoping mechanisms in the URI Container
-        (sub) claim to allow the Signed Token Chain to be valid for more than one URL.</t>
+        (sub) claim to allow a signed JWT to be valid for more than one URL.</t>
 
-        <t>In order for this chaining of signed JWTs to work, it is necessary for
+        <t>In order for this renewal of signed JWTs to work, it is necessary for
         a UA to extract the signed JWT from the HTTP 2xx Successful message of an
-        earlier request and use it to retrieve the next chunk. The exact mechanism
-        by which the client does this depends on the exact HAS protocol and since
+        earlier request and use it to retrieve the next segment. The exact mechanism
+        by which the client does this depends on the exact segmented protocol and since
         this document is only concerned with the generation and validation of
         incoming request, this process is outside the scope of this document.
         However, in order to also support legacy UAs that do not include any
         specific provisions for the handling of signed JWTs, the folowing section
         defines a mechanism using HTTP Cookies that allows such UAs to support
-        the concept of chained signed JWTs without requiring any support on
+        the concept of renewing signed JWTs without requiring any support on
         the UA side.</t>
       </section>
 
-      <section anchor="communicating_token" title="Communicating a signed JWTs in a Signed Token Chain">
+      <section anchor="communicating_token" title="Communicating a signed JWTs in Signed Token Renewal">
         <t>This section assumes the value of the CDNI Signed Token Transport (cdnistt) claim
         has been set to 1. Other values of cdnistt are out of scope of this document. </t>
 
-	<t>When using the Signed Token Chain mechanism, the signed JWT is
+	<t>When using the Signed Token Renewal mechanism, the signed JWT is
         transported to the UA via a 'URISigningPackage' cookie added to the
         HTTP 2xx Successful message along with the content being returned to
         the UA, or to the HTTP 3xx Redirection message in case the UA is
@@ -717,14 +682,14 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
         method for transport of the Signed Token described in the previous
         section might break if used in combination with a HTTP 3xx Redirection
         response where the target URL is in a different domain. In such
-        scenarios, a Signed Token Chain signed JWT SHOULD be communicated
+        scenarios, Signed Token Renewal of a signed JWT SHOULD be communicated
         via the query string instead, in a similar fashion to how regular
-        signed JWTs (outside a Signed Token Chain) are communicated. Note that
+        signed JWTs (outside of Signed Token Renewal) are communicated. Note that
         the use of URL embedded signed JWTs SHOULD NOT be used in HTTP 2xx Successful
         messages, since UAs might not know how to extract the signed JWTs.</t>
 
           <t>Note that the process described below only works in cases where both the manifest
-          file and segments constituting the HTTP Adaptive Streaming content are delivered from
+          file and segments constituting the segmented content are delivered from
           the same domain. In other words, any redirection between different domains needs to be
           carried out while retrieving the manifest file.</t>
 
@@ -893,7 +858,7 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
                     because of Client IP enforcement</t>
 
                     <t>"403" : signed JWT validation performed and rejected
-                    because of URI Pattern enforcement</t>
+                    because of URI Regular Expression enforcement</t>
 
                     <t>"404" : signed JWT validation performed and rejected
                     because of Issuer enforcement</t>
@@ -1353,7 +1318,7 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
 	    <?rfc subcompact="yes"?>
 	    <list style="symbols">
 	      <t>Claim Name: <spanx style="verb">cdniets</spanx></t>
-	      <t>Claim Description: CDNI Expiration Time Setting for Signed Token Chain</t>
+	      <t>Claim Description: CDNI Expiration Time Setting for Signed Token Renewal</t>
 	      <t>Change Controller: IESG</t>
 	      <t>Specification Document(s): <xref target="cdniets_claim"/> of [[ this specification ]]</t>
 	    </list>
@@ -1363,7 +1328,7 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
 	    <?rfc subcompact="yes"?>
 	    <list style="symbols">
 	      <t>Claim Name: <spanx style="verb">cdnistt</spanx></t>
-	      <t>Claim Description: CDNI Signed Token Transport Method for Signed Token Chain</t>
+	      <t>Claim Description: CDNI Signed Token Transport Method for Signed Token Renewal</t>
 	      <t>Change Controller: IESG</t>
 	      <t>Specification Document(s): <xref target="cdnistt_claim"/> of [[ this specification ]]</t>
 	    </list>
@@ -1441,7 +1406,7 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
       contributions in reviewing this document and providing feedback: Scott
       Leibrand, Kevin Ma, Ben Niven-Jenkins, Thierry Magnien, Dan York,
       Bhaskar Bhupalam, Matt Caulfield, Samuel Rajakumar, Iuniana Oprescu,
-      Leif Hedstrom, Gancho Tenev, and Brian Campbell.</t>
+      Leif Hedstrom, Gancho Tenev, Brian Campbell, and Chris Lemmons.</t>
     </section>
 
     <section title="Contributors">
@@ -1540,7 +1505,7 @@ http://*/folder/content-83112371/quality_*/segment????.mp4
     <section title="Signed URI Package Example" anchor="sup_example">
       <t>This section contains three examples of token usage: a simple example with only the
       required claim present, a complex example which demonstrates the full JWT claims set,
-      including an encrypted Client IP (cdniip), and one that uses a Signed Token Chain.</t>
+      including an encrypted Client IP (cdniip), and one that uses a Signed Token Renewal.</t>
 
       <t>Note: All of the examples have whitespace added to improve formatting and readability,
       but are not present in the generated content.</t>
@@ -1613,7 +1578,7 @@ GSfVXoDtm0Z6L5Jx4EmwM1w-WkznNajUy11iMAcA
       <section title="Complex Example" anchor="complex_example">
         <t>
           This example uses all optional fields except for those dealing
-          with Signed Token Chaining, including Client IP (cdniip) which is
+          with Signed Token Renewal, including Client IP (cdniip) which is
           encrpyted. This significantly increases the size of the signed
           JWT token.
         </t>
@@ -1666,9 +1631,9 @@ T7jH8F4melcXbiEVIUo5sX3bS7WJZyMxZGTPcWmeYblMgM-sDoQUWOQ
 
       </section>
 
-      <section title="Signed Token Chain Example" anchor="token_chain_example">
+      <section title="Signed Token Renewal Example" anchor="token_renewal_example">
         <t>
-          This example uses fields for Signed Token Chaining.
+          This example uses fields for Signed Token Renewal.
         </t>
 
         <t>
