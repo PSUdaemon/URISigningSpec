@@ -41,6 +41,7 @@ var samples = {
     "sub": "uri:http://cdni.example/foo/bar/baz"
   },
   "complex": {
+    "aud": "dCDN LLC",
     "cdniip": "[2001:db8::1/32]",
     "cdniv": 1,
     "exp": 1474243500,
