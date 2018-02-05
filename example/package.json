@@ -10,6 +10,6 @@
   "license": "MIT",
   "dependencies": {
     "lodash.omit": "^4.5.0",
-    "node-jose": "^0.9.1"
+    "node-jose": "^0.9.5"
   }
 }

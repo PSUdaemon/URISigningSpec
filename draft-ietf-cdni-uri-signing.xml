@@ -441,28 +441,10 @@
             redirecting a URI, the CDN generating the new signed JWT MAY change the URI
             Container to comport with the URI being used in the redirection.</t>
         </section>
-        <section anchor="aud_claim" title="Client IP (aud) claim">
-            <t>Client IP (aud) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.3 MUST be followed.
-            IP address, or IP prefix, for
-            which the Signed URI is valid. This is represented in CIDR
-            notation, with dotted decimal format for IPv4 or canonical text
-            representation for <xref target="RFC5952">IPv6 addresses</xref>.
-            The request is rejected if sourced from a client outside of the
-            specified IP range. Since the client IP is considered
-            personally identifiable information this field
-            MUST be a JSON Web Encryption (<xref target="RFC7516">JWE</xref>)
-            Object in compact serialization form.  If the CDN validating the
-            signed JWT does not support Client IP validation, or if the
-            Client IP in the signed JWT does not match the source IP
-            address in the content request, the CDN MUST
-            reject the request.
-            If the received signed JWT contains a Client IP claim, then any
-            JWT subsequently generated for CDNI redirection MUST also
-            contain a Client IP claim, and the Client IP value MUST be
-            the same as in the received signed JWT.  A signed JWT
-            generated for CDNI redirection MUST NOT add a Client IP
-            claim if no Client IP claim existed in the received
-            signed JWT.</t>
+        <section anchor="aud_claim" title="Audience (aud) claim">
+            <t>Audience (aud) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.3 MUST be followed.
+            This claim is used to ensure that the CDN that validates the JWT identifies
+            itself with the value in this claim.</t>
         </section>
         <section anchor="exp_claim" title="Expiry Time (exp) claim">
             <t>Expiry Time (exp) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.4 MUST be followed, though URI Signing implementations MUST NOT allow for any time synchronization "leeway".
@@ -539,6 +521,29 @@
             for this version of the specification. In the absence of this claim, the value is assumed
             to be "1". For future versions this claim will be mandatory. Implementations MUST reject
             signed JWTs with unsupported CDNI Claim Set versions.</t>
+        </section>
+        <section anchor="cdniip_claim" title="Client IP (cdniip) claim">
+            <t>Client IP (cdniip) [optional] IP address, or IP prefix, for
+            which the Signed URI is valid. This is represented in CIDR
+            notation, with dotted decimal format for IPv4 or canonical text
+            representation for <xref target="RFC5952">IPv6 addresses</xref>.
+            The request is rejected if sourced from a client outside of the
+            specified IP range. Since the client IP is considered
+            personally identifiable information this field
+            MUST be a JSON Web Encryption (<xref target="RFC7516">JWE</xref>)
+            Object in compact serialization form.  If the CDN validating the
+            signed JWT does not support Client IP validation, or if the
+            Client IP in the signed JWT does not match the source IP
+            address in the content request, the CDN MUST
+            reject the request. The type of this claim is a JSON string that
+            contains the JWE.
+            If the received signed JWT contains a Client IP claim, then any
+            JWT subsequently generated for CDNI redirection MUST also
+            contain a Client IP claim, and the Client IP value MUST be
+            the same as in the received signed JWT.  A signed JWT
+            generated for CDNI redirection MUST NOT add a Client IP
+            claim if no Client IP claim existed in the received
+            signed JWT.</t>
         </section>
         <section anchor="cdniets_claim" title="CDNI Expiration Time Setting (cdniets) claim">
             <t>CDNI Expiration Time Setting (cdniets) [optional] - The CDNI Expiration
@@ -1312,6 +1317,16 @@
 	  <t>
 	    <?rfc subcompact="yes"?>
 	    <list style="symbols">
+	      <t>Claim Name: <spanx style="verb">cdniip</spanx></t>
+	      <t>Claim Description: CDNI IP Address</t>
+	      <t>Change Controller: IESG</t>
+	      <t>Specification Document(s): <xref target="cdniip_claim"/> of [[ this specification ]]</t>
+	    </list>
+	  </t>
+	  <?rfc subcompact="no"?>
+	  <t>
+	    <?rfc subcompact="yes"?>
+	    <list style="symbols">
 	      <t>Claim Name: <spanx style="verb">cdnistt</spanx></t>
 	      <t>Claim Description: CDNI Signed Token Transport Method for Signed Token Renewal</t>
 	      <t>Change Controller: IESG</t>
@@ -1380,7 +1395,7 @@
     <section title="Privacy">
       <t>The privacy protection concerns described in <xref
       target="RFC7937">CDNI Logging Interface</xref> apply when
-      the client's IP address (aud) is embedded in the Signed URI.
+      the client's IP address (cdniip) is embedded in the Signed URI.
       For this reason, the mechanism described in <xref
       target="jwt_profile"/> encrypts the Client IP before
       including it in the URI Signing Package (and thus the URL itself).</t>
@@ -1490,7 +1505,7 @@
     <section title="Signed URI Package Example" anchor="sup_example">
       <t>This section contains three examples of token usage: a simple example with only the
       required claim present, a complex example which demonstrates the full JWT claims set,
-      including an encrypted Client IP (aud), and one that uses a Signed Token Renewal.</t>
+      including an encrypted Client IP (cdniip), and one that uses a Signed Token Renewal.</t>
 
       <t>Note: All of the examples have whitespace added to improve formatting and readability,
       but are not present in the generated content.</t>
@@ -1555,27 +1570,27 @@
         <figure><artwork><![CDATA[
 eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBPdjBlTXExd2N4TGY3V3hJZzA5SmRTWU
 dZRkRPV2tsZHVlYUltZjAifQ.eyJzdWIiOiJ1cmk6aHR0cDovL2NkbmkuZXhhbXBsZ
-S9mb28vYmFyL2JheiJ9.LTizGd7zCb17Qp_80ClGApLCieRIq3dCjcRckNfLqiJ4BT
-GSfVXoDtm0Z6L5Jx4EmwM1w-WkznNajUy11iMAcA
+S9mb28vYmFyL2JheiJ9.fjmHpIakncrQbmT-zMVkJZqg-seCbHbyrtSQ30pTzPZFAy
+XLdtDcShik-sZgmtv2Nqql4AEy-OByzztvLNvtOA
 ]]></artwork></figure>
       </section>
 
       <section title="Complex Example" anchor="complex_example">
         <t>
           This example uses all optional fields except for those dealing
-          with Signed Token Renewal, including Client IP (aud) which is
+          with Signed Token Renewal, including Client IP (cdniip) which is
           encrpyted. This significantly increases the size of the signed
           JWT token.
         </t>
 
         <t>
-          JWE for client IP (aud) of [2001:db8::1/32]:
+          JWE for client IP (cdniip) of [2001:db8::1/32]:
         </t>
 
         <figure><artwork><![CDATA[
 eyJhbGciOiJkaXIiLCJraWQiOiJmLVdianhCQzNkUHVJM2QyNGtQMmhmdm9zN1F6Nj
-g4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..oGLsnF8fLlFcUXK0.KFfBB
-H_FPYFu-RBFBR3rhQ.6_MVaa4t7JiVX2IgUkZ3jA
+g4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..hP3bU32Cel599o4e.Or-X4
+bUT8ccw4mxfAG8zSw.vPQe7YNPp7p2Q1jZaruZ0g
 ]]></artwork></figure>
 
         <t>
@@ -1584,9 +1599,10 @@ H_FPYFu-RBFBR3rhQ.6_MVaa4t7JiVX2IgUkZ3jA
 
         <figure><artwork><![CDATA[
 {
-  "aud": "eyJhbGciOiJkaXIiLCJraWQiOiJmLVdianhCQzNkUHVJM2QyNGtQMmhm
-dm9zN1F6Njg4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..oGLsnF8fLlFc
-UXK0.KFfBBH_FPYFu-RBFBR3rhQ.6_MVaa4t7JiVX2IgUkZ3jA",
+  "aud": "dCDN LLC",
+  "cdniip": "eyJhbGciOiJkaXIiLCJraWQiOiJmLVdianhCQzNkUHVJM2QyNGtQM
+mhmdm9zN1F6Njg4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..hP3bU32Ce
+l599o4e.Or-X4bUT8ccw4mxfAG8zSw.vPQe7YNPp7p2Q1jZaruZ0g",
   "cdniv": 1,
   "exp": 1474243500,
   "iat": 1474243200,
@@ -1603,15 +1619,16 @@ UXK0.KFfBBH_FPYFu-RBFBR3rhQ.6_MVaa4t7JiVX2IgUkZ3jA",
 
         <figure><artwork><![CDATA[
 eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBPdjBlTXExd2N4TGY3V3hJZzA5SmRTWU
-dZRkRPV2tsZHVlYUltZjAifQ.eyJhdWQiOiJleUpoYkdjaU9pSmthWElpTENKcmFXU
-WlPaUptTFZkaWFuaENRek5rVUhWSk0yUXlOR3RRTW1obWRtOXpOMUY2TmpnNFZWUnB
-ObUZDTUdoT09UazRJaXdpWlc1aklqb2lRVEV5T0VkRFRTSjkuLm9HTHNuRjhmTGxGY
-1VYSzAuS0ZmQkJIX0ZQWUZ1LVJCRkJSM3JoUS42X01WYWE0dDdKaVZYMklnVWtaM2p
-BIiwiY2RuaXYiOjEsImV4cCI6MTQ3NDI0MzUwMCwiaWF0IjoxNDc0MjQzMjAwLCJpc
-3MiOiJ1Q0ROIEluYyIsImp0aSI6IjVEQWFmTGhaQWZoc2JlIiwibmJmIjoxNDc0MjQ
-zMjAwLCJzdWIiOiJ1cmktcmVnZXg6aHR0cDovL2NkbmlcXC5leGFtcGxlL2Zvby9iY
-XIvYmF6L1swLTldezN9XFwucG5nIn0.r2FiSdfnGRw_RC2roGwh4LEYlfsWGF972-M
-f3He_LhGr2_3eRXP0jP_OFPj5NEtTZFY4PX_iD7vPD12_HPDJCQ
+dZRkRPV2tsZHVlYUltZjAifQ.eyJhdWQiOiJkQ0ROIExMQyIsImNkbmlpcCI6ImV5S
+mhiR2NpT2lKa2FYSWlMQ0pyYVdRaU9pSm1MVmRpYW5oQ1F6TmtVSFZKTTJReU5HdFF
+NbWhtZG05ek4xRjZOamc0VlZScE5tRkNNR2hPT1RrNElpd2laVzVqSWpvaVFURXlPR
+WREVFNKOS4uaFAzYlUzMkNlbDU5OW80ZS5Pci1YNGJVVDhjY3c0bXhmQUc4elN3LnZ
+QUWU3WU5QcDdwMlExalphcnVaMGciLCJjZG5pdiI6MSwiZXhwIjoxNDc0MjQzNTAwL
+CJpYXQiOjE0NzQyNDMyMDAsImlzcyI6InVDRE4gSW5jIiwianRpIjoiNURBYWZMaFp
+BZmhzYmUiLCJuYmYiOjE0NzQyNDMyMDAsInN1YiI6InVyaS1yZWdleDpodHRwOi8vY
+2RuaVxcLmV4YW1wbGUvZm9vL2Jhci9iYXovWzAtOV17M31cXC5wbmcifQ.8q-z47Ys
+L4WVm5Xz9XOvbIjOaX0UFdW0rzhVq0JasNJnqeK-y640XNTS-wWtvoFAGx3eD1AlfS
+5ZfHW_ctcpOQ
 ]]></artwork></figure>
 
       </section>
@@ -1642,8 +1659,8 @@ f3He_LhGr2_3eRXP0jP_OFPj5NEtTZFY4PX_iD7vPD12_HPDJCQ
 eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBPdjBlTXExd2N4TGY3V3hJZzA5SmRTWU
 dZRkRPV2tsZHVlYUltZjAifQ.eyJjZG5pZXRzIjozMCwiY2RuaXN0dCI6MSwiZXhwI
 joxNDc0MjQzNTAwLCJzdWIiOiJ1cmktcmVnZXg6aHR0cDovL2NkbmlcXC5leGFtcGx
-lL2Zvby9iYXIvYmF6L1swLTldezN9XFwudHMifQ.VYF7Eqk1WhRWdvDVUx5mXDJaS-
-r6jbjgiYuwIEAYmbLWsF2dUDohrV70sz7TC09n-oNf_ws4eeH_A6AnvF4FTQ
+lL2Zvby9iYXIvYmF6L1swLTldezN9XFwudHMifQ.27naJYxAqFhgRPJMLfp61O4wVL
+C80B3zHC-_lKChHeRHLXTSdiNgQFNv00FG_wDQAxwspG3hQ8CQMqNFOrtZiA
 ]]></artwork></figure>
 
         <t>
@@ -1674,8 +1691,8 @@ r6jbjgiYuwIEAYmbLWsF2dUDohrV70sz7TC09n-oNf_ws4eeH_A6AnvF4FTQ
 eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBPdjBlTXExd2N4TGY3V3hJZzA5SmRTWU
 dZRkRPV2tsZHVlYUltZjAifQ.eyJjZG5pZXRzIjozMCwiY2RuaXN0dCI6MSwiZXhwI
 joxNDc0MjQzNTMwLCJzdWIiOiJ1cmktcmVnZXg6aHR0cDovL2NkbmlcXC5leGFtcGx
-lL2Zvby9iYXIvYmF6L1swLTldezN9XFwudHMifQ.zzXhYg6b7_8MylW-RS97qZv3hQ
-QlYg-TxhC-wigdB4moxlFEjndDvv0EDxl42faQaE39BCHZq7H-DXVpBrhxTw
+lL2Zvby9iYXIvYmF6L1swLTldezN9XFwudHMifQ.zT1lIQVrWnS6fOWVr_bxlTHB0C
+HHGKX3vtP2_E9j6bafsv0VMli1siDJ0F7vAgVr_f-5FKUahfAmTa25BfRrkQ
 ]]></artwork></figure>
       </section>
     </section>
