@@ -535,8 +535,8 @@
             signed JWT does not support Client IP validation, or if the
             Client IP in the signed JWT does not match the source IP
             address in the content request, the CDN MUST
-	    reject the request. The type of this claim is a JSON string that
-	    contains the JWE.
+            reject the request. The type of this claim is a JSON string that
+            contains the JWE.
             If the received signed JWT contains a Client IP claim, then any
             JWT subsequently generated for CDNI redirection MUST also
             contain a Client IP claim, and the Client IP value MUST be
