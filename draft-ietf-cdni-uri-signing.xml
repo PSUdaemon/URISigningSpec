@@ -564,7 +564,8 @@
             in Signed Token Renewal. Its type is a JSON numeric value. It
             denotes the number of seconds to be added to the time at which the JWT is validated
             that gives the value of the Expiry Time (exp) claim of the next signed JWT.
-            The CDNI Expiration Time Setting (cdniets) SHOULD NOT be used when not using Signed Token Renewal.</t>
+            The CDNI Expiration Time Setting (cdniets) SHOULD NOT be used when not using Signed Token Renewal
+            and MUST be present when using Signed Token Renewal.</t>
         </section>
         <section anchor="cdnistt_claim" title="CDNI Signed Token Transport (cdnistt) claim">
           <t>CDNI Signed Token Transport (cdnistt) [optional] - The CDNI Signed Token Transport (cdnistt) claim
@@ -572,7 +573,8 @@
           is transported from the CDN to the UA and vice versa for the purpose of Signed Token Renewal. Its type is a JSON integer.
           This document only defines setting its value to '1', which means the signed JWTs
           are transported via HTTP Cookies in both directions.
-          Additional values for this claim can be defined in <xref target="sec.IANA.cdnistt"/>.</t>
+          Additional values for this claim can be defined in <xref target="sec.IANA.cdnistt"/>. If using
+          this claim you MUST also specify a CDNI Expiration Time Setting (cdniets) as noted above.</t>
         </section>
         <section anchor="uri_container_forms" title="URI Container Forms">
           <t>The URI Container (sub) claim takes one of the following forms. More forms may be added in the future to extend the capabilities.</t>
@@ -685,6 +687,11 @@
         defines a mechanism using HTTP Cookies that allows such UAs to support
         the concept of renewing signed JWTs without requiring any support on
         the UA side.</t>
+
+        <section title="Required Claims">
+          <t>The <xref target="cdnistt_claim">cdnistt claim</xref> and <xref target="cdniets_claim">cdniets claim</xref>
+          MUST both be present to utilize Signed token Renewal. Either one MUST NOT appear alone.</t>
+        </section>
       </section>
 
       <section anchor="communicating_token" title="Communicating a signed JWTs in Signed Token Renewal">
@@ -697,26 +704,24 @@
         the UA, or to the HTTP 3xx Redirection message in case the UA is
         redirected to a different server.</t>
 
-      <section title="Support for cross-domain redirection">
-        <t>For security purposes, the use of cross-domain cookies is not supported
-        in some application environments. As a result, the Cookie-based
-        method for transport of the Signed Token described in the previous
-        section might break if used in combination with a HTTP 3xx Redirection
-        response where the target URL is in a different domain. In such
-        scenarios, Signed Token Renewal of a signed JWT SHOULD be communicated
-        via the query string instead, in a similar fashion to how regular
-        signed JWTs (outside of Signed Token Renewal) are communicated. Note that
-        the use of URL embedded signed JWTs SHOULD NOT be used in HTTP 2xx Successful
-        messages, since UAs might not know how to extract the signed JWTs.</t>
+        <section title="Support for cross-domain redirection">
+          <t>For security purposes, the use of cross-domain cookies is not supported
+          in some application environments. As a result, the Cookie-based
+          method for transport of the Signed Token described in the previous
+          section might break if used in combination with a HTTP 3xx Redirection
+          response where the target URL is in a different domain. In such
+          scenarios, Signed Token Renewal of a signed JWT SHOULD be communicated
+          via the query string instead, in a similar fashion to how regular
+          signed JWTs (outside of Signed Token Renewal) are communicated. Note that
+          the use of URL embedded signed JWTs SHOULD NOT be used in HTTP 2xx Successful
+          messages, since UAs might not know how to extract the signed JWTs.</t>
 
           <t>Note that the process described below only works in cases where both the manifest
           file and segments constituting the segmented content are delivered from
           the same domain. In other words, any redirection between different domains needs to be
           carried out while retrieving the manifest file.</t>
-
         </section>
       </section>
-
     </section>
 
     <section anchor="cdni_interfaces"
