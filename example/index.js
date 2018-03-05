@@ -38,10 +38,13 @@ function loadKey(kname) {
 
 var samples = {
   "simple": {
-    "sub": "uri:http://cdni.example/foo/bar/baz"
+    "exp": 1474243500,
+    "iss": "uCDN Inc",
+    "cdniuc": "uri:http://cdni.example/foo/bar/baz"
   },
   "complex": {
     "aud": "dCDN LLC",
+    "sub": "UserToken",
     "cdniip": "[2001:db8::1/32]",
     "cdniv": 1,
     "exp": 1474243500,
@@ -49,19 +52,19 @@ var samples = {
     "iss": "uCDN Inc",
     "jti": "5DAafLhZAfhsbe",
     "nbf": 1474243200,
-    "sub": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}\\.png"
+    "cdniuc": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}\\.png"
   },
   "chained-1": {
     "cdniets": 30,
     "cdnistt": 1,
     "exp": 1474243500,
-    "sub": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}\\.ts"
+    "cdniuc": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}\\.ts"
   },
   "chained-2": {
     "cdniets": 30,
     "cdnistt": 1,
     "exp": 1474243530,
-    "sub": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}\\.ts"
+    "cdniuc": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}\\.ts"
   }
 };
 
@@ -85,6 +88,22 @@ function generateSample(sname) {
            then((result) => {
              console.log("'cdniip' ENCRYPTED:  %s", result);
              claims.cdniip = result;
+             return claims;
+           });
+  })
+
+  // OPTIONAL -- exchange 'sub' claim for encrypted
+  p = p.then((claims) => {
+    if (!claims.sub) {
+      return claims;
+    }
+
+    console.log("'sub' DECRYPTED:  %s", claims.sub);
+    return jose.JWE.createEncrypt({format: "compact"}, keys["encrypt"]).
+           final(claims.sub, "utf8").
+           then((result) => {
+             console.log("'sub' ENCRYPTED:  %s", result);
+             claims.sub = result;
              return claims;
            });
   })

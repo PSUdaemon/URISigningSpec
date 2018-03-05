@@ -442,16 +442,19 @@
             contain an Issuer claim, an Issuer claim MAY be added to
             a signed JWT generated for CDNI redirection.</t> 
         </section>
-        <section anchor="sub_claim" title="URI Container (sub) claim">
-            <t>URI Container (sub) [mandatory] - The semantics in <xref target="RFC7519"/> Section 4.1.2 MUST be followed.
-            Container for holding the URI representation before a URI Signing Package is
-            added. This representation can take one of several forms detailed in
-            <xref target="uri_container_forms"/>. If the URI regex in the signed
-            JWT does not match the URI of the content request,  the CDN validating the
-            signed JWT MUST reject the request. When comparing the URI the percent encoded
-            form as defined in <xref target="RFC3986"/> Section 2.1 MUST be used. When
-            redirecting a URI, the CDN generating the new signed JWT MAY change the URI
-            Container to comport with the URI being used in the redirection.</t>
+        <section anchor="sub_claim" title="Subject (sub) claim">
+            <t>Subject (sub) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.2 MUST be followed.
+            If this claim is used, it MUST be a JSON Web Encryption (<xref target="RFC7516">JWE</xref>)
+            Object in compact serialization form, because it contains
+            personally identifiable information. This claim contains
+            information about the subject (for example, a user or an agent)
+            that MAY be used to validate the signed JWT.
+            If the received signed JWT contains a Subject claim, then any
+            JWT subsequently generated for CDNI redirection MUST also
+            contain a Subject claim, and the Subject value MUST be the same
+            as in the received signed JWT. A signed JWT generated for CDNI
+            redirection MUST NOT add a Subject claim if no Subject claim
+            existed in the received signed JWT.</t>
         </section>
         <section anchor="aud_claim" title="Audience (aud) claim">
             <t>Audience (aud) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.3 MUST be followed.
@@ -557,6 +560,17 @@
             claim if no Client IP claim existed in the received
             signed JWT.</t>
         </section>
+        <section anchor="cdniuc_claim" title="CDNI URI Container (cdniuc) claim">
+            <t>URI Container (cdniuc) [optional] -
+            Container for holding the URI representation before a URI Signing Package is
+            added. This representation can take one of several forms detailed in
+            <xref target="uri_container_forms"/>. If the URI regex in the signed
+            JWT does not match the URI of the content request,  the CDN validating the
+            signed JWT MUST reject the request. When comparing the URI, the percent encoded
+            form as defined in <xref target="RFC3986"/> Section 2.1 MUST be used. When
+            redirecting a URI, the CDN generating the new signed JWT MAY change the URI
+            Container to comport with the URI being used in the redirection.</t>
+        </section>
         <section anchor="cdniets_claim" title="CDNI Expiration Time Setting (cdniets) claim">
             <t>CDNI Expiration Time Setting (cdniets) [optional] - The CDNI Expiration
             Time Setting (cdniets) claim provides a means for setting the value
@@ -575,7 +589,7 @@
           this claim you MUST also specify a CDNI Expiration Time Setting (cdniets) as noted above.</t>
         </section>
         <section anchor="uri_container_forms" title="URI Container Forms">
-          <t>The URI Container (sub) claim takes one of the following forms. More forms may be added in the future to extend the capabilities.</t>
+          <t>The URI Container (cdniuc) claim takes one of the following forms. More forms may be added in the future to extend the capabilities.</t>
           <t>Before comparing a URI against this container, the signed JWT must be removed from
           the URI. This removal is only for the purpose of determining if the URI matches; all
           other purposes will use the original URI. If the signed JWT is terminated by anything
@@ -672,7 +686,7 @@
         seeking within the content and for switching to a different representation),
         the Signed Token Renewal uses the
         URI Regular Expression Container scoping mechanisms in the URI Container
-        (sub) claim to allow a signed JWT to be valid for more than one URL.</t>
+        (cdniuc) claim to allow a signed JWT to be valid for more than one URL.</t>
 
         <t>In order for this renewal of signed JWTs to work, it is necessary for
         a UA to extract the signed JWT from the HTTP 2xx Successful message of an
@@ -1334,16 +1348,7 @@
 	    </list>
 	  </t>
 	  <?rfc subcompact="no"?>
-	  <t>
-	    <?rfc subcompact="yes"?>
-	    <list style="symbols">
-	      <t>Claim Name: <spanx style="verb">cdniets</spanx></t>
-	      <t>Claim Description: CDNI Expiration Time Setting for Signed Token Renewal</t>
-	      <t>Change Controller: IESG</t>
-	      <t>Specification Document(s): <xref target="cdniets_claim"/> of [[ this specification ]]</t>
-	    </list>
-	  </t>
-	  <?rfc subcompact="no"?>
+
 	  <t>
 	    <?rfc subcompact="yes"?>
 	    <list style="symbols">
@@ -1354,6 +1359,29 @@
 	    </list>
 	  </t>
 	  <?rfc subcompact="no"?>
+
+	  <t>
+	    <?rfc subcompact="yes"?>
+	    <list style="symbols">
+	      <t>Claim Name: <spanx style="verb">cdniuc</spanx></t>
+	      <t>Claim Description: CDNI URI Container</t>
+	      <t>Change Controller: IESG</t>
+	      <t>Specification Document(s): <xref target="cdniuc_claim"/> of [[ this specification ]]</t>
+	    </list>
+	  </t>
+	  <?rfc subcompact="no"?>
+
+	  <t>
+	    <?rfc subcompact="yes"?>
+	    <list style="symbols">
+	      <t>Claim Name: <spanx style="verb">cdniets</spanx></t>
+	      <t>Claim Description: CDNI Expiration Time Setting for Signed Token Renewal</t>
+	      <t>Change Controller: IESG</t>
+	      <t>Specification Document(s): <xref target="cdniets_claim"/> of [[ this specification ]]</t>
+	    </list>
+	  </t>
+	  <?rfc subcompact="no"?>
+
 	  <t>
 	    <?rfc subcompact="yes"?>
 	    <list style="symbols">
@@ -1579,8 +1607,8 @@
 
      <section title="Simple Example" anchor="simple_example">
         <t>
-          This example is the simplest possible example containing
-          the only required field (sub).
+          This example is a simple common usage example containing
+          a minimal subset of claims that the authors find most useful.
         </t>
 
         <t>
@@ -1589,7 +1617,9 @@
 
         <figure><artwork><![CDATA[
 {
-  "sub": "uri:http://cdni.example/foo/bar/baz"
+  "exp": 1474243500,
+  "iss": "uCDN Inc",
+  "cdniuc": "uri:http://cdni.example/foo/bar/baz"
 }
 ]]></artwork></figure>
 
@@ -1599,28 +1629,39 @@
 
         <figure><artwork><![CDATA[
 eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBPdjBlTXExd2N4TGY3V3hJZzA5SmRTWU
-dZRkRPV2tsZHVlYUltZjAifQ.eyJzdWIiOiJ1cmk6aHR0cDovL2NkbmkuZXhhbXBsZ
-S9mb28vYmFyL2JheiJ9.fjmHpIakncrQbmT-zMVkJZqg-seCbHbyrtSQ30pTzPZFAy
-XLdtDcShik-sZgmtv2Nqql4AEy-OByzztvLNvtOA
+dZRkRPV2tsZHVlYUltZjAifQ.eyJleHAiOjE0NzQyNDM1MDAsImlzcyI6InVDRE4gS
+W5jIiwiY2RuaXVjIjoidXJpOmh0dHA6Ly9jZG5pLmV4YW1wbGUvZm9vL2Jhci9iYXo
+ifQ.T2qJuy9SerMQZ7rJG8T0EK9wATF36hOks6inNSEOGuq0-NsELXWvY7SGQZnjy3
+vPYDKCV0zfX8z_qcSkkdVRkw
 ]]></artwork></figure>
       </section>
 
       <section title="Complex Example" anchor="complex_example">
         <t>
-          This example uses all optional fields except for those dealing
-          with Signed Token Renewal, including Client IP (cdniip) which is
+          This example uses all fields except for those dealing
+          with Signed Token Renewal, including Client IP (cdniip) and Subject (sub) which are
           encrpyted. This significantly increases the size of the signed
           JWT token.
         </t>
 
         <t>
-          JWE for client IP (cdniip) of [2001:db8::1/32]:
+          JWE for Client IP (cdniip) of [2001:db8::1/32]:
         </t>
 
         <figure><artwork><![CDATA[
 eyJhbGciOiJkaXIiLCJraWQiOiJmLVdianhCQzNkUHVJM2QyNGtQMmhmdm9zN1F6Nj
-g4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..hP3bU32Cel599o4e.Or-X4
-bUT8ccw4mxfAG8zSw.vPQe7YNPp7p2Q1jZaruZ0g
+g4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..y4mJvRhL2Tzw_WYC.3yTj1
+tuhPLrJ7y9W8VteYQ.uj-DCH9n7sjqU3TzTtX7CA
+]]></artwork></figure>
+
+        <t>
+          JWE for Subject (sub) of "UserToken":
+        </t>
+
+        <figure><artwork><![CDATA[
+eyJhbGciOiJkaXIiLCJraWQiOiJmLVdianhCQzNkUHVJM2QyNGtQMmhmdm9zN1F6Nj
+g4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..9Lx3ckULQi3XbZaq.jlACj
+Odfqxwn.yHvHa8offfK9_9zKez-Bww
 ]]></artwork></figure>
 
         <t>
@@ -1630,16 +1671,19 @@ bUT8ccw4mxfAG8zSw.vPQe7YNPp7p2Q1jZaruZ0g
         <figure><artwork><![CDATA[
 {
   "aud": "dCDN LLC",
+  "sub": "eyJhbGciOiJkaXIiLCJraWQiOiJmLVdianhCQzNkUHVJM2QyNGtQMmhm
+dm9zN1F6Njg4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..9Lx3ckULQi3X
+bZaq.jlACjOdfqxwn.yHvHa8offfK9_9zKez-Bww",
   "cdniip": "eyJhbGciOiJkaXIiLCJraWQiOiJmLVdianhCQzNkUHVJM2QyNGtQM
-mhmdm9zN1F6Njg4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..hP3bU32Ce
-l599o4e.Or-X4bUT8ccw4mxfAG8zSw.vPQe7YNPp7p2Q1jZaruZ0g",
+mhmdm9zN1F6Njg4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..y4mJvRhL2
+Tzw_WYC.3yTj1tuhPLrJ7y9W8VteYQ.uj-DCH9n7sjqU3TzTtX7CA",
   "cdniv": 1,
   "exp": 1474243500,
   "iat": 1474243200,
   "iss": "uCDN Inc",
   "jti": "5DAafLhZAfhsbe",
   "nbf": 1474243200,
-  "sub": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}\\.png"
+  "cdniuc": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}\\.png"
 }
 ]]></artwork></figure>
 
@@ -1649,16 +1693,19 @@ l599o4e.Or-X4bUT8ccw4mxfAG8zSw.vPQe7YNPp7p2Q1jZaruZ0g",
 
         <figure><artwork><![CDATA[
 eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBPdjBlTXExd2N4TGY3V3hJZzA5SmRTWU
-dZRkRPV2tsZHVlYUltZjAifQ.eyJhdWQiOiJkQ0ROIExMQyIsImNkbmlpcCI6ImV5S
-mhiR2NpT2lKa2FYSWlMQ0pyYVdRaU9pSm1MVmRpYW5oQ1F6TmtVSFZKTTJReU5HdFF
-NbWhtZG05ek4xRjZOamc0VlZScE5tRkNNR2hPT1RrNElpd2laVzVqSWpvaVFURXlPR
-WREVFNKOS4uaFAzYlUzMkNlbDU5OW80ZS5Pci1YNGJVVDhjY3c0bXhmQUc4elN3LnZ
-QUWU3WU5QcDdwMlExalphcnVaMGciLCJjZG5pdiI6MSwiZXhwIjoxNDc0MjQzNTAwL
-CJpYXQiOjE0NzQyNDMyMDAsImlzcyI6InVDRE4gSW5jIiwianRpIjoiNURBYWZMaFp
-BZmhzYmUiLCJuYmYiOjE0NzQyNDMyMDAsInN1YiI6InVyaS1yZWdleDpodHRwOi8vY
-2RuaVxcLmV4YW1wbGUvZm9vL2Jhci9iYXovWzAtOV17M31cXC5wbmcifQ.8q-z47Ys
-L4WVm5Xz9XOvbIjOaX0UFdW0rzhVq0JasNJnqeK-y640XNTS-wWtvoFAGx3eD1AlfS
-5ZfHW_ctcpOQ
+dZRkRPV2tsZHVlYUltZjAifQ.eyJhdWQiOiJkQ0ROIExMQyIsInN1YiI6ImV5SmhiR
+2NpT2lKa2FYSWlMQ0pyYVdRaU9pSm1MVmRpYW5oQ1F6TmtVSFZKTTJReU5HdFFNbWh
+tZG05ek4xRjZOamc0VlZScE5tRkNNR2hPT1RrNElpd2laVzVqSWpvaVFURXlPRWREV
+FNKOS4uOUx4M2NrVUxRaTNYYlphcS5qbEFDak9kZnF4d24ueUh2SGE4b2ZmZks5Xzl
+6S2V6LUJ3dyIsImNkbmlpcCI6ImV5SmhiR2NpT2lKa2FYSWlMQ0pyYVdRaU9pSm1MV
+mRpYW5oQ1F6TmtVSFZKTTJReU5HdFFNbWhtZG05ek4xRjZOamc0VlZScE5tRkNNR2h
+PT1RrNElpd2laVzVqSWpvaVFURXlPRWREVFNKOS4ueTRtSnZSaEwyVHp3X1dZQy4ze
+VRqMXR1aFBMcko3eTlXOFZ0ZVlRLnVqLURDSDluN3NqcVUzVHpUdFg3Q0EiLCJjZG5
+pdiI6MSwiZXhwIjoxNDc0MjQzNTAwLCJpYXQiOjE0NzQyNDMyMDAsImlzcyI6InVDR
+E4gSW5jIiwianRpIjoiNURBYWZMaFpBZmhzYmUiLCJuYmYiOjE0NzQyNDMyMDAsImN
+kbml1YyI6InVyaS1yZWdleDpodHRwOi8vY2RuaVxcLmV4YW1wbGUvZm9vL2Jhci9iY
+XovWzAtOV17M31cXC5wbmcifQ.qhBD2wQngDIeLRBfnoQryT-FSUoPcqnz7baCdMFi
+OgZmvU3endAHz_MunXUJi2f0PzlGxi-ECuh7c_oDoCDt1Q
 ]]></artwork></figure>
 
       </section>
@@ -1677,7 +1724,7 @@ L4WVm5Xz9XOvbIjOaX0UFdW0rzhVq0JasNJnqeK-y640XNTS-wWtvoFAGx3eD1AlfS
   "cdniets": 30,
   "cdnistt": 1,
   "exp": 1474243500,
-  "sub": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}\\.ts"
+  "cdniuc": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}\\.ts"
 }
 ]]></artwork></figure>
 
@@ -1688,9 +1735,9 @@ L4WVm5Xz9XOvbIjOaX0UFdW0rzhVq0JasNJnqeK-y640XNTS-wWtvoFAGx3eD1AlfS
         <figure><artwork><![CDATA[
 eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBPdjBlTXExd2N4TGY3V3hJZzA5SmRTWU
 dZRkRPV2tsZHVlYUltZjAifQ.eyJjZG5pZXRzIjozMCwiY2RuaXN0dCI6MSwiZXhwI
-joxNDc0MjQzNTAwLCJzdWIiOiJ1cmktcmVnZXg6aHR0cDovL2NkbmlcXC5leGFtcGx
-lL2Zvby9iYXIvYmF6L1swLTldezN9XFwudHMifQ.27naJYxAqFhgRPJMLfp61O4wVL
-C80B3zHC-_lKChHeRHLXTSdiNgQFNv00FG_wDQAxwspG3hQ8CQMqNFOrtZiA
+joxNDc0MjQzNTAwLCJjZG5pdWMiOiJ1cmktcmVnZXg6aHR0cDovL2NkbmlcXC5leGF
+tcGxlL2Zvby9iYXIvYmF6L1swLTldezN9XFwudHMifQ.BfdruOQNKXo_HnZ1dfSH4t
+ozQRS78HCMadPVsCKsNZCDB1fyAsEyZc49lMJaYY0Lui5I9KsJNITHSrsn8rPZ8A
 ]]></artwork></figure>
 
         <t>
@@ -1709,7 +1756,7 @@ C80B3zHC-_lKChHeRHLXTSdiNgQFNv00FG_wDQAxwspG3hQ8CQMqNFOrtZiA
   "cdniets": 30,
   "cdnistt": 1,
   "exp": 1474243530,
-  "sub": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}\\.ts"
+  "cdniuc": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}\\.ts"
 }
 ]]></artwork></figure>
 
@@ -1720,9 +1767,9 @@ C80B3zHC-_lKChHeRHLXTSdiNgQFNv00FG_wDQAxwspG3hQ8CQMqNFOrtZiA
         <figure><artwork><![CDATA[
 eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBPdjBlTXExd2N4TGY3V3hJZzA5SmRTWU
 dZRkRPV2tsZHVlYUltZjAifQ.eyJjZG5pZXRzIjozMCwiY2RuaXN0dCI6MSwiZXhwI
-joxNDc0MjQzNTMwLCJzdWIiOiJ1cmktcmVnZXg6aHR0cDovL2NkbmlcXC5leGFtcGx
-lL2Zvby9iYXIvYmF6L1swLTldezN9XFwudHMifQ.zT1lIQVrWnS6fOWVr_bxlTHB0C
-HHGKX3vtP2_E9j6bafsv0VMli1siDJ0F7vAgVr_f-5FKUahfAmTa25BfRrkQ
+joxNDc0MjQzNTMwLCJjZG5pdWMiOiJ1cmktcmVnZXg6aHR0cDovL2NkbmlcXC5leGF
+tcGxlL2Zvby9iYXIvYmF6L1swLTldezN9XFwudHMifQ.G2kBPfbTylDz4AQyS-l-XL
+evlEOhuHorIpjhH5OsrHxWhL1L49n3M-xqFWeGj56JzRTXtFzm49L0gYDycyCgsw
 ]]></artwork></figure>
       </section>
     </section>
