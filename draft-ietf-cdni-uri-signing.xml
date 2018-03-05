@@ -571,9 +571,7 @@
           <t>CDNI Signed Token Transport (cdnistt) [optional] - The CDNI Signed Token Transport (cdnistt) claim
           provides a means of signalling the method through which a new signed JWT
           is transported from the CDN to the UA and vice versa for the purpose of Signed Token Renewal. Its type is a JSON integer.
-          This document only defines setting its value to '1', which means the signed JWTs
-          are transported via HTTP Cookies in both directions.
-          Additional values for this claim can be defined in <xref target="sec.IANA.cdnistt"/>. If using
+          Values for this claim can be defined in <xref target="sec.IANA.cdnistt"/>. If using
           this claim you MUST also specify a CDNI Expiration Time Setting (cdniets) as noted above.</t>
         </section>
         <section anchor="uri_container_forms" title="URI Container Forms">
@@ -690,7 +688,9 @@
 
         <section title="Required Claims">
           <t>The <xref target="cdnistt_claim">cdnistt claim</xref> and <xref target="cdniets_claim">cdniets claim</xref>
-          MUST both be present to utilize Signed token Renewal. Either one MUST NOT appear alone.</t>
+          MUST both be present to utilize Signed token Renewal. Either one MUST NOT appear alone. You MAY set cdnistt to
+          a value of '0' to mean no Signed Token Renewal, but you still MUST have a corresponding cdniets that validates as
+          a JSON number. However, if you do not want to use Signed Token Renewal, it is RECOMMENDED to simply omit both.</t>
         </section>
       </section>
 
@@ -1296,6 +1296,10 @@
           <ttcol align='left'>Value</ttcol>
           <ttcol align='left'>Description</ttcol>
           <ttcol align='left'>RFC</ttcol>
+
+          <c>0</c>
+          <c>Designates token transport is not enabled</c>
+          <c>RFCthis</c>
 
           <c>1</c>
           <c>Designates token transport via cookie</c>
