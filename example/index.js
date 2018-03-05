@@ -40,7 +40,7 @@ var samples = {
   "simple": {
     "exp": 1474243500,
     "iss": "uCDN Inc",
-    "cdniuc": "uri:http://cdni.example/foo/bar/baz"
+    "cdniuc": "uri:http://cdni.example/foo/bar"
   },
   "complex": {
     "aud": "dCDN LLC",
@@ -52,19 +52,19 @@ var samples = {
     "iss": "uCDN Inc",
     "jti": "5DAafLhZAfhsbe",
     "nbf": 1474243200,
-    "cdniuc": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}\\.png"
+    "cdniuc": "uri-regex:http://cdni\\.example/foo/bar/[0-9]{3}\\.png"
   },
   "chained-1": {
     "cdniets": 30,
     "cdnistt": 1,
     "exp": 1474243500,
-    "cdniuc": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}\\.ts"
+    "cdniuc": "uri-regex:http://cdni\\.example/foo/bar/[0-9]{3}\\.ts"
   },
   "chained-2": {
     "cdniets": 30,
     "cdnistt": 1,
     "exp": 1474243530,
-    "cdniuc": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}\\.ts"
+    "cdniuc": "uri-regex:http://cdni\\.example/foo/bar/[0-9]{3}\\.ts"
   }
 };
 
