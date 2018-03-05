@@ -1420,6 +1420,12 @@
       to dCDNs - including cascaded CDNs. Since this key can be used
       to legitimately sign a URL for content access authorization, it is
       important to know the implications of a compromised shared key.</t>
+
+      <t>If a shared key usable for signing is compromised, an attacker
+      can use it to perform a denial-of-service attack by forcing the CDN to
+      evaluate prohibitively expensive regular expressions embedded in a
+      cdniuc claim. As a result, compromised keys should be timely revoked
+      in order to prevent exploitation.</t>
     </section>
 
     <section title="Privacy">
