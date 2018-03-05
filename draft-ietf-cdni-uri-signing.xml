@@ -61,24 +61,8 @@
     </author>
     
     <author fullname="Phil Sorber" initials="P" surname="Sorber">
-      <organization>Comcast Cable Communications</organization>
-
       <address>
-        <postal>
-          <street>1401 Wynkoop Street, Suite 300</street>
-
-          <city>Denver</city>
-
-          <region>CO</region>
-
-          <code>80202</code>
-
-          <country>United States</country>
-        </postal>
-
-        <phone>+1 720 502 3785</phone>
-
-        <email>phillip_sorber@comcast.com</email>
+        <email>sorber@apache.org</email>
       </address>
     </author>
     
