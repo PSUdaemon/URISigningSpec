@@ -1603,7 +1603,7 @@
 {
   "exp": 1474243500,
   "iss": "uCDN Inc",
-  "cdniuc": "uri:http://cdni.example/foo/bar/baz"
+  "cdniuc": "uri:http://cdni.example/foo/bar"
 }
 ]]></artwork></figure>
 
@@ -1614,9 +1614,9 @@
         <figure><artwork><![CDATA[
 eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBPdjBlTXExd2N4TGY3V3hJZzA5SmRTWU
 dZRkRPV2tsZHVlYUltZjAifQ.eyJleHAiOjE0NzQyNDM1MDAsImlzcyI6InVDRE4gS
-W5jIiwiY2RuaXVjIjoidXJpOmh0dHA6Ly9jZG5pLmV4YW1wbGUvZm9vL2Jhci9iYXo
-ifQ.T2qJuy9SerMQZ7rJG8T0EK9wATF36hOks6inNSEOGuq0-NsELXWvY7SGQZnjy3
-vPYDKCV0zfX8z_qcSkkdVRkw
+W5jIiwiY2RuaXVjIjoidXJpOmh0dHA6Ly9jZG5pLmV4YW1wbGUvZm9vL2JhciJ9.4W
+xfA1ogQfeVLJYDtxrhilYctGR2KIIa1br5L6ZETTpn18_cNmsjQE4D7Cxs3tbbWAnI
+gVSIdcNVwBneluta5g
 ]]></artwork></figure>
       </section>
 
@@ -1634,8 +1634,8 @@ vPYDKCV0zfX8z_qcSkkdVRkw
 
         <figure><artwork><![CDATA[
 eyJhbGciOiJkaXIiLCJraWQiOiJmLVdianhCQzNkUHVJM2QyNGtQMmhmdm9zN1F6Nj
-g4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..y4mJvRhL2Tzw_WYC.3yTj1
-tuhPLrJ7y9W8VteYQ.uj-DCH9n7sjqU3TzTtX7CA
+g4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..hHQn6LM8Km95O0IE.KgJiy
+DRsW7QBQsDJrmS7Hg.cXRZ8sMJ8PKz3fnj6VXgvw
 ]]></artwork></figure>
 
         <t>
@@ -1644,8 +1644,8 @@ tuhPLrJ7y9W8VteYQ.uj-DCH9n7sjqU3TzTtX7CA
 
         <figure><artwork><![CDATA[
 eyJhbGciOiJkaXIiLCJraWQiOiJmLVdianhCQzNkUHVJM2QyNGtQMmhmdm9zN1F6Nj
-g4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..9Lx3ckULQi3XbZaq.jlACj
-Odfqxwn.yHvHa8offfK9_9zKez-Bww
+g4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..ZH1hpBqhB8rgr3fD.3iEkR
+iaFkgwG.nzyjp7bZ3SJlYcDWv9irrQ
 ]]></artwork></figure>
 
         <t>
@@ -1656,18 +1656,18 @@ Odfqxwn.yHvHa8offfK9_9zKez-Bww
 {
   "aud": "dCDN LLC",
   "sub": "eyJhbGciOiJkaXIiLCJraWQiOiJmLVdianhCQzNkUHVJM2QyNGtQMmhm
-dm9zN1F6Njg4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..9Lx3ckULQi3X
-bZaq.jlACjOdfqxwn.yHvHa8offfK9_9zKez-Bww",
+dm9zN1F6Njg4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..ZH1hpBqhB8rg
+r3fD.3iEkRiaFkgwG.nzyjp7bZ3SJlYcDWv9irrQ",
   "cdniip": "eyJhbGciOiJkaXIiLCJraWQiOiJmLVdianhCQzNkUHVJM2QyNGtQM
-mhmdm9zN1F6Njg4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..y4mJvRhL2
-Tzw_WYC.3yTj1tuhPLrJ7y9W8VteYQ.uj-DCH9n7sjqU3TzTtX7CA",
+mhmdm9zN1F6Njg4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..hHQn6LM8K
+m95O0IE.KgJiyDRsW7QBQsDJrmS7Hg.cXRZ8sMJ8PKz3fnj6VXgvw",
   "cdniv": 1,
   "exp": 1474243500,
   "iat": 1474243200,
   "iss": "uCDN Inc",
   "jti": "5DAafLhZAfhsbe",
   "nbf": 1474243200,
-  "cdniuc": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}\\.png"
+  "cdniuc": "uri-regex:http://cdni\\.example/foo/bar/[0-9]{3}\\.png"
 }
 ]]></artwork></figure>
 
@@ -1680,16 +1680,16 @@ eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBPdjBlTXExd2N4TGY3V3hJZzA5SmRTWU
 dZRkRPV2tsZHVlYUltZjAifQ.eyJhdWQiOiJkQ0ROIExMQyIsInN1YiI6ImV5SmhiR
 2NpT2lKa2FYSWlMQ0pyYVdRaU9pSm1MVmRpYW5oQ1F6TmtVSFZKTTJReU5HdFFNbWh
 tZG05ek4xRjZOamc0VlZScE5tRkNNR2hPT1RrNElpd2laVzVqSWpvaVFURXlPRWREV
-FNKOS4uOUx4M2NrVUxRaTNYYlphcS5qbEFDak9kZnF4d24ueUh2SGE4b2ZmZks5Xzl
-6S2V6LUJ3dyIsImNkbmlpcCI6ImV5SmhiR2NpT2lKa2FYSWlMQ0pyYVdRaU9pSm1MV
+FNKOS4uWkgxaHBCcWhCOHJncjNmRC4zaUVrUmlhRmtnd0cubnp5anA3YlozU0psWWN
+EV3Y5aXJyUSIsImNkbmlpcCI6ImV5SmhiR2NpT2lKa2FYSWlMQ0pyYVdRaU9pSm1MV
 mRpYW5oQ1F6TmtVSFZKTTJReU5HdFFNbWhtZG05ek4xRjZOamc0VlZScE5tRkNNR2h
-PT1RrNElpd2laVzVqSWpvaVFURXlPRWREVFNKOS4ueTRtSnZSaEwyVHp3X1dZQy4ze
-VRqMXR1aFBMcko3eTlXOFZ0ZVlRLnVqLURDSDluN3NqcVUzVHpUdFg3Q0EiLCJjZG5
+PT1RrNElpd2laVzVqSWpvaVFURXlPRWREVFNKOS4uaEhRbjZMTThLbTk1TzBJRS5LZ
+0ppeURSc1c3UUJRc0RKcm1TN0hnLmNYUlo4c01KOFBLejNmbmo2VlhndnciLCJjZG5
 pdiI6MSwiZXhwIjoxNDc0MjQzNTAwLCJpYXQiOjE0NzQyNDMyMDAsImlzcyI6InVDR
 E4gSW5jIiwianRpIjoiNURBYWZMaFpBZmhzYmUiLCJuYmYiOjE0NzQyNDMyMDAsImN
-kbml1YyI6InVyaS1yZWdleDpodHRwOi8vY2RuaVxcLmV4YW1wbGUvZm9vL2Jhci9iY
-XovWzAtOV17M31cXC5wbmcifQ.qhBD2wQngDIeLRBfnoQryT-FSUoPcqnz7baCdMFi
-OgZmvU3endAHz_MunXUJi2f0PzlGxi-ECuh7c_oDoCDt1Q
+kbml1YyI6InVyaS1yZWdleDpodHRwOi8vY2RuaVxcLmV4YW1wbGUvZm9vL2Jhci9bM
+C05XXszfVxcLnBuZyJ9.3sKwFFMy7Hlbur1RzkeI0wDKerYXcrmBdfwJG7NP3TWS7a
+s52f8-F-wOFzFEIoX2UX3Z5Dinl6lbCQ__-pBgZw
 ]]></artwork></figure>
 
       </section>
@@ -1708,7 +1708,7 @@ OgZmvU3endAHz_MunXUJi2f0PzlGxi-ECuh7c_oDoCDt1Q
   "cdniets": 30,
   "cdnistt": 1,
   "exp": 1474243500,
-  "cdniuc": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}\\.ts"
+  "cdniuc": "uri-regex:http://cdni\\.example/foo/bar/[0-9]{3}\\.ts"
 }
 ]]></artwork></figure>
 
@@ -1720,8 +1720,8 @@ OgZmvU3endAHz_MunXUJi2f0PzlGxi-ECuh7c_oDoCDt1Q
 eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBPdjBlTXExd2N4TGY3V3hJZzA5SmRTWU
 dZRkRPV2tsZHVlYUltZjAifQ.eyJjZG5pZXRzIjozMCwiY2RuaXN0dCI6MSwiZXhwI
 joxNDc0MjQzNTAwLCJjZG5pdWMiOiJ1cmktcmVnZXg6aHR0cDovL2NkbmlcXC5leGF
-tcGxlL2Zvby9iYXIvYmF6L1swLTldezN9XFwudHMifQ.BfdruOQNKXo_HnZ1dfSH4t
-ozQRS78HCMadPVsCKsNZCDB1fyAsEyZc49lMJaYY0Lui5I9KsJNITHSrsn8rPZ8A
+tcGxlL2Zvby9iYXIvWzAtOV17M31cXC50cyJ9.fL4S6f4FovPls_N-JBap7CKGsQsi
+Xhds2nFhz3EnIOVfDlrTt3mw6AA6SsHnc2fu6bqZP_3YOdwOYFYjDPTYfg
 ]]></artwork></figure>
 
         <t>
@@ -1740,7 +1740,7 @@ ozQRS78HCMadPVsCKsNZCDB1fyAsEyZc49lMJaYY0Lui5I9KsJNITHSrsn8rPZ8A
   "cdniets": 30,
   "cdnistt": 1,
   "exp": 1474243530,
-  "cdniuc": "uri-regex:http://cdni\\.example/foo/bar/baz/[0-9]{3}\\.ts"
+  "cdniuc": "uri-regex:http://cdni\\.example/foo/bar/[0-9]{3}\\.ts"
 }
 ]]></artwork></figure>
 
@@ -1752,8 +1752,8 @@ ozQRS78HCMadPVsCKsNZCDB1fyAsEyZc49lMJaYY0Lui5I9KsJNITHSrsn8rPZ8A
 eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBPdjBlTXExd2N4TGY3V3hJZzA5SmRTWU
 dZRkRPV2tsZHVlYUltZjAifQ.eyJjZG5pZXRzIjozMCwiY2RuaXN0dCI6MSwiZXhwI
 joxNDc0MjQzNTMwLCJjZG5pdWMiOiJ1cmktcmVnZXg6aHR0cDovL2NkbmlcXC5leGF
-tcGxlL2Zvby9iYXIvYmF6L1swLTldezN9XFwudHMifQ.G2kBPfbTylDz4AQyS-l-XL
-evlEOhuHorIpjhH5OsrHxWhL1L49n3M-xqFWeGj56JzRTXtFzm49L0gYDycyCgsw
+tcGxlL2Zvby9iYXIvWzAtOV17M31cXC50cyJ9.Zi-Xq-0ZrZ5uL2F5YCxZMXWWnaM6
+wS9-x9eRu5UC6WgbMBQ0yH7lJNe7UG_5Ge-QPuRggm9tz1AF4S_Ty8H9Ig
 ]]></artwork></figure>
       </section>
     </section>
