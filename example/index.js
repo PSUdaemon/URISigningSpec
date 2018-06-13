@@ -65,6 +65,20 @@ var samples = {
     "cdnistt": 1,
     "exp": 1474243530,
     "cdniuc": "uri-regex:http://cdni\\.example/foo/bar/[0-9]{3}\\.ts"
+  },
+  "base-1": {
+    "exp": 1474243500,
+    "cdniets": 30,
+    "cdnistt": 1,
+    "cdnib": "/foo/bar",
+    "cdniuc": "b:"
+  },
+  "base-2": {
+    "exp": 1474243530,
+    "cdniets": 30,
+    "cdnistt": 1,
+    "cdnib": "/foo/bar",
+    "cdniuc": "b:"
   }
 };
 

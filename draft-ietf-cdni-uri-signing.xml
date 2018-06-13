@@ -544,6 +544,33 @@
             claim if no Client IP claim existed in the received
             signed JWT.</t>
         </section>
+        <section anchor="cdnib_claim" title="CDNI Base (cdnib) claim">
+            <t>Base (cdnir) [optional] -
+            The base path for which the token is intended. Its type is a
+            JSON string. It contains a <xref target="RFC3986">URI</xref>,
+            except that any or all of the scheme, host, or port MAY be
+            omitted. This URI MUST NOT contain User Information
+            (<xref target="RFC3986" /> Section 3.2.1), Query (Section 3.4),
+            or Fragment (Section 3.5) components.</t>
+
+            <t>The scheme is terminated by a colon (':'), which MUST be
+            omitted if the scheme is. The authority is preceeded by a
+            double slash ("//"), which MUST be omitted if the authority
+            is, and terminated by the next slash ("/"), which begins the
+            required path, or the end of the URI.</t>
+
+            <t>The base claim MUST NOT be used as a sole basis to either
+            accept or reject a request. Rather, other claims use the
+            information claimed here.</t>
+
+            <t>If the received signed JWT contains a Base claim, then
+            any JWT subsequently generated for CDNI redirection or
+            Signed Token Renewal MUST also contain a Base claim and the
+            Base claim value MUST be the same as in the received signed
+            JWT. A signed JWT generated for CDNI redirection or Signed
+            Token Renewal MUST NOT add a Base claim if no Base claim
+            existed in the received signed JWT.</t>
+        </section>
         <section anchor="cdniuc_claim" title="CDNI URI Container (cdniuc) claim">
             <t>URI Container (cdniuc) [optional] -
             Container for holding the URI representation before a URI Signing Package is
@@ -607,6 +634,30 @@
 
           <section anchor="uri_container_forms_hash" title="URI Hash Container (uri-hash:)">
               <t>Prefixed with 'uri-hash:', this string is a URL Segment form (<xref target="RFC6920"/> Section 5) of the URI.</t>
+          </section>
+
+          <section anchor="uri_container_forms_b" title="URI Base Container (b:)">
+              <t>This string is simply 'b:', with no additional
+              information. This form indicates that the URI MUST
+              match the Base claim of the JWT. A URI matches iff:
+              <list style="symbols">
+                  <t>If the scheme is present in the Base claim, it is,
+                  according to a case insensitive comparison, the same
+                  as the scheme of the URI; and</t>
+                  <t>If the host is present in the Base claim, it is,
+                  according to a case insensitive comparison, the same
+                  as the host of the URI; and</t>
+                  <t>If the port is present in the Base claim, it matches
+                  the port on which the request is received; and</t>
+                  <t>The path in the Base claim is either empty, a
+                  single slash ('/'), or each of its components match,
+                  using a case sensitive comparison, each of the path
+                  components, in order, that start the URI.</t>
+              </list></t>
+
+              <t>The URI MAY have path components in excess of what is
+              claimed in the Base claim, but MUST have at least those
+              components.</t>
           </section>
         </section>
       </section>
@@ -696,11 +747,14 @@
         <t>This section assumes the value of the CDNI Signed Token Transport (cdnistt) claim
         has been set to 1. Other values of cdnistt are out of scope of this document. </t>
 
-	<t>When using the Signed Token Renewal mechanism, the signed JWT is
+        <t>When using the Signed Token Renewal mechanism, the signed JWT is
         transported to the UA via a 'URISigningPackage' cookie added to the
         HTTP 2xx Successful message along with the content being returned to
         the UA, or to the HTTP 3xx Redirection message in case the UA is
         redirected to a different server.</t>
+
+        <t>If a Base claim is present in the JWT, the cookie should be
+        allocated to the Base claim's path and host, if present.</t>
 
         <section title="Support for cross-domain redirection">
           <t>For security purposes, the use of cross-domain cookies is not supported
@@ -1760,6 +1814,51 @@ dZRkRPV2tsZHVlYUltZjAifQ.eyJjZG5pZXRzIjozMCwiY2RuaXN0dCI6MSwiZXhwI
 joxNDc0MjQzNTMwLCJjZG5pdWMiOiJ1cmktcmVnZXg6aHR0cDovL2NkbmlcXC5leGF
 tcGxlL2Zvby9iYXIvWzAtOV17M31cXC50cyJ9.Zi-Xq-0ZrZ5uL2F5YCxZMXWWnaM6
 wS9-x9eRu5UC6WgbMBQ0yH7lJNe7UG_5Ge-QPuRggm9tz1AF4S_Ty8H9Ig
+]]></artwork></figure>
+      </section>
+      <section title="Signed Token Renewal and Base Example" anchor="token_renewal_base_example">
+          <t>This example uses a base claim with Signed Token Renewal.</t>
+
+          <t>The JWT Claim Set before signing:</t>
+          <figure><artwork><![CDATA[
+{
+  "exp": 1474243500,
+  "cdniets": 30,
+  "cdnistt": 1,
+  "cdnib": "/foo/bar",
+  "cdniuc": "b:"
+}
+
+claims SIGNED:
+]]></artwork></figure>
+          <t>The signed JWT:</t>
+          <figure><artwork><![CDATA[
+eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBPdjBlTXExd2N4TGY3V3hJZzA5SmRTWU
+dZRkRPV2tsZHVlYUltZjAifQ.eyJleHAiOjE0NzQyNDM1MDAsImNkbmlldHMiOjMwL
+CJjZG5pc3R0IjoxLCJjZG5pYiI6Ii9mb28vYmFyIiwiY2RuaXVjIjoiYjoifQ.qulU
+8xtDepa9mBWfaRKuk1afEWNu0jYKhefd6jt3N6dnlra4dvZFVMk8WGM_k8G39_qmQn
+LIgsXVEQJWjrvblA
+]]></artwork></figure>
+
+          <t>Once the server validates the signed JWT, it will return a
+          new signed JWT, just like the previous example:</t>
+          <figure><artwork><![CDATA[
+{
+  "exp": 1474243530,
+  "cdniets": 30,
+  "cdnistt": 1,
+  "cdnib": "/foo/bar",
+  "cdniuc": "b:"
+}
+]]></artwork></figure>
+
+          <t>The response will have a header that looks like this:</t>
+      <figure><artwork><![CDATA[
+Set-Cookie: URISigningPackage=eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBP
+djBlTXExd2N4TGY3V3hJZzA5SmRTWUdZRkRPV2tsZHVlYUltZjAifQ.eyJleHAiOjE
+0NzQyNDM1MzAsImNkbmlldHMiOjMwLCJjZG5pc3R0IjoxLCJjZG5pYiI6Ii9mb28vY
+mFyIiwiY2RuaXVjIjoiYjoifQ.5OJbREiu-C6tsSuAPGICpSwfV69nfeyxhCCJSqKJ
+RemMkT2ONqSJusdp4tnIEU2PNGDUFvkdxdkWyk2olr8uEg; Path=/foo/bar
 ]]></artwork></figure>
       </section>
     </section>
