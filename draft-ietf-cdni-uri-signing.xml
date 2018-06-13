@@ -649,11 +649,14 @@
                   as the host of the URI; and</t>
                   <t>If the port is present in the Base claim, it matches
                   the port on which the request is received; and</t>
-                  <t>The path in the Base claim is either empty, a
-                  single slash ('/'), or each of its components match,
-                  using a case sensitive comparison, each of the path
-                  components, in order, that start the URI.</t>
+		  <t>The path in the Base claim is either empty following a
+		  host or schema, a single slash ('/'), or each of its
+		  components match, using a case sensitive comparison, each of
+		  the path components, in order, that start the URI.</t>
               </list></t>
+
+	      <t>If the signed JWT does not contain a CDNI Base claim, or its
+	      Base claim is empty, the request MUST be rejected.</t>
 
               <t>The URI MAY have path components in excess of what is
               claimed in the Base claim, but MUST have at least those
