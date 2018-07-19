@@ -14,7 +14,7 @@
   <front>
     <title abbrev="CDNI URI Signing">URI Signing for CDN Interconnection
     (CDNI)</title>
-    
+
     <author fullname="Ray van Brandenburg" initials="R"
             surname="van Brandenburg">
       <organization>Tiledmedia</organization>
@@ -37,7 +37,7 @@
         <email>ray@tiledmedia.com</email>
       </address>
     </author>
-    
+
     <author fullname="Kent Leung" initials="K" surname="Leung">
       <organization>Cisco Systems, Inc.</organization>
 
@@ -59,14 +59,14 @@
         <email>kleung@cisco.com</email>
       </address>
     </author>
-    
+
     <author fullname="Phil Sorber" initials="P" surname="Sorber">
       <address>
         <email>sorber@apache.org</email>
       </address>
     </author>
-    
-    <date day="" month="" year=""/>
+
+    <date/>
 
     <workgroup>CDNI</workgroup>
 
@@ -130,7 +130,7 @@
       any arbitrary distribution policy to be enforced across CDNs without the
       need of CDNs to have any awareness of the actual CSP distribution
       policy.</t>
-      
+
       <t>The representation of this method is a Signed JSON Web Token (JWT) <xref target="RFC7519"/>.</t>
 
       <section title="Terminology">
@@ -387,7 +387,7 @@
         distribution policy capabilities.</t>
 
         <t>In order to provide distribution policy flexibility,
-        the exact subset of claims used in a given signed JWT is a runtime decision. 
+        the exact subset of claims used in a given signed JWT is a runtime decision.
         Claim requirements are defined in the <xref target="metadata">CDNI Metadata</xref>
         If the CDNI Metadata interface is not used, or
         does not include claim requirements, the claim requirements
@@ -424,7 +424,7 @@
             claim, and the Issuer value MUST be updated to identify the
             redirecting CDN.  If the received signed JWT does not
             contain an Issuer claim, an Issuer claim MAY be added to
-            a signed JWT generated for CDNI redirection.</t> 
+            a signed JWT generated for CDNI redirection.</t>
         </section>
         <section anchor="sub_claim" title="Subject (sub) claim">
             <t>Subject (sub) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.2 MUST be followed.
@@ -590,9 +590,9 @@
 
           <section anchor="uri_container_forms_regex" title="URI Regular Expression Container (uri-regex:)">
               <t>Prefixed with 'uri-regex:', this string is any <xref target="PCRE839">PCRE</xref> compatible regular expression used to match against the requested URI.</t>
-              
+
               <t>Note: Because '\' has special meaning in JSON <xref target="RFC7159"/> as the escape character within JSON strings, the regular expression character '\' MUST be escaped as '\\'.</t>
-              
+
               <t>An example of a 'uri-regex:' is the following:</t>
               <t>
                 <figure>
@@ -601,7 +601,7 @@
                   </artwork>
                 </figure>
               </t>
-              
+
               <t>Note: Due to computational complexity of executing arbitrary regular expressions, it is RECOMMENDED to only execute after validating the JWT to ensure its authenticity.</t>
           </section>
 
@@ -696,7 +696,7 @@
         <t>This section assumes the value of the CDNI Signed Token Transport (cdnistt) claim
         has been set to 1. Other values of cdnistt are out of scope of this document. </t>
 
-	<t>When using the Signed Token Renewal mechanism, the signed JWT is
+        <t>When using the Signed Token Renewal mechanism, the signed JWT is
         transported to the UA via a 'URISigningPackage' cookie added to the
         HTTP 2xx Successful message along with the content being returned to
         the UA, or to the HTTP 3xx Redirection message in case the UA is
@@ -756,9 +756,9 @@
         Redirection Interface</xref> describes the recursive request
         redirection method. For URI Signing, the uCDN signs the URI
         provided by the dCDN. URI Signing therefore has has no impact
-        on this interface.</t> 
+        on this interface.</t>
       </section>
-      
+
       <section anchor="metadata" title="CDNI Metadata Interface">
         <t>The <xref target="RFC8006">CDNI Metadata
         Interface</xref> describes the CDNI metadata distribution needed to
@@ -816,7 +816,7 @@
           </list></t>
 
         <t>The following is an example of a URI Signing metadata payload with all default values:</t>
-        
+
         <figure>
           <artwork><![CDATA[
 
@@ -827,9 +827,9 @@
 ]]>
           </artwork>
         </figure>
-        
+
         <t>The following is an example of a URI Signing metadata payload with explicit values:</t>
-        
+
         <figure>
           <artwork><![CDATA[
 
@@ -1271,7 +1271,7 @@
           <c>s-uri-signing-deny-reason</c>
           <c>RFCthis</c>
         </texttable>
-        
+
         <t>[RFC Editor: Please replace RFCthis with the published RFC
         number for this document.]</t>
 
