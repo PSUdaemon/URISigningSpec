@@ -1602,7 +1602,7 @@
         </t>
 
         <t>
-          Note: "sha-256;2tderfWPa86Ku7YnzW51YUp7dGUjBS/3SW3ELx4hmWY" is the URL Segment form
+          Note: "sha-256;2tderfWPa86Ku7YnzW51YUp7dGUjBS_3SW3ELx4hmWY" is the URL Segment form
           (<xref target="RFC6920"/> Section 5) of "http://cdni.example/foo/bar".
         </t>
 
@@ -1610,7 +1610,7 @@
 {
   "exp": 1474243500,
   "iss": "uCDN Inc",
-  "cdniuc": "hash:sha-256;2tderfWPa86Ku7YnzW51YUp7dGUjBS/3SW3ELx4hmWY"
+  "cdniuc": "hash:sha-256;2tderfWPa86Ku7YnzW51YUp7dGUjBS_3SW3ELx4hmWY"
 }
 ]]></artwork></figure>
 
@@ -1622,8 +1622,8 @@
 eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBPdjBlTXExd2N4TGY3V3hJZzA5SmRTWU
 dZRkRPV2tsZHVlYUltZjAifQ.eyJleHAiOjE0NzQyNDM1MDAsImlzcyI6InVDRE4gS
 W5jIiwiY2RuaXVjIjoiaGFzaDpzaGEtMjU2OzJ0ZGVyZldQYTg2S3U3WW56VzUxWVV
-wN2RHVWpCUy8zU1czRUx4NGhtV1kifQ.kjP7guJ5RTIKQ1msKzupKex1H33rTtWatm
-xr2gWBMv3e8E0Ccdeq4xZI9CZVLDAjBpdA5OSx8OzrQXPdMXuKfQ
+wN2RHVWpCU18zU1czRUx4NGhtV1kifQ.T57uPHuAqd0szjjwbBCogswi0z62ZBOTFh
+UfSSByyUqMBwPwG8CJugpPQ-8bsIKV2nOLGcWInZ3cxy591WBaTA
 ]]></artwork></figure>
       </section>
 

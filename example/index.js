@@ -40,7 +40,7 @@ var samples = {
   "simple": {
     "exp": 1474243500,
     "iss": "uCDN Inc",
-    "cdniuc": "hash:sha-256;2tderfWPa86Ku7YnzW51YUp7dGUjBS/3SW3ELx4hmWY"
+    "cdniuc": "hash:sha-256;2tderfWPa86Ku7YnzW51YUp7dGUjBS_3SW3ELx4hmWY"
   },
   "complex": {
     "aud": "dCDN LLC",
