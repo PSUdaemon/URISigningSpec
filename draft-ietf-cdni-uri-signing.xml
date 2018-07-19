@@ -10,7 +10,7 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc category="std" docName="draft-ietf-cdni-uri-signing-14" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-cdni-uri-signing-15" ipr="trust200902">
   <front>
     <title abbrev="CDNI URI Signing">URI Signing for CDN Interconnection
     (CDNI)</title>
@@ -61,8 +61,24 @@
     </author>
 
     <author fullname="Phil Sorber" initials="P" surname="Sorber">
+      <organization>Apple, Inc.</organization>
+
       <address>
-        <email>sorber@apache.org</email>
+        <postal>
+          <street>1800 Wazee Street</street>
+
+          <street>Suite 410</street>
+
+          <city>Denver</city>
+
+          <region>CO</region>
+
+          <code>80202</code>
+
+          <country>United States</country>
+        </postal>
+
+        <email>sorber@apple.com</email>
       </address>
     </author>
 
