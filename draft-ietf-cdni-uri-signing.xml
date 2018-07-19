@@ -584,8 +584,8 @@
           URI Signing Package Attribute to the sub-delimiter that terminates the signed
           JWT will be removed, inclusive.</t>
 
-          <section anchor="uri_container_forms_uri" title="URI Simple Container (uri:)">
-              <t>When prefixed with 'uri:', the string following 'uri:' is the URI that MUST be matched with a simple string match to the requested URI.</t>
+          <section anchor="uri_container_forms_hash" title="URI Hash Container (uri-hash:)">
+              <t>Prefixed with 'uri-hash:', this string is a URL Segment form (<xref target="RFC6920"/> Section 5) of the URI.</t>
           </section>
 
           <section anchor="uri_container_forms_regex" title="URI Regular Expression Container (uri-regex:)">
@@ -603,10 +603,6 @@
               </t>
 
               <t>Note: Due to computational complexity of executing arbitrary regular expressions, it is RECOMMENDED to only execute after validating the JWT to ensure its authenticity.</t>
-          </section>
-
-          <section anchor="uri_container_forms_hash" title="URI Hash Container (uri-hash:)">
-              <t>Prefixed with 'uri-hash:', this string is a URL Segment form (<xref target="RFC6920"/> Section 5) of the URI.</t>
           </section>
         </section>
       </section>
@@ -1605,11 +1601,16 @@
           The JWT Claim Set before signing:
         </t>
 
+        <t>
+          Note: "sha-256;2tderfWPa86Ku7YnzW51YUp7dGUjBS/3SW3ELx4hmWY" is the URL Segment form
+          (<xref target="RFC6920"/> Section 5) of "http://cdni.example/foo/bar".
+        </t>
+
         <figure><artwork><![CDATA[
 {
   "exp": 1474243500,
   "iss": "uCDN Inc",
-  "cdniuc": "uri:http://cdni.example/foo/bar"
+  "cdniuc": "uri-hash:sha-256;2tderfWPa86Ku7YnzW51YUp7dGUjBS/3SW3ELx4hmWY"
 }
 ]]></artwork></figure>
 
@@ -1620,9 +1621,9 @@
         <figure><artwork><![CDATA[
 eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBPdjBlTXExd2N4TGY3V3hJZzA5SmRTWU
 dZRkRPV2tsZHVlYUltZjAifQ.eyJleHAiOjE0NzQyNDM1MDAsImlzcyI6InVDRE4gS
-W5jIiwiY2RuaXVjIjoidXJpOmh0dHA6Ly9jZG5pLmV4YW1wbGUvZm9vL2JhciJ9.4W
-xfA1ogQfeVLJYDtxrhilYctGR2KIIa1br5L6ZETTpn18_cNmsjQE4D7Cxs3tbbWAnI
-gVSIdcNVwBneluta5g
+W5jIiwiY2RuaXVjIjoidXJpLWhhc2g6c2hhLTI1NjsydGRlcmZXUGE4Nkt1N1luelc
+1MVlVcDdkR1VqQlMvM1NXM0VMeDRobVdZIn0.emOAX8a8P8t5JOIUmx6m5plz1EG4P
+HfCRobOxf0-iA5jzI73HNv8vlZr2tcc1m9v2Nw3JgnRYInOPvJ8SH2mbg
 ]]></artwork></figure>
       </section>
 

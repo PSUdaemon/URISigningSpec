@@ -40,7 +40,7 @@ var samples = {
   "simple": {
     "exp": 1474243500,
     "iss": "uCDN Inc",
-    "cdniuc": "uri:http://cdni.example/foo/bar"
+    "cdniuc": "uri-hash:sha-256;2tderfWPa86Ku7YnzW51YUp7dGUjBS/3SW3ELx4hmWY"
   },
   "complex": {
     "aud": "dCDN LLC",
