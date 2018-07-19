@@ -584,16 +584,16 @@
           URI Signing Package Attribute to the sub-delimiter that terminates the signed
           JWT will be removed, inclusive.</t>
 
-          <section anchor="uri_container_forms_hash" title="URI Hash Container (uri-hash:)">
-              <t>Prefixed with 'uri-hash:', this string is a URL Segment form (<xref target="RFC6920"/> Section 5) of the URI.</t>
+          <section anchor="uri_container_forms_hash" title="URI Hash Container (hash:)">
+              <t>Prefixed with 'hash:', this string is a URL Segment form (<xref target="RFC6920"/> Section 5) of the URI.</t>
           </section>
 
-          <section anchor="uri_container_forms_regex" title="URI Regular Expression Container (uri-regex:)">
-              <t>Prefixed with 'uri-regex:', this string is any <xref target="PCRE839">PCRE</xref> compatible regular expression used to match against the requested URI.</t>
+          <section anchor="uri_container_forms_regex" title="URI Regular Expression Container (regex:)">
+              <t>Prefixed with 'regex:', this string is any <xref target="PCRE839">PCRE</xref> compatible regular expression used to match against the requested URI.</t>
 
               <t>Note: Because '\' has special meaning in JSON <xref target="RFC7159"/> as the escape character within JSON strings, the regular expression character '\' MUST be escaped as '\\'.</t>
 
-              <t>An example of a 'uri-regex:' is the following:</t>
+              <t>An example of a 'regex:' is the following:</t>
               <t>
                 <figure>
                   <artwork>
@@ -1610,7 +1610,7 @@
 {
   "exp": 1474243500,
   "iss": "uCDN Inc",
-  "cdniuc": "uri-hash:sha-256;2tderfWPa86Ku7YnzW51YUp7dGUjBS/3SW3ELx4hmWY"
+  "cdniuc": "hash:sha-256;2tderfWPa86Ku7YnzW51YUp7dGUjBS/3SW3ELx4hmWY"
 }
 ]]></artwork></figure>
 
@@ -1621,9 +1621,9 @@
         <figure><artwork><![CDATA[
 eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBPdjBlTXExd2N4TGY3V3hJZzA5SmRTWU
 dZRkRPV2tsZHVlYUltZjAifQ.eyJleHAiOjE0NzQyNDM1MDAsImlzcyI6InVDRE4gS
-W5jIiwiY2RuaXVjIjoidXJpLWhhc2g6c2hhLTI1NjsydGRlcmZXUGE4Nkt1N1luelc
-1MVlVcDdkR1VqQlMvM1NXM0VMeDRobVdZIn0.emOAX8a8P8t5JOIUmx6m5plz1EG4P
-HfCRobOxf0-iA5jzI73HNv8vlZr2tcc1m9v2Nw3JgnRYInOPvJ8SH2mbg
+W5jIiwiY2RuaXVjIjoiaGFzaDpzaGEtMjU2OzJ0ZGVyZldQYTg2S3U3WW56VzUxWVV
+wN2RHVWpCUy8zU1czRUx4NGhtV1kifQ.kjP7guJ5RTIKQ1msKzupKex1H33rTtWatm
+xr2gWBMv3e8E0Ccdeq4xZI9CZVLDAjBpdA5OSx8OzrQXPdMXuKfQ
 ]]></artwork></figure>
       </section>
 
@@ -1641,8 +1641,8 @@ HfCRobOxf0-iA5jzI73HNv8vlZr2tcc1m9v2Nw3JgnRYInOPvJ8SH2mbg
 
         <figure><artwork><![CDATA[
 eyJhbGciOiJkaXIiLCJraWQiOiJmLVdianhCQzNkUHVJM2QyNGtQMmhmdm9zN1F6Nj
-g4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..hHQn6LM8Km95O0IE.KgJiy
-DRsW7QBQsDJrmS7Hg.cXRZ8sMJ8PKz3fnj6VXgvw
+g4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..dqkehF7wJXHsngXV.GEx_K
+SyryBD4zRRl_2Y30Q.8E3x5kQe3KWTlyX-5j9wPg
 ]]></artwork></figure>
 
         <t>
@@ -1651,8 +1651,8 @@ DRsW7QBQsDJrmS7Hg.cXRZ8sMJ8PKz3fnj6VXgvw
 
         <figure><artwork><![CDATA[
 eyJhbGciOiJkaXIiLCJraWQiOiJmLVdianhCQzNkUHVJM2QyNGtQMmhmdm9zN1F6Nj
-g4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..ZH1hpBqhB8rgr3fD.3iEkR
-iaFkgwG.nzyjp7bZ3SJlYcDWv9irrQ
+g4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..7lWugCT6Rvx_gHwG.VeE2O
+RPRhlQ6._FuExcqvOPP-2w-vS9m5XQ
 ]]></artwork></figure>
 
         <t>
@@ -1663,18 +1663,18 @@ iaFkgwG.nzyjp7bZ3SJlYcDWv9irrQ
 {
   "aud": "dCDN LLC",
   "sub": "eyJhbGciOiJkaXIiLCJraWQiOiJmLVdianhCQzNkUHVJM2QyNGtQMmhm
-dm9zN1F6Njg4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..ZH1hpBqhB8rg
-r3fD.3iEkRiaFkgwG.nzyjp7bZ3SJlYcDWv9irrQ",
+dm9zN1F6Njg4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..7lWugCT6Rvx_
+gHwG.VeE2ORPRhlQ6._FuExcqvOPP-2w-vS9m5XQ",
   "cdniip": "eyJhbGciOiJkaXIiLCJraWQiOiJmLVdianhCQzNkUHVJM2QyNGtQM
-mhmdm9zN1F6Njg4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..hHQn6LM8K
-m95O0IE.KgJiyDRsW7QBQsDJrmS7Hg.cXRZ8sMJ8PKz3fnj6VXgvw",
+mhmdm9zN1F6Njg4VVRpNmFCMGhOOTk4IiwiZW5jIjoiQTEyOEdDTSJ9..dqkehF7wJ
+XHsngXV.GEx_KSyryBD4zRRl_2Y30Q.8E3x5kQe3KWTlyX-5j9wPg",
   "cdniv": 1,
   "exp": 1474243500,
   "iat": 1474243200,
   "iss": "uCDN Inc",
   "jti": "5DAafLhZAfhsbe",
   "nbf": 1474243200,
-  "cdniuc": "uri-regex:http://cdni\\.example/foo/bar/[0-9]{3}\\.png"
+  "cdniuc": "regex:http://cdni\\.example/foo/bar/[0-9]{3}\\.png"
 }
 ]]></artwork></figure>
 
@@ -1687,16 +1687,16 @@ eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBPdjBlTXExd2N4TGY3V3hJZzA5SmRTWU
 dZRkRPV2tsZHVlYUltZjAifQ.eyJhdWQiOiJkQ0ROIExMQyIsInN1YiI6ImV5SmhiR
 2NpT2lKa2FYSWlMQ0pyYVdRaU9pSm1MVmRpYW5oQ1F6TmtVSFZKTTJReU5HdFFNbWh
 tZG05ek4xRjZOamc0VlZScE5tRkNNR2hPT1RrNElpd2laVzVqSWpvaVFURXlPRWREV
-FNKOS4uWkgxaHBCcWhCOHJncjNmRC4zaUVrUmlhRmtnd0cubnp5anA3YlozU0psWWN
-EV3Y5aXJyUSIsImNkbmlpcCI6ImV5SmhiR2NpT2lKa2FYSWlMQ0pyYVdRaU9pSm1MV
+FNKOS4uN2xXdWdDVDZSdnhfZ0h3Ry5WZUUyT1JQUmhsUTYuX0Z1RXhjcXZPUFAtMnc
+tdlM5bTVYUSIsImNkbmlpcCI6ImV5SmhiR2NpT2lKa2FYSWlMQ0pyYVdRaU9pSm1MV
 mRpYW5oQ1F6TmtVSFZKTTJReU5HdFFNbWhtZG05ek4xRjZOamc0VlZScE5tRkNNR2h
-PT1RrNElpd2laVzVqSWpvaVFURXlPRWREVFNKOS4uaEhRbjZMTThLbTk1TzBJRS5LZ
-0ppeURSc1c3UUJRc0RKcm1TN0hnLmNYUlo4c01KOFBLejNmbmo2VlhndnciLCJjZG5
+PT1RrNElpd2laVzVqSWpvaVFURXlPRWREVFNKOS4uZHFrZWhGN3dKWEhzbmdYVi5HR
+XhfS1N5cnlCRDR6UlJsXzJZMzBRLjhFM3g1a1FlM0tXVGx5WC01ajl3UGciLCJjZG5
 pdiI6MSwiZXhwIjoxNDc0MjQzNTAwLCJpYXQiOjE0NzQyNDMyMDAsImlzcyI6InVDR
 E4gSW5jIiwianRpIjoiNURBYWZMaFpBZmhzYmUiLCJuYmYiOjE0NzQyNDMyMDAsImN
-kbml1YyI6InVyaS1yZWdleDpodHRwOi8vY2RuaVxcLmV4YW1wbGUvZm9vL2Jhci9bM
-C05XXszfVxcLnBuZyJ9.3sKwFFMy7Hlbur1RzkeI0wDKerYXcrmBdfwJG7NP3TWS7a
-s52f8-F-wOFzFEIoX2UX3Z5Dinl6lbCQ__-pBgZw
+kbml1YyI6InJlZ2V4Omh0dHA6Ly9jZG5pXFwuZXhhbXBsZS9mb28vYmFyL1swLTlde
+zN9XFwucG5nIn0.2bXxaf1Hz9he1GcWC_bybOPL6ycygEgvT7JtP2BRsiGSzykEEIj
+SWi9agE9vtuDsOzkbBGgd691XtjrjL-JO_g
 ]]></artwork></figure>
 
       </section>
@@ -1715,7 +1715,7 @@ s52f8-F-wOFzFEIoX2UX3Z5Dinl6lbCQ__-pBgZw
   "cdniets": 30,
   "cdnistt": 1,
   "exp": 1474243500,
-  "cdniuc": "uri-regex:http://cdni\\.example/foo/bar/[0-9]{3}\\.ts"
+  "cdniuc": "regex:http://cdni\\.example/foo/bar/[0-9]{3}\\.ts"
 }
 ]]></artwork></figure>
 
@@ -1726,9 +1726,9 @@ s52f8-F-wOFzFEIoX2UX3Z5Dinl6lbCQ__-pBgZw
         <figure><artwork><![CDATA[
 eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBPdjBlTXExd2N4TGY3V3hJZzA5SmRTWU
 dZRkRPV2tsZHVlYUltZjAifQ.eyJjZG5pZXRzIjozMCwiY2RuaXN0dCI6MSwiZXhwI
-joxNDc0MjQzNTAwLCJjZG5pdWMiOiJ1cmktcmVnZXg6aHR0cDovL2NkbmlcXC5leGF
-tcGxlL2Zvby9iYXIvWzAtOV17M31cXC50cyJ9.fL4S6f4FovPls_N-JBap7CKGsQsi
-Xhds2nFhz3EnIOVfDlrTt3mw6AA6SsHnc2fu6bqZP_3YOdwOYFYjDPTYfg
+joxNDc0MjQzNTAwLCJjZG5pdWMiOiJyZWdleDpodHRwOi8vY2RuaVxcLmV4YW1wbGU
+vZm9vL2Jhci9bMC05XXszfVxcLnRzIn0.J3JFrn3XAS7AJ-Fx1RKA23DiYvI1T6UPo
+GbtAIBjIcV0at19ACAp7T3phz6_co1m3butnzxknJddz3svNQnkkQ
 ]]></artwork></figure>
 
         <t>
@@ -1747,7 +1747,7 @@ Xhds2nFhz3EnIOVfDlrTt3mw6AA6SsHnc2fu6bqZP_3YOdwOYFYjDPTYfg
   "cdniets": 30,
   "cdnistt": 1,
   "exp": 1474243530,
-  "cdniuc": "uri-regex:http://cdni\\.example/foo/bar/[0-9]{3}\\.ts"
+  "cdniuc": "regex:http://cdni\\.example/foo/bar/[0-9]{3}\\.ts"
 }
 ]]></artwork></figure>
 
@@ -1758,9 +1758,9 @@ Xhds2nFhz3EnIOVfDlrTt3mw6AA6SsHnc2fu6bqZP_3YOdwOYFYjDPTYfg
         <figure><artwork><![CDATA[
 eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBPdjBlTXExd2N4TGY3V3hJZzA5SmRTWU
 dZRkRPV2tsZHVlYUltZjAifQ.eyJjZG5pZXRzIjozMCwiY2RuaXN0dCI6MSwiZXhwI
-joxNDc0MjQzNTMwLCJjZG5pdWMiOiJ1cmktcmVnZXg6aHR0cDovL2NkbmlcXC5leGF
-tcGxlL2Zvby9iYXIvWzAtOV17M31cXC50cyJ9.Zi-Xq-0ZrZ5uL2F5YCxZMXWWnaM6
-wS9-x9eRu5UC6WgbMBQ0yH7lJNe7UG_5Ge-QPuRggm9tz1AF4S_Ty8H9Ig
+joxNDc0MjQzNTMwLCJjZG5pdWMiOiJyZWdleDpodHRwOi8vY2RuaVxcLmV4YW1wbGU
+vZm9vL2Jhci9bMC05XXszfVxcLnRzIn0.APth9x43OjTReLxPskceE0MrcO62lKhwI
+Gd7YL6YK3FJiZF8-UXnUIGZIAebLe7R0FwZQv37VUoicEPmqBpaYg
 ]]></artwork></figure>
       </section>
     </section>
