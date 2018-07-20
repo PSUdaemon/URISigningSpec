@@ -520,16 +520,16 @@
             signed JWTs with unsupported CDNI Claim Set versions.</t>
         </section>
         <section anchor="cdnicrit_claim" title="CDNI Critical Claims Set (cdnicrit) claim">
-            <t>CDNI Critical Claims Set (cdnicrit) [optional] - The "crit" (critical) claim
+            <t>CDNI Critical Claims Set (cdnicrit) [optional] - The cdnicrit claim
             indicates that extensions to this specification are being used that
-            MUST be understood and processed.  Its value is a comma separate listing
+            MUST be understood and processed.  Its value is a comma separated listing
             of claims in the Signed JWT that use those extensions.
             If any of the listed extension claims are not understood
             and supported by the recipient, then the Signed JWT is invalid.  Producers
             MUST NOT include claim names defined by this specification, duplicate names, or names that do not
-            occur as claim names within the Signed JWT in the "crit"
-            list.  Producers MUST NOT use the empty list "" as the "crit"
-            value.  Recipients MAY consider the Signed JWT to be invalid if the critical
+            occur as claim names within the Signed JWT in the cdnicrit
+            list.  Producers MUST NOT use the empty list "" as the cdnicrit
+            value.  Recipients MAY consider the Signed JWT to be invalid if the cdnicrit
             list contains any claim names defined by this
             specification or if any other constraints
             on its use are violated.  This claim MUST be understood and processed by implementations.</t>
