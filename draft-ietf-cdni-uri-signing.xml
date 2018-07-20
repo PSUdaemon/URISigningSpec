@@ -401,9 +401,7 @@
         "mandatory" identifiers in square brackets refer to whether or
         not a given claim MUST be present in a URI Signing JWT.)
         A CDN MUST be able to parse and process all of the claims
-        listed below.  If the signed JWT contains any other claims which the
-        CDN does not understand (i.e., is unable to parse and
-        process), the CDN MUST reject the request.</t>
+        listed below.</t>
 
         <t>Note: See the <xref target="security">Security
         Considerations</xref> section on the limitations of using an
