@@ -521,6 +521,21 @@
             to be "1". For future versions this claim will be mandatory. Implementations MUST reject
             signed JWTs with unsupported CDNI Claim Set versions.</t>
         </section>
+        <section anchor="cdnicrit_claim" title="CDNI Critical Claims Set (cdnicrit) claim">
+            <t>CDNI Critical Claims Set (cdnicrit) [optional] - The "crit" (critical) claim
+            indicates that extensions to this specification are being used that
+            MUST be understood and processed.  Its value is a comma separate listing
+            of claims in the Signed JWT that use those extensions.
+            If any of the listed extension claims are not understood
+            and supported by the recipient, then the Signed JWT is invalid.  Producers
+            MUST NOT include claim names defined by this specification, duplicate names, or names that do not
+            occur as claim names within the Signed JWT in the "crit"
+            list.  Producers MUST NOT use the empty list "" as the "crit"
+            value.  Recipients MAY consider the Signed JWT to be invalid if the critical
+            list contains any claim names defined by this
+            specification or if any other constraints
+            on its use are violated.  This claim MUST be understood and processed by implementations.</t>
+        </section>
         <section anchor="cdniip_claim" title="Client IP (cdniip) claim">
             <t>Client IP (cdniip) [optional] IP address, or IP prefix, for
             which the Signed URI is valid. This is represented in CIDR
@@ -1331,6 +1346,17 @@
 	      <t>Claim Description: CDNI Claim Set Version</t>
 	      <t>Change Controller: IESG</t>
 	      <t>Specification Document(s): <xref target="cdniv_claim"/> of [[ this specification ]]</t>
+	    </list>
+	  </t>
+	  <?rfc subcompact="no"?>
+
+	  <t>
+	    <?rfc subcompact="yes"?>
+	    <list style="symbols">
+	      <t>Claim Name: <spanx style="verb">cdnicrit</spanx></t>
+	      <t>Claim Description: CDNI Critical Claims Set</t>
+	      <t>Change Controller: IESG</t>
+	      <t>Specification Document(s): <xref target="cdnicrit_claim"/> of [[ this specification ]]</t>
 	    </list>
 	  </t>
 	  <?rfc subcompact="no"?>
