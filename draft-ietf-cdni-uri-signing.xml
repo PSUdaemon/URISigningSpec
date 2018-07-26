@@ -349,7 +349,7 @@
 
     <section anchor="jwt_profile" title="JWT Format and Processing Requirements">
       <t>The concept behind URI Signing is based on embedding a signed <xref target="RFC7519">JSON Web Token (JWT)
-    </xref> in the UA request: The signed JWT contains a number of claims that can be validated to ensure the
+    </xref> in an <xref target="RFC7230">http or https URI</xref> (section 2.7). The signed JWT contains a number of claims that can be validated to ensure the
       UA has legitimate access to the content.</t>
 
       <t>This document specifies the following attribute for embedding a signed JWT in a Target CDN URI or Redirection URI:</t>
@@ -574,9 +574,9 @@
         </section>
         <section anchor="uri_container_forms" title="URI Container Forms">
           <t>The URI Container (cdniuc) claim takes one of the following forms. More forms may be added in the future to extend the capabilities.</t>
-          <t>Before comparing a URI against this container, the following steps MUST be performed:
+          <t>Before utilizing a URI with this container, the following steps MUST be performed:
           <list style="symbols">
-            <t>Remove the signed JWT from
+            <t>Prior to validation, remove the signed JWT from
               the URI. This removal is only for the purpose of determining if the URI matches; all
               other purposes will use the original URI. If the signed JWT is terminated by anything
               other than a sub-delimiter (as definined in <xref target="RFC3986"/> Section 2.2),
@@ -585,12 +585,13 @@
               JWT will be removed, inclusive. Otherwise, everything from the first character of the
               URI Signing Package Attribute to the sub-delimiter that terminates the signed
               JWT will be removed, inclusive.</t>
-            <t>Normalize the URI according to <xref target="RFC3986"/> sections 6.2.2 and 6.2.3.</t>
+            <t>Normalize the URI according to <xref target="RFC7230">section 2.7.3</xref> and
+              <xref target="RFC3986"/> sections 6.2.2 and 6.2.3. This applies to both generation
+              and validation of the signed JWT.</t>
           </list></t>
 
           <section anchor="uri_container_forms_hash" title="URI Hash Container (hash:)">
-              <t>Prefixed with 'hash:', this string is a URL Segment form (<xref target="RFC6920"/> Section 5) of the URI. Before generating the hash, the URI MUST
-                be normalized according to <xref target="RFC3986"/> sections 6.2.2 and 6.2.3.</t>
+              <t>Prefixed with 'hash:', this string is a URL Segment form (<xref target="RFC6920"/> Section 5) of the URI.</t>
           </section>
 
           <section anchor="uri_container_forms_regex" title="URI Regular Expression Container (regex:)">
@@ -657,7 +658,7 @@
 
       <section anchor="uri_signing_mechanism" title="Signed Token Renewal mechanism">
         <t>In order to allow for effective access control of segmented content, the
-        URI signing scheme defined in this section is based on a mechanism
+        URI signing mechanism defined in this section is based on a method
         through which subsequent segment requests can be linked together.
         As part of the JWT validation procedure, the CDN can generate a new
         signed JWT that the UA can use to do a subsequent request. More specifically,
@@ -1479,6 +1480,8 @@
       <?rfc include='reference.RFC.8174'?>
 
       <?rfc include='reference.RFC.7937'?>
+
+      <?rfc include='reference.RFC.7230'?>
 
       <?rfc include='reference.RFC.7159'?>
 
