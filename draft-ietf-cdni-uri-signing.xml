@@ -608,7 +608,10 @@
           </section>
 
           <section anchor="uri_container_forms_regex" title="URI Regular Expression Container (regex:)">
-              <t>Prefixed with 'regex:', this string is any <xref target="PCRE839">PCRE</xref> compatible regular expression used to match against the requested URI.</t>
+              <t>Prefixed with 'regex:', this string is any <xref target="POSIX.1">POSIX</xref> Section 9 Extended
+              Regular Expression compatible regular expression used to match against the requested URI.
+              These regular expressions MUST be evaluated in the POSIX locale (<xref target="POSIX.1">POSIX</xref> Section 7.2).
+              </t>
 
               <t>Note: Because '\' has special meaning in JSON <xref target="RFC7159"/> as the escape character within JSON strings, the regular expression character '\' MUST be escaped as '\\'.</t>
 
@@ -1543,13 +1546,13 @@
 
       <?rfc include='reference.RFC.8216'?>
 
-      <reference anchor="PCRE839" target="http://www.pcre.org/">
+      <reference anchor="POSIX.1" target="http://pubs.opengroup.org/onlinepubs/9699919799/">
         <front>
-          <title>Perl Compatible Regular Expressions</title>
-          <author surname="Hazel" initials="P"/>
-          <date day="17" month="June" year="2016"/>
+          <title>The Open Group Base Specifications Issue 7</title>
+          <author surname="IEEE"/>
+          <date day="31" month="Jan" year="2018"/>
         </front>
-        <seriesInfo name="Version" value="8.39"/>
+        <seriesInfo name="IEEE Std" value="1003.1 2018 Edition"/>
       </reference>
 
       <reference anchor="IANA.JWT.Claims" target="http://www.iana.org/assignments/jwt">
