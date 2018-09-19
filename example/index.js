@@ -57,12 +57,14 @@ var samples = {
   "chained-1": {
     "cdniets": 30,
     "cdnistt": 1,
+    "cdnistd": 2,
     "exp": 1474243500,
     "cdniuc": "regex:http://cdni\\.example/foo/bar/[0-9]{3}\\.ts"
   },
   "chained-2": {
     "cdniets": 30,
     "cdnistt": 1,
+    "cdnistd": 2,
     "exp": 1474243530,
     "cdniuc": "regex:http://cdni\\.example/foo/bar/[0-9]{3}\\.ts"
   }
