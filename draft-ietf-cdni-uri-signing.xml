@@ -585,6 +585,26 @@
           Values for this claim can be defined in <xref target="sec.IANA.cdnistt"/>. If using
           this claim you MUST also specify a CDNI Expiration Time Setting (cdniets) as noted above.</t>
         </section>
+        <section anchor="cdnistd_claim" title="CDNI Signed Token Depth (cdnistd) claim">
+          <t>CDNI Signed Token Depth (cdnistd) [optional] - The CDNI Signed Token Depth (cdnistd) claim is used to
+          associate a subsequent signed JWT generated as the result of a CDNI Signed Token Transport claim
+          with a specific URI subset. Its type is a JSON integer. Signed JWTs MUST NOT use a negative
+          value for the CDNI Signed Token Depth claim.</t>
+          <t>If the transport used for Signed Token Transport allows the CDN to associate the path component of a
+          URI with tokens, the CDNI Signed Token Depth value is the number of path segments that should be
+          considered significant for this association. A CDNI Signed Token Depth of zero means that the
+          client SHOULD be directed to return the token with requests for any path. If the CDNI Signed
+          Token Depth is greater than zero, then the client SHOULD be directed to return the token for
+          future requests wherein the first CDNI Signed Token Depth segments of the path match the first
+          CDNI Signed Token Depth segments of the signed URI path. This matching MUST use the URI with the
+          token removed, as specified in <xref target="uri_container_forms"/>.</t>
+          <t>If the URI path to match contains fewer segments than the CDNI Signed Token Depth claim, a signed JWT
+          MUST NOT be generated for the purposes of Signed Token Renewal. If the CDNI Signed Token Depth
+          claim is omitted, it means the same thing as if its value were zero. If the received signed JWT
+          contains a CDNI Signed Token Depth claim, then any JWT subsequently generated for CDNI
+          redirection or Signed Token Transport MUST also contain a CDNI Signed Token Depth claim, and the
+          value MUST be the same as in the received signed JWT.</t>
+        </section>
         <section anchor="uri_container_forms" title="URI Container Forms">
           <t>The URI Container (cdniuc) claim takes one of the following forms. More forms may be added in the future to extend the capabilities.</t>
           <t>Before utilizing a URI with this container, the following steps MUST be performed:
@@ -1328,82 +1348,82 @@
 
       <section anchor="ClaimsReg" title="JSON Web Token Claims Registration">
 
-	<t>
-	  This specification registers the following Claims
-	  in the IANA "JSON Web Token Claims" registry
-	  <xref target="IANA.JWT.Claims"/>
-	  established by <xref target="RFC7519"/>.
-	</t>
+        <t>
+          This specification registers the following Claims
+          in the IANA "JSON Web Token Claims" registry
+          <xref target="IANA.JWT.Claims"/>
+          established by <xref target="RFC7519"/>.
+        </t>
 
-	<section anchor='ClaimsContents' title='Registry Contents'>
+        <section anchor='ClaimsContents' title='Registry Contents'>
 
-	  <t>
-	    <?rfc subcompact="yes"?>
-	    <list style="symbols">
-	      <t>Claim Name: <spanx style="verb">cdniv</spanx></t>
-	      <t>Claim Description: CDNI Claim Set Version</t>
-	      <t>Change Controller: IESG</t>
-	      <t>Specification Document(s): <xref target="cdniv_claim"/> of [[ this specification ]]</t>
-	    </list>
-	  </t>
-	  <?rfc subcompact="no"?>
+          <t>
+            <?rfc subcompact="yes"?>
+            <list style="symbols">
+              <t>Claim Name: <spanx style="verb">cdniv</spanx></t>
+              <t>Claim Description: CDNI Claim Set Version</t>
+              <t>Change Controller: IESG</t>
+              <t>Specification Document(s): <xref target="cdniv_claim"/> of [[ this specification ]]</t>
+            </list>
+          </t>
+          <?rfc subcompact="no"?>
 
-	  <t>
-	    <?rfc subcompact="yes"?>
-	    <list style="symbols">
-	      <t>Claim Name: <spanx style="verb">cdnicrit</spanx></t>
-	      <t>Claim Description: CDNI Critical Claims Set</t>
-	      <t>Change Controller: IESG</t>
-	      <t>Specification Document(s): <xref target="cdnicrit_claim"/> of [[ this specification ]]</t>
-	    </list>
-	  </t>
-	  <?rfc subcompact="no"?>
+          <t>
+            <?rfc subcompact="yes"?>
+            <list style="symbols">
+              <t>Claim Name: <spanx style="verb">cdnicrit</spanx></t>
+              <t>Claim Description: CDNI Critical Claims Set</t>
+              <t>Change Controller: IESG</t>
+              <t>Specification Document(s): <xref target="cdnicrit_claim"/> of [[ this specification ]]</t>
+            </list>
+          </t>
+          <?rfc subcompact="no"?>
 
-	  <t>
-	    <?rfc subcompact="yes"?>
-	    <list style="symbols">
-	      <t>Claim Name: <spanx style="verb">cdniip</spanx></t>
-	      <t>Claim Description: CDNI IP Address</t>
-	      <t>Change Controller: IESG</t>
-	      <t>Specification Document(s): <xref target="cdniip_claim"/> of [[ this specification ]]</t>
-	    </list>
-	  </t>
-	  <?rfc subcompact="no"?>
+          <t>
+            <?rfc subcompact="yes"?>
+            <list style="symbols">
+              <t>Claim Name: <spanx style="verb">cdniip</spanx></t>
+              <t>Claim Description: CDNI IP Address</t>
+              <t>Change Controller: IESG</t>
+              <t>Specification Document(s): <xref target="cdniip_claim"/> of [[ this specification ]]</t>
+            </list>
+          </t>
+          <?rfc subcompact="no"?>
 
-	  <t>
-	    <?rfc subcompact="yes"?>
-	    <list style="symbols">
-	      <t>Claim Name: <spanx style="verb">cdniuc</spanx></t>
-	      <t>Claim Description: CDNI URI Container</t>
-	      <t>Change Controller: IESG</t>
-	      <t>Specification Document(s): <xref target="cdniuc_claim"/> of [[ this specification ]]</t>
-	    </list>
-	  </t>
-	  <?rfc subcompact="no"?>
+          <t>
+            <?rfc subcompact="yes"?>
+            <list style="symbols">
+              <t>Claim Name: <spanx style="verb">cdniuc</spanx></t>
+              <t>Claim Description: CDNI URI Container</t>
+              <t>Change Controller: IESG</t>
+              <t>Specification Document(s): <xref target="cdniuc_claim"/> of [[ this specification ]]</t>
+            </list>
+          </t>
+          <?rfc subcompact="no"?>
 
-	  <t>
-	    <?rfc subcompact="yes"?>
-	    <list style="symbols">
-	      <t>Claim Name: <spanx style="verb">cdniets</spanx></t>
-	      <t>Claim Description: CDNI Expiration Time Setting for Signed Token Renewal</t>
-	      <t>Change Controller: IESG</t>
-	      <t>Specification Document(s): <xref target="cdniets_claim"/> of [[ this specification ]]</t>
-	    </list>
-	  </t>
-	  <?rfc subcompact="no"?>
+          <t>
+            <?rfc subcompact="yes"?>
+            <list style="symbols">
+              <t>Claim Name: <spanx style="verb">cdniets</spanx></t>
+              <t>Claim Description: CDNI Expiration Time Setting for Signed Token Renewal</t>
+              <t>Change Controller: IESG</t>
+              <t>Specification Document(s): <xref target="cdniets_claim"/> of [[ this specification ]]</t>
+            </list>
+          </t>
+          <?rfc subcompact="no"?>
 
-	  <t>
-	    <?rfc subcompact="yes"?>
-	    <list style="symbols">
-	      <t>Claim Name: <spanx style="verb">cdnistt</spanx></t>
-	      <t>Claim Description: CDNI Signed Token Transport Method for Signed Token Renewal</t>
-	      <t>Change Controller: IESG</t>
-	      <t>Specification Document(s): <xref target="cdnistt_claim"/> of [[ this specification ]]</t>
-	    </list>
-	  </t>
-	  <?rfc subcompact="no"?>
+          <t>
+            <?rfc subcompact="yes"?>
+            <list style="symbols">
+              <t>Claim Name: <spanx style="verb">cdnistt</spanx></t>
+              <t>Claim Description: CDNI Signed Token Transport Method for Signed Token Renewal</t>
+              <t>Change Controller: IESG</t>
+              <t>Specification Document(s): <xref target="cdnistt_claim"/> of [[ this specification ]]</t>
+            </list>
+          </t>
+          <?rfc subcompact="no"?>
 
-	</section>
+        </section>
       </section>
     </section>
 
@@ -1558,7 +1578,7 @@
           <author>
             <organization>IANA</organization>
           </author>
-	  <date/>
+          <date/>
         </front>
       </reference>
 
@@ -1570,7 +1590,7 @@
           <author>
             <organization>ISO</organization>
           </author>
-	  <date month="05" year="2014"/>
+          <date month="05" year="2014"/>
         </front>
         <seriesInfo name="ISO/IEC" value="23009-1:2014"/>
         <seriesInfo name="Edition" value="2"/>
