@@ -616,7 +616,7 @@
               <t>
                 <figure>
                   <artwork>
-[^:]*\\://[^/]*/folder/content/quality_[^/]*/segment.{3}\\.mp4(\?.*)?
+[^:]*\\://[^/]*/folder/content/quality_[^/]*/segment.{3}\\.mp4(\\?.*)?
                   </artwork>
                 </figure>
               </t>
