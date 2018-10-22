@@ -1442,6 +1442,17 @@
           </t>
           <?rfc subcompact="no"?>
 
+          <t>
+            <?rfc subcompact="yes"?>
+            <list style="symbols">
+              <t>Claim Name: <spanx style="verb">cdnistd</spanx></t>
+              <t>Claim Description: CDNI Signed Token Depth</t>
+              <t>Change Controller: IESG</t>
+              <t>Specification Document(s): <xref target="cdnistd_claim"/> of [[ this specification ]]</t>
+            </list>
+          </t>
+          <?rfc subcompact="no"?>
+
         </section>
       </section>
     </section>
