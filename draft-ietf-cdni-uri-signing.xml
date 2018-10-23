@@ -607,7 +607,8 @@
           with a specific URI subset. Its type is a JSON integer. Signed JWTs MUST NOT use a negative
           value for the CDNI Signed Token Depth claim.</t>
           <t>If the transport used for Signed Token Transport allows the CDN to associate the path component of a
-          URI with tokens (e.g., an HTTP Cookie Path as described in section 4.1.2.4 of <xref target="RFC6265"/>), the CDNI Signed Token Depth value is the number of path segments that should be
+          URI with tokens (e.g., an HTTP Cookie Path as described in section 4.1.2.4 of <xref target="RFC6265"/>),
+          the CDNI Signed Token Depth value is the number of path segments that should be
           considered significant for this association. A CDNI Signed Token Depth of zero means that the
           client SHOULD be directed to return the token with requests for any path. If the CDNI Signed
           Token Depth is greater than zero, then the client SHOULD be directed to return the token for
