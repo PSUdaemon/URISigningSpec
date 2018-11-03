@@ -621,6 +621,25 @@
           redirection or Signed Token Transport MUST also contain a CDNI Signed Token Depth claim, and the
           value MUST be the same as in the received signed JWT.</t>
         </section>
+        <section anchor="cdnierr_claim" title="CDNI Error Redirect URI (cdnierr) claim">
+          <t>CDNI Error Redirect URI (cdnierr) [optional] - The location to which the client
+          MUST be redirected if the validation of a signed JWT fails for a reason other than
+          presenting an invalid signature. If a well-formed signed JWT would be rejected for
+          a reason other than an invalid signature (that is, a reason that would be logged
+          as code other than 400 or 500 according to <xref target="logging"/>), instead of
+          returning an appropriate error code, the CDN must return HTTP Code 303 with a
+          Location parameter that redirects the client to the CDNI Error Redirect URI, unless
+          the CDNI Error Redirect Code is present, non-zero, and specifies redirection, in
+          which case that value MUST be used for the redirection response. A server MUST NOT
+          redirect a client to the CDNI Error Redirect URI unless that client presents a
+          signed JWT with a valid signature.<t>
+        </section>
+        <section anchor="cdnierc_claim" title="CDNI Error Redirect Code (cdnierc) claim">
+          <t>CDNI Error Redirect Code (cdnierc) [optional] - The HTTP Code to use for redirection
+          if required by the CDNI Error Redirect URI. Its type is a JSON integer. A signed JWT
+          MUST be one of 301, 302, 303, 305, or 307. If this claim is zero or missing, it is
+          treated as though it were 303, as described in <xref target="cdnierr_claim"/>.</t>
+        </section>
         <section anchor="uri_container_forms" title="URI Container Forms">
           <t>The URI Container (cdniuc) claim takes one of the following forms. More forms may be added in the future to extend the capabilities.</t>
           <t>Before utilizing a URI with this container, the following steps MUST be performed:
