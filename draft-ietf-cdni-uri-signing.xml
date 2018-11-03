@@ -988,7 +988,7 @@
 
         <t>The URI signing method described below is based on the following
         steps (assuming HTTP redirection, iterative request routing, and a CDN
-        path with two CDNs). Note that uCDN and uCDN are
+        path with two CDNs). Note that CDN and uCDN are
         used exchangeably.</t>
 
         <figure title="Figure 3: HTTP-based Request Routing with URI Signing">
