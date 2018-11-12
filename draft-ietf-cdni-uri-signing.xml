@@ -392,7 +392,7 @@
         <t>a reserved character (as defined in <xref target="RFC3986"/> Section 2.2),</t>
         <t>the URI Signing Package Attribute name,</t>
         <t>if the last character of the URI Signing Package Attribute name is not a reserved character, an equal symbol ('='),</t>
-        <t>and a sequence of non-reserved characters that will be interpreted as a signed JWT,</t>
+        <t>and a sequence of zero or more non-reserved characters that will be interpreted as a signed JWT,</t>
         <t>terminated by either a reserved character or the end of the URI.</t>
      </list>
      The first such match will be taken to provide the signed JWT; the URI will not be searched
