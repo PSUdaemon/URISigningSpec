@@ -124,7 +124,7 @@
 
       <t><list style="empty">
         <t>The CSP may also trust the CDN operator to perform actions such as
-        ..., and to enforce per-request authorization performed by the CSP using
+        delegating traffic to additional downstream CDNs, and to enforce per-request authorization performed by the CSP using
         techniques such as URI signing.</t>
       </list></t>
 
@@ -458,7 +458,9 @@
         <section anchor="aud_claim" title="Audience (aud) claim">
             <t>Audience (aud) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.3 MUST be followed.
             This claim is used to ensure that the CDN verifing the JWT is an intended recipient
-            of the request.</t>
+            of the request. It should be appropriately set to an identiy that the validating CDN understands itself
+            to be capable of validating on behalf of. This may be the CSP identity, or any CDN in the chain and can
+            also be modified as needed by any entity in the chain as long as they can generate a valid signature.</t>
         </section>
         <section anchor="exp_claim" title="Expiry Time (exp) claim">
             <t>Expiry Time (exp) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.4 MUST be followed, though URI Signing implementations MUST NOT allow for any time synchronization "leeway".
@@ -468,7 +470,7 @@
             time-synchronized. It is RECOMMENDED to use <xref target="RFC5905">NTP</xref> for time synchronization.
             If the CDN verifying the signed JWT does not support
             Expiry Time verification, or if the Expiry Time in the
-            signed JWT corresponds to a time earlier than the time of
+            signed JWT corresponds to a time equal to or earlier than the time of
             the content request, the CDN MUST reject the
             request.
             If the received signed JWT contains a Expiry Time claim, then any
@@ -554,7 +556,7 @@
         <section anchor="cdniip_claim" title="Client IP (cdniip) claim">
             <t>Client IP (cdniip) [optional] - The Client IP (cdniip) claim hold an IP address or IP prefix for
             which the Signed URI is valid. This is represented in CIDR
-            notation, with dotted decimal format for IPv4 or canonical text
+            notation, with dotted decimal format for <xref target="RFC0791">IPv4 addresses</xref> or canonical text
             representation for <xref target="RFC5952">IPv6 addresses</xref>.
             The request MUST be rejected if sourced from a client outside of the
             specified IP range. Since the client IP is considered
@@ -578,7 +580,7 @@
             <t>URI Container (cdniuc) [optional] - The URI Container (cdniuc)
             holds the URI representation before a URI Signing Package is
             added. This representation can take one of several forms detailed in
-            <xref target="uri_container_forms"/>. If the URI regex in the signed
+            <xref target="uri_container_forms"/>. If the URI Container used in the signed
             JWT does not match the URI of the content request,  the CDN verifying the
             signed JWT MUST reject the request. When comparing the URI, the percent encoded
             form as defined in <xref target="RFC3986"/> Section 2.1 MUST be used. When
@@ -934,13 +936,28 @@
                     because of Client IP enforcement</t>
 
                     <t>"403" : signed JWT verification performed and rejected
-                    because of URI Regular Expression enforcement</t>
+                    because of URI Container enforcement</t>
 
                     <t>"404" : signed JWT verification performed and rejected
                     because of Issuer enforcement</t>
 
                     <t>"405" : signed JWT verification performed and rejected
                     because of Not Before enforcement</t>
+
+                    <t>"406" : signed JWT verification performed and rejected
+                    because of Subject enforcement</t>
+
+                    <t>"407" : signed JWT verification performed and rejected
+                    because of Audience enforcement</t>
+
+                    <t>"408" : signed JWT verification performed and rejected
+                    because of Nonce enforcement</t>
+
+                    <t>"409" : signed JWT verification performed and rejected
+                    because of Version enforcement</t>
+
+                    <t>"410" : signed JWT verification performed and rejected
+                    because of Critical Extention enforcement</t>
 
                     <t>"500" : unable to perform signed JWT verification
                     because of malformed URI</t>
@@ -1362,9 +1379,6 @@
 
         <t>[RFC Editor: Please replace RFCthis with the published RFC
         number for this document.]</t>
-
-        <t>[Ed Note: are there any special instructions to the
-        designated expert reviewer?]</t>
       </section>
 
       <section anchor="ClaimsReg" title="JSON Web Token Claims Registration">
@@ -1570,30 +1584,12 @@
       <?rfc include='reference.RFC.6920'?>
 
       <?rfc include='reference.RFC.8126'?>
-    </references>
 
-    <references title="Informative References">
-      <?rfc include='reference.RFC.6707'?>
+      <?rfc include='reference.RFC.0791'?>
 
       <?rfc include='reference.RFC.3986'?>
 
-      <?rfc include='reference.RFC.7336'?>
-
-      <?rfc include='reference.RFC.7337'?>
-
-      <?rfc include='reference.RFC.8008'?>
-
-      <?rfc include='reference.RFC.7975'?>
-
       <?rfc include='reference.RFC.5952'?>
-
-      <?rfc include='reference.RFC.6983'?>
-
-      <?rfc include='reference.RFC.5905'?>
-
-      <?rfc include='reference.RFC.7517'?>
-
-      <?rfc include='reference.RFC.8216'?>
 
       <?rfc include='reference.RFC.6265'?>
 
@@ -1605,6 +1601,26 @@
         </front>
         <seriesInfo name="IEEE Std" value="1003.1 2018 Edition"/>
       </reference>
+    </references>
+
+    <references title="Informative References">
+      <?rfc include='reference.RFC.6707'?>
+
+      <?rfc include='reference.RFC.7336'?>
+
+      <?rfc include='reference.RFC.7337'?>
+
+      <?rfc include='reference.RFC.8008'?>
+
+      <?rfc include='reference.RFC.7975'?>
+
+      <?rfc include='reference.RFC.6983'?>
+
+      <?rfc include='reference.RFC.5905'?>
+
+      <?rfc include='reference.RFC.7517'?>
+
+      <?rfc include='reference.RFC.8216'?>
 
       <reference anchor="IANA.JWT.Claims" target="http://www.iana.org/assignments/jwt">
         <front>
