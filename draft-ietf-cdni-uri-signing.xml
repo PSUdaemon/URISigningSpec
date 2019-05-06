@@ -458,9 +458,8 @@
         <section anchor="aud_claim" title="Audience (aud) claim">
             <t>Audience (aud) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.3 MUST be followed.
             This claim is used to ensure that the CDN verifing the JWT is an intended recipient
-            of the request. It should be appropriately set to an identiy that the validating CDN understands itself
-            to be capable of validating on behalf of. This may be the CSP identity, or any CDN in the chain and can
-            also be modified as needed by any entity in the chain as long as they can generate a valid signature.</t>
+            of the request. The claim should contain an identity on behalf of whom the CDN can verify the token (e.g.,
+            the CSP or any uCDN in the chain).  A dCDN MAY modify the claim as long it can generate a valid signature.</t>
         </section>
         <section anchor="exp_claim" title="Expiry Time (exp) claim">
             <t>Expiry Time (exp) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.4 MUST be followed, though URI Signing implementations MUST NOT allow for any time synchronization "leeway".
@@ -930,34 +929,37 @@
                     because of incorrect signature</t>
 
                     <t>"401" : signed JWT verification performed and rejected
-                    because of Expiration Time enforcement</t>
+                    because of Issuer enforcement</t>
 
                     <t>"402" : signed JWT verification performed and rejected
-                    because of Client IP enforcement</t>
+                    because of Subject enforcement</t>
 
                     <t>"403" : signed JWT verification performed and rejected
-                    because of URI Container enforcement</t>
+                    because of Audience enforcement</t>
 
                     <t>"404" : signed JWT verification performed and rejected
-                    because of Issuer enforcement</t>
+                    because of Expiration Time enforcement</t>
 
                     <t>"405" : signed JWT verification performed and rejected
                     because of Not Before enforcement</t>
 
                     <t>"406" : signed JWT verification performed and rejected
-                    because of Subject enforcement</t>
+                    because of Issued At enforcement</t>
 
                     <t>"407" : signed JWT verification performed and rejected
-                    because of Audience enforcement</t>
-
-                    <t>"408" : signed JWT verification performed and rejected
                     because of Nonce enforcement</t>
 
-                    <t>"409" : signed JWT verification performed and rejected
+                    <t>"408" : signed JWT verification performed and rejected
                     because of Version enforcement</t>
 
-                    <t>"410" : signed JWT verification performed and rejected
+                    <t>"409" : signed JWT verification performed and rejected
                     because of Critical Extention enforcement</t>
+
+                    <t>"410" : signed JWT verification performed and rejected
+                    because of Client IP enforcement</t>
+
+                    <t>"411" : signed JWT verification performed and rejected
+                    because of URI Container enforcement</t>
 
                     <t>"500" : unable to perform signed JWT verification
                     because of malformed URI</t>
