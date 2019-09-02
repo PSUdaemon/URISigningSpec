@@ -892,7 +892,11 @@
       "enforce": true,
       "issuers": ["csp", "ucdn1", "ucdn2"],
       "package-attribute": "usp",
-      "jwt-header": "1234abcd"
+      "jwt-header":
+        {
+            "alg": "ES256",
+            "kid": "P5UpOv0eMq1wcxLf7WxIg09JdSYGYFDOWkldueaImf0"
+        }
     }
 }
 ]]>
@@ -919,51 +923,7 @@
 
                 <t>field value: this characterises the URI signing verification
                 performed by the Surrogate on the request. The allowed values
-                are:<list>
-                    <t>"000" : no signed JWT verification performed</t>
-
-                    <t>"200" : signed JWT verification performed and
-                    verified</t>
-
-                    <t>"400" : signed JWT verification performed and rejected
-                    because of incorrect signature</t>
-
-                    <t>"401" : signed JWT verification performed and rejected
-                    because of Issuer enforcement</t>
-
-                    <t>"402" : signed JWT verification performed and rejected
-                    because of Subject enforcement</t>
-
-                    <t>"403" : signed JWT verification performed and rejected
-                    because of Audience enforcement</t>
-
-                    <t>"404" : signed JWT verification performed and rejected
-                    because of Expiration Time enforcement</t>
-
-                    <t>"405" : signed JWT verification performed and rejected
-                    because of Not Before enforcement</t>
-
-                    <t>"406" : signed JWT verification performed and rejected
-                    because of Issued At enforcement</t>
-
-                    <t>"407" : signed JWT verification performed and rejected
-                    because of Nonce enforcement</t>
-
-                    <t>"408" : signed JWT verification performed and rejected
-                    because of Version enforcement</t>
-
-                    <t>"409" : signed JWT verification performed and rejected
-                    because of Critical Extention enforcement</t>
-
-                    <t>"410" : signed JWT verification performed and rejected
-                    because of Client IP enforcement</t>
-
-                    <t>"411" : signed JWT verification performed and rejected
-                    because of URI Container enforcement</t>
-
-                    <t>"500" : unable to perform signed JWT verification
-                    because of malformed URI</t>
-                  </list></t>
+                are registered in <xref target="sec.IANA.field.s-uri-signing.values"/>.</t>
 
                 <t>occurrence: there MUST be zero or exactly one instance of
                 this field.</t>
@@ -1350,6 +1310,80 @@
         <t>[RFC Editor: Please replace RFCthis with the published RFC
         number for this document.]</t>
 
+      </section>
+
+      <section anchor="sec.IANA.field.s-uri-signing.values" title="CDNI Logging Field (s-uri-signing) Values">
+        <t>This document requests the registration of the following CDNI
+        Logging Field values under the IANA "CDNI Logging Field (s-uri-signing) Values" registry:</t>
+
+        <texttable>
+          <ttcol align="left">Value</ttcol>
+          <ttcol align="left">Reference</ttcol>
+          <ttcol align="left">Description</ttcol>
+
+          <c>000</c>
+          <c>RFCthis</c>
+          <c>No signed JWT verification performed</c>
+
+          <c>200</c>
+          <c>RFCthis</c>
+          <c>Signed JWT verification performed and verified</c>
+
+          <c>400</c>
+          <c>RFCthis</c>
+          <c>Signed JWT verification performed and rejected because of incorrect signature</c>
+
+          <c>401</c>
+          <c>RFCthis</c>
+          <c>Signed JWT verification performed and rejected because of Issuer enforcement</c>
+
+          <c>402</c>
+          <c>RFCthis</c>
+          <c>Signed JWT verification performed and rejected because of Subject enforcement</c>
+
+          <c>403</c>
+          <c>RFCthis</c>
+          <c>Signed JWT verification performed and rejected because of Audience enforcement</c>
+
+          <c>404</c>
+          <c>RFCthis</c>
+          <c>Signed JWT verification performed and rejected because of Expiration Time enforcement</c>
+
+          <c>405</c>
+          <c>RFCthis</c>
+          <c>Signed JWT verification performed and rejected because of Not Before enforcement</c>
+
+          <c>406</c>
+          <c>RFCthis</c>
+          <c>Signed JWT verification performed and rejected because of Issued At enforcement</c>
+
+          <c>407</c>
+          <c>RFCthis</c>
+          <c>Signed JWT verification performed and rejected because of Nonce enforcement</c>
+
+          <c>408</c>
+          <c>RFCthis</c>
+          <c>Signed JWT verification performed and rejected because of Version enforcement</c>
+
+          <c>409</c>
+          <c>RFCthis</c>
+          <c>Signed JWT verification performed and rejected because of Critical Extention enforcement</c>
+
+          <c>410</c>
+          <c>RFCthis</c>
+          <c>Signed JWT verification performed and rejected because of Client IP enforcement</c>
+
+          <c>411</c>
+          <c>RFCthis</c>
+          <c>Signed JWT verification performed and rejected because of URI Container enforcement</c>
+
+          <c>500</c>
+          <c>RFCthis</c>
+          <c>Unable to perform signed JWT verification because of malformed URI</c>
+        </texttable>
+
+        <t>[RFC Editor: Please replace RFCthis with the published RFC
+        number for this document.]</t>
       </section>
 
       <section anchor="sec.IANA.cdnistt"
