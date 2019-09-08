@@ -1312,9 +1312,13 @@
 
       </section>
 
-      <section anchor="sec.IANA.field.s-uri-signing.values" title="CDNI Logging Field (s-uri-signing) Values">
-        <t>This document requests the registration of the following CDNI
-        Logging Field values under the IANA "CDNI Logging Field (s-uri-signing) Values" registry:</t>
+      <section anchor="sec.IANA.field.s-uri-signing.values" title="CDNI URI Signing Verification Code">
+        <t>The IANA is requested to create a new "CDNI URI Signing Verification Code" subregistry, in the
+        "Content Delivery Networks Interconnection (CDNI) Parameters" registry. The "CDNI URI Signing Verification Code"
+        namespace defines the valid values associated with the s-uri-signing CDNI Logging Field. The CDNI URI Signing
+        Verification Code is a 3DIGIT value as defined in <xref target="logging"/>. Additions to the CDNI URI Signing
+        Verification Code namespace will conform to the "Specification Required" policy as defined in
+        <xref target="RFC8126"/>.</t>
 
         <texttable>
           <ttcol align="left">Value</ttcol>
