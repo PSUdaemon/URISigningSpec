@@ -1318,7 +1318,7 @@
         namespace defines the valid values associated with the s-uri-signing CDNI Logging Field. The CDNI URI Signing
         Verification Code is a 3DIGIT value as defined in <xref target="logging"/>. Additions to the CDNI URI Signing
         Verification Code namespace will conform to the "Specification Required" policy as defined in
-        <xref target="RFC8126"/>.</t>
+        <xref target="RFC8126"/>. Updates to this subregistry are expected to be sparse.</t>
 
         <texttable>
           <ttcol align="left">Value</ttcol>
@@ -1399,7 +1399,8 @@
         namespace defines the valid values
         that may be in the Signed Token Transport (cdnistt) JWT claim.
         Additions to the Signed Token Transport namespace conform to the
-        "Specification Required" policy as defined in <xref target="RFC8126"/>.</t>
+        "Specification Required" policy as defined in <xref target="RFC8126"/>.
+        Updates to this subregistry are expected to be sparse.</t>
 
         <t>The following table defines the initial Enforcement
         Information Elements:</t>
@@ -1510,6 +1511,14 @@
           <?rfc subcompact="no"?>
 
         </section>
+      </section>
+
+      <section anchor="expertreview" title="Expert Review Guidance">
+        <t>Generally speaking, we should determine the registration has a rational justification
+         and does not duplicate a previous registration. Early assignment should be permissible as long
+         as there is a reasonable expectation that the specification will become formalized. Expert
+         Reviewers should be empowered to pass judgements as they see fit, but should follow the
+         guidelines of <xref target="RFC8126"/> Section 5 when reasonable.</t>
       </section>
     </section>
 
