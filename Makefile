@@ -1,4 +1,4 @@
-XML2RFC=xml2rfc
+XML2RFC=xml2rfc --v2
 RFC2TXT=$(XML2RFC) --text
 RFC2HTML=$(XML2RFC) --html
 
