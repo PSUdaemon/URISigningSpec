@@ -10,7 +10,7 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc category="std" docName="draft-ietf-cdni-uri-signing-20" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-cdni-uri-signing-21" ipr="trust200902">
   <front>
     <title abbrev="CDNI URI Signing">URI Signing for Content Delivery Network Interconnection
     (CDNI)</title>
@@ -375,8 +375,8 @@
         <list style="symbols">
           <t>URI Signing Package (URISigningPackage): The URI attribute that
           encapsulates all the URI Signing claims in a signed JWT encoded
-          format. This attribute is exposed in the Signed URI as a URI
-          query parameter or as a URL path parameter.</t>
+          format. This attribute is exposed in the Signed URI as a path-style parameter
+          or a form-style parameter.</t>
         </list>
       </t>
 
@@ -386,16 +386,11 @@
       Package Attribute, the parameter name can be set by configuration (out of
       scope of this document).</t>
 
-      <t>The URI Signing Package will be found by searching the <xref target="RFC3986">URI Query string</xref> (see [RFC3986] Section 3.4), left-to-right,
-      for the following sequence:
-      <list style="symbols">
-        <t>the URI Signing Package Attribute name,</t>
-        <t>an equal symbol ('='),</t>
-        <t>and a sequence of zero or more non-reserved characters (as defined in <xref target="RFC3986"/> Section 2.3) that will be interpreted as a signed JWT,</t>
-        <t>terminated by either any reserved character (as defined in <xref target="RFC3986"/> Section 2.2) or the end of the URI Query string.</t>
-     </list>
-     The first such match will be taken to provide the signed JWT; the URI will not be searched
-     for multiple signed JWTs.</t>
+      <t>The URI Signing Package will be found by parsing any path-style parameters and
+     form-style parameters looking for a key name matching the URI Signing Package Attribute.
+     Both parameter styles MUST be supported to allow flexibility of operation.
+     The first matching parameter SHOULD be taken to provide the signed JWT, though providing
+     more than one matching key is undefined behavior.</t>
 
      <t>The following is an example where the URI Signing Package Attribute name is "token" and the signed JWT is "SIGNEDJWT":</t>
        <figure><artwork>http://example.com/media/path?come=data&amp;token=SIGNEDJWT&amp;other=data</artwork></figure>
