@@ -10,7 +10,7 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc category="std" docName="draft-ietf-cdni-uri-signing-21" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-cdni-uri-signing-22" ipr="trust200902">
   <front>
     <title abbrev="CDNI URI Signing">URI Signing for Content Delivery Network Interconnection
     (CDNI)</title>
@@ -39,24 +39,8 @@
     </author>
 
     <author fullname="Kent Leung" initials="K" surname="Leung">
-      <organization>Cisco Systems, Inc.</organization>
-
       <address>
-        <postal>
-          <street>3625 Cisco Way</street>
-
-          <city>San Jose</city>
-
-          <region>CA</region>
-
-          <code>95134</code>
-
-          <country>United States</country>
-        </postal>
-
-        <phone>+1 408 526 5030</phone>
-
-        <email>kleung@cisco.com</email>
+        <email>mail4kentl@gmail.com</email>
       </address>
     </author>
 
@@ -103,7 +87,7 @@
     <section title="Introduction">
       <t>This document describes the concept of URI Signing and how it can be
       used to provide access authorization in the case of redirection between
-      interconnected CDNs (CDNI) and between a Content Service Provider (CSP)
+      cooperating CDNs and between a Content Service Provider (CSP)
       and a CDN. The primary goal of URI Signing is to make sure that only
       authorized UAs are able to access the content, with a CSP
       being able to authorize every individual request. It should be noted
@@ -318,19 +302,7 @@
         relationship between uCDN and dCDN always exists,
         either asymmetric public/private keys or symmetric shared secret keys
         can be used for URI Signing with HTTP-based request routing. Note that the signed Redirection URI MUST
-        maintain the same (or higher) level of security as the original Signed
-        URI.</t>
-
-        <figure title="Figure 3: CDNI URI Signing Key">
-          <artwork>
-             +------------------------------------------+
-             | Mode | Asymmetric Key  | Symmetric Key   |
-             +------------------------------------------+
-             |HTTP  |Public key (uCDN)|Shared key (uCDN)|
-             |DNS   |Public key (CSP) |Shared key (CSP) |
-             +------------------------------------------+
-           </artwork>
-        </figure>
+        maintain HTTPS as the scheme if it was present in the original and it MAY be upgraded from HTTP to HTTPS.</t>
 
         <t>Two types of keys can be used for URI Signing: asymmetric keys and
         symmetric keys. Asymmetric keys are based on a public/private key pair
@@ -458,7 +430,7 @@
         </section>
         <section anchor="aud_claim" title="Audience (aud) claim">
             <t>Audience (aud) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.3 MUST be followed.
-            This claim is used to ensure that the CDN verifing the JWT is an intended recipient
+            This claim is used to ensure that the CDN verifying the JWT is an intended recipient
             of the request. The claim should contain an identity on behalf of whom the CDN can verify the token (e.g.,
             the CSP or any uCDN in the chain).  A dCDN MAY modify the claim as long it can generate a valid signature.</t>
         </section>
@@ -515,7 +487,8 @@
             same as in the received signed JWT.
             If the received signed JWT does not contain a
             Nonce claim, a Nonce claim MUST NOT be added to a signed JWT
-            generated for CDNI redirection.</t>
+            generated for CDNI redirection. Sizing of the Nonce is application
+            dependent given the desired security constraints.</t>
         </section>
         <section anchor="cdniv_claim" title="CDNI Claim Set Version (cdniv) claim">
             <t>CDNI Claim Set Version (cdniv) [optional] - The CDNI Claim Set Version (cdniv)
@@ -563,6 +536,12 @@
             generated for CDNI redirection MUST NOT add a Client IP
             claim if no Client IP claim existed in the received
             signed JWT.</t>
+            <t>It should be noted that use of this claim can cause issues, for example
+            in situations with dual-stack IPv4 and IPv6 networks, MPTCP, QUIC, and
+            mobile clients switching from WiFi to Cellular networks where the client's
+            source address can change, even between address families. This claim exists
+            mainly for legacy feature parity reasons, therefore use of this claim should
+            be done judiciously.</t>
         </section>
         <section anchor="cdniuc_claim" title="CDNI URI Container (cdniuc) claim">
             <t>URI Container (cdniuc) [optional] - The URI Container (cdniuc)
@@ -620,7 +599,7 @@
             <t>Prior to verification, remove the signed JWT from
               the URI. This removal is only for the purpose of determining if the URI matches; all
               other purposes will use the original URI. If the signed JWT is terminated by anything
-              other than a sub-delimiter (as definined in <xref target="RFC3986"/> Section 2.2),
+              other than a sub-delimiter (as defined in <xref target="RFC3986"/> Section 2.2),
               everything from the reserved character (as defined in <xref target="RFC3986"/> Section 2.2)
               that precedes the URI Signing Package Attribute to the last character of the signed
               JWT will be removed, inclusive. Otherwise, everything from the first character of the
@@ -659,7 +638,7 @@
 
       <section anchor="jwt_header" title="JWT Header">
       <t>The header of the JWT MAY be passed via the CDNI Metadata interface instead of
-      being included in the URISigningPackage. The header value must be transmitted in
+      being included in the URISigningPackage. The header value MUST be transmitted in
       the serialized encoded form and prepended to the JWT payload and signature passed in
       the URISigningPackage prior to verification. This reduces the size of the signed JWT
       token.</t>
@@ -729,15 +708,15 @@
 
         <section title="Required Claims">
           <t>The <xref target="cdnistt_claim">cdnistt claim</xref> and <xref target="cdniets_claim">cdniets claim</xref>
-          MUST both be present for Signed Token Renewal. You MAY set cdnistt to
-          a value of '0' to mean no Signed Token Renewal, but you still MUST have a corresponding cdniets that verifies as
-          a JSON number. However, if you do not want to use Signed Token Renewal, it is RECOMMENDED to simply omit both.</t>
+          MUST both be present for Signed Token Renewal. cdnistt MAY bt set to
+          a value of '0' to mean no Signed Token Renewal, but there still MUST be a corresponding cdniets that verifies as
+          a JSON number. However, if use of Signed Token Renewal is not desired, it is RECOMMENDED to simply omit both.</t>
         </section>
       </section>
 
       <section anchor="communicating_token" title="Communicating a signed JWTs in Signed Token Renewal">
         <t>This section assumes the value of the CDNI Signed Token Transport (cdnistt) claim
-        has been set to 1. Other values of cdnistt are out of scope of this document. </t>
+        has been set to 1.</t>
 
         <t>When using the Signed Token Renewal mechanism, the signed JWT is
         transported to the UA via a 'URISigningPackage' cookie added to the
@@ -753,7 +732,9 @@
           response where the target URL is in a different domain. In such
           scenarios, Signed Token Renewal of a signed JWT SHOULD be communicated
           via the query string instead, in a similar fashion to how regular
-          signed JWTs (outside of Signed Token Renewal) are communicated. Note that
+          signed JWTs (outside of Signed Token Renewal) are communicated. Also,
+          the value of the CDNI Signed Token Transport (cdnistt) claim
+          MUST be set to 2. Note that
           the use of URL embedded signed JWTs SHOULD NOT be used in HTTP 2xx Successful
           messages, since UAs might not know how to extract the signed JWTs.</t>
 
@@ -797,7 +778,7 @@
         <t>The <xref target="RFC7975">CDNI Request Routing
         Redirection Interface</xref> describes the recursive request
         redirection method. For URI Signing, the uCDN signs the URI
-        provided by the dCDN. URI Signing therefore has has no impact
+        provided by the dCDN. URI Signing therefore has no impact
         on this interface.</t>
       </section>
 
@@ -1208,13 +1189,13 @@
         multiple, possibly untrusted, CDNI hops is the public key, which
         is generally not confidential.</t>
 
-        <t>With DNS-based request routing, URI Signing does not match well the
+        <t>With DNS-based request routing, URI Signing does not match well with the
         general chain of trust model of CDNI when used with symmetric keys
         because the symmetric key information needs to be distributed across
         multiple CDNI hops, to CDNs with which the CSP may not have a trust
         relationship. This raises a security concern for applicability of URI
         Signing with symmetric keys in case of DNS-based inter-CDN request
-        routing.</t>
+        routing. Due to these concerns, this architecture is NOT RECOMMENDED.</t>
       </section>
     </section>
 
@@ -1360,7 +1341,7 @@
 
           <c>409</c>
           <c>RFCthis</c>
-          <c>Signed JWT verification performed and rejected because of Critical Extention enforcement</c>
+          <c>Signed JWT verification performed and rejected because of Critical Extension enforcement</c>
 
           <c>410</c>
           <c>RFCthis</c>
@@ -1404,6 +1385,10 @@
 
           <c>1</c>
           <c>Designates token transport via cookie</c>
+          <c>RFCthis</c>
+
+          <c>2</c>
+          <c>Designates token transport via query string</c>
           <c>RFCthis</c>
         </texttable>
 
@@ -1556,13 +1541,16 @@
           different users based on Client IP Address which can lead to illegitimate users
           being able to access the content. One way to reduce exposure to this
           kind of attack is to not only check for Client IP but also for other
-          attributes, e.g., attributes that can be found in HTTP headers.</t>
+          attributes, e.g., attributes that can be found in HTTP headers.
+          However, this may be easily circumvented by a sophisticated attacker.</t>
         </list></t>
 
       <t>The shared key between CSP and uCDN may be distributed
       to dCDNs - including cascaded CDNs. Since this key can be used
       to legitimately sign a URL for content access authorization, it is
-      important to know the implications of a compromised shared key.</t>
+      important to know the implications of a compromised shared key. While
+      using a shared key scheme can be convenient, this architecture is NOT
+      RECOMMENDED due to the risks associated.</t>
 
       <t>If a shared key usable for signing is compromised, an attacker
       can use it to perform a denial-of-service attack by forcing the CDN to
