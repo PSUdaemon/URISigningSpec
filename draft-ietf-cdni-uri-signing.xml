@@ -541,7 +541,10 @@
             mobile clients switching from WiFi to Cellular networks where the client's
             source address can change, even between address families. This claim exists
             mainly for legacy feature parity reasons, therefore use of this claim should
-            be done judiciously.</t>
+            be done judiciously. An example of a reasonable use case would be making a
+            signed JWT for an internal preview of an asset where the end consumer understands
+            that they must be originated from the same IP for the entirety of the session.
+            Using this claim at large is discouraged.</t>
         </section>
         <section anchor="cdniuc_claim" title="CDNI URI Container (cdniuc) claim">
             <t>URI Container (cdniuc) [optional] - The URI Container (cdniuc)
@@ -1550,7 +1553,8 @@
       to legitimately sign a URL for content access authorization, it is
       important to know the implications of a compromised shared key. While
       using a shared key scheme can be convenient, this architecture is NOT
-      RECOMMENDED due to the risks associated.</t>
+      RECOMMENDED due to the risks associated. It is included for legacy
+      feature parity and is highly discouraged in new implementations.</t>
 
       <t>If a shared key usable for signing is compromised, an attacker
       can use it to perform a denial-of-service attack by forcing the CDN to
