@@ -738,11 +738,9 @@
           response where the target URL is in a different domain. In such
           scenarios, Signed Token Renewal of a signed JWT SHOULD be communicated
           via the query string instead, in a similar fashion to how regular
-          signed JWTs (outside of Signed Token Renewal) are communicated. Also,
+          signed JWTs (outside of Signed Token Renewal) are communicated. Note
           the value of the CDNI Signed Token Transport (cdnistt) claim
-          MUST be set to 2. Note that
-          the use of URL embedded signed JWTs SHOULD NOT be used in HTTP 2xx Successful
-          messages, since UAs might not know how to extract the signed JWTs.</t>
+          MUST be set to 2.</t>
 
           <t>Note that the process described herein only works in cases where both the manifest
           file and segments constituting the segmented content are delivered from
