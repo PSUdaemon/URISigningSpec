@@ -539,7 +539,7 @@
             generated for CDNI redirection MUST NOT add a Client IP
             claim if no Client IP claim existed in the received
             signed JWT.</t>
-            <t>It should be noted that use of this claim can cause issues, for example
+            <t>It should be noted that use of this claim can cause issues, for example,
             in situations with dual-stack IPv4 and IPv6 networks, MPTCP, QUIC, and
             mobile clients switching from WiFi to Cellular networks where the client's
             source address can change, even between address families. This claim exists
@@ -714,7 +714,7 @@
 
         <section title="Required Claims">
           <t>The <xref target="cdnistt_claim">cdnistt claim</xref> and <xref target="cdniets_claim">cdniets claim</xref>
-          MUST both be present for Signed Token Renewal. cdnistt MAY bt set to
+          MUST both be present for Signed Token Renewal. cdnistt MAY be set to
           a value of '0' to mean no Signed Token Renewal, but there still MUST be a corresponding cdniets that verifies as
           a JSON number. However, if use of Signed Token Renewal is not desired, it is RECOMMENDED to simply omit both.</t>
         </section>
@@ -760,7 +760,7 @@
       Signing. Also, the uCDN needs to be able to distribute via the
       CDNI Metadata interface the information necessary to allow the
       dCDN to verify a Signed URI. Events that pertain to URI
-      Signing (e.g., request denial or delivery after and access authorization decision has been made)
+      Signing (e.g., request denial or delivery after an access authorization decision has been made)
       need to be included in the logs communicated through the CDNI Logging
       interface.</t>
 
@@ -812,8 +812,7 @@
 
             <t>Property: issuers<list style="empty">
                 <t>Description: A list of valid Issuers against which
-                the Issuer claim in the signed JWT may be cross-referenced
-                against the key issuer with.</t>
+                the Issuer claim in the signed JWT may be cross-referenced.</t>
 
                 <t>Type: Array of Strings</t>
 
@@ -1142,7 +1141,7 @@
 
             <t>Using the CDNI Metadata interface, the uCDN
             communicates to a dCDN the information needed to
-            verify Sigbned JWTs from the CSP (e.g., the URI query
+            verify Signed JWTs from the CSP (e.g., the URI query
             string parameter name for the URI Signing Package Attribute). In
             the case of symmetric key, the uCDN checks if the
             dCDN is allowed by CSP to obtain the shared secret
