@@ -364,7 +364,10 @@
      form-style parameters looking for a key name matching the URI Signing Package Attribute.
      Both parameter styles MUST be supported to allow flexibility of operation.
      The first matching parameter SHOULD be taken to provide the signed JWT, though providing
-     more than one matching key is undefined behavior.</t>
+     more than one matching key is undefined behavior. Path-style parameters generated in the
+     form indicated by Section 3.2.7 of <xref target="RFC6570" /> MUST be supported.
+     Form-style parameters generated in the form indicated by Section 3.2.8 of <xref target="RFC6570" />
+     MUST be supported.</t>
 
      <t>The following is an example where the URI Signing Package Attribute name is "token" and the signed JWT is "SIGNEDJWT":</t>
        <figure><artwork>http://example.com/media/path?come=data&amp;token=SIGNEDJWT&amp;other=data</artwork></figure>
@@ -1633,6 +1636,8 @@
       <?rfc include='reference.RFC.6707'?>
 
       <?rfc include='reference.RFC.5905'?>
+
+      <?rfc include='reference.RFC.6570'?>
 
       <reference anchor="POSIX.1" target="http://pubs.opengroup.org/onlinepubs/9699919799/">
         <front>
