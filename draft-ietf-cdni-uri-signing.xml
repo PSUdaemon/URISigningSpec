@@ -200,7 +200,7 @@
         the content (#4).</t>
 
         <figure anchor="fig_single_cdn"
-                title="Figure 1: URI Signing in a CDN Environment">
+                title="URI Signing in a CDN Environment">
           <artwork>
                 --------
                /        \
@@ -238,7 +238,7 @@
         dCDN before delivering the content (#6). Note: The CDNI call flows are covered in <xref
         target="operation">Detailed URI Signing Operation</xref>.</t>
 
-        <figure title="Figure 2: URI Signing in a CDNI Environment">
+        <figure anchor="fig_cdni_env" title="URI Signing in a CDNI Environment">
           <artwork>
                                    +-------------------------+
                                    |Request Redirection Modes|
@@ -940,7 +940,7 @@
         (assuming HTTP redirection, iterative request routing, and a CDN
         path with two CDNs) includes the following steps:</t>
 
-        <figure title="Figure 4: HTTP-based Request Routing with URI Signing">
+        <figure anchor="fig_http_routing" title="HTTP-based Request Routing with URI Signing">
           <artwork>
      End-User           dCDN                 uCDN                 CSP
      |                    |                    |                    |
@@ -1074,7 +1074,7 @@
         (assuming iterative DNS request routing and a CDN path with two
         CDNs) includes the following steps.</t>
 
-        <figure title="Figure 5: DNS-based Request Routing with URI Signing">
+        <figure anchor="fig_dns_routing" title="DNS-based Request Routing with URI Signing">
           <artwork>
      End-User            dCDN                 uCDN                CSP
      |                    |                    |                    |
