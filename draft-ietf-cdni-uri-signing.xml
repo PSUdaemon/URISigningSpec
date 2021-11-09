@@ -182,7 +182,7 @@
         UA's IP address or a time window). To prevent the UA from altering the claims
         a JWT MUST be signed.</t>
 
-        <t>Figure 1, shown below, presents an overview of the URI Signing
+        <t><xref target="fig_single_cdn"/>, shown below, presents an overview of the URI Signing
         mechanism in the case of a CSP with a single CDN. When the UA browses
         for content on CSP's website (#1), it receives HTML web pages with
         embedded content URIs. Upon requesting these URIs, the CSP redirects
@@ -224,7 +224,7 @@
       </section>
 
       <section title="CDNI URI Signing Overview">
-        <t>In a CDNI environment, as shown in Figure 2 below, URI Signing operates the same way in the
+        <t>In a CDNI environment, as shown in <xref target="fig_cdni_env"/> below, URI Signing operates the same way in the
         initial steps #1 and #2 but the later steps involve multiple CDNs
         delivering the content. The main difference from the
         single CDN case is a redirection step between the uCDN and the
@@ -278,7 +278,7 @@
 
         <t>The trust relationships between CSP, uCDN, and
         dCDN have direct implications for URI Signing. In the case shown in
-        Figure 2, the CSP has a trust relationship with the
+        <xref target="fig_cdni_env"/>, the CSP has a trust relationship with the
         uCDN. The delivery of the content may be delegated to a
         dCDN, which has a relationship with the uCDN but may
         have no relationship with the CSP.</t>
