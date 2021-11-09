@@ -312,7 +312,7 @@
         verification of the Signed URI. With symmetric keys, the same key is
         used by both the signing entity for signing the URI and the
         verifying entity for verifying the Signed URI. Regardless of the type
-        of keys used, the verifying entity has to obtain in a manner that allows trust to
+        of keys used, the verifying entity has to obtain the key in a manner that allows trust to
         be placed in the assertions made using that key (either the
         public or the symmetric key). There are very different requirements
         (outside the scope of this document) for distributing asymmetric keys
@@ -403,7 +403,7 @@
         <section anchor="iss_claim" title="Issuer (iss) claim">
             <t>Issuer (iss) [optional] - The semantics in
             <xref target="RFC7519"/> Section 4.1.1 MUST be followed. If this
-            claim is used it MUST be used to confirm that the indicated key
+            claim is used, it MUST be used to confirm that the indicated key
             was provided by said issuer and used to sign the JWT.  If the CDN verifying the
             signed JWT does not support Issuer verification, or if the
             Issuer in the signed JWT does not match the list of known
