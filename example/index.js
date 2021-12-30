@@ -36,9 +36,13 @@ function loadKey(kname) {
   return p;
 }
 
+var iat = Math.floor(new Date().getTime() / 1000)
+var nbf = iat + 86400
+var exp = nbf + 86400
+
 var samples = {
   "simple": {
-    "exp": 1474243500,
+    "exp": exp,
     "iss": "uCDN Inc",
     "cdniuc": "hash:sha-256;2tderfWPa86Ku7YnzW51YUp7dGUjBS_3SW3ELx4hmWY"
   },
@@ -47,25 +51,25 @@ var samples = {
     "sub": "UserToken",
     "cdniip": "[2001:db8::1/32]",
     "cdniv": 1,
-    "exp": 1474243500,
-    "iat": 1474243200,
+    "exp": exp,
+    "iat": iat,
     "iss": "uCDN Inc",
     "jti": "5DAafLhZAfhsbe",
-    "nbf": 1474243200,
+    "nbf": nbf,
     "cdniuc": "regex:http://cdni\\.example/foo/bar/[0-9]{3}\\.png"
   },
   "chained-1": {
     "cdniets": 30,
     "cdnistt": 1,
     "cdnistd": 2,
-    "exp": 1474243500,
+    "exp": exp,
     "cdniuc": "regex:http://cdni\\.example/foo/bar/[0-9]{3}\\.ts"
   },
   "chained-2": {
     "cdniets": 30,
     "cdnistt": 1,
     "cdnistd": 2,
-    "exp": 1474243530,
+    "exp": exp,
     "cdniuc": "regex:http://cdni\\.example/foo/bar/[0-9]{3}\\.ts"
   }
 };
