@@ -199,6 +199,10 @@
         valid. After these claims are verified, the CDN delivers
         the content (#4).</t>
 
+        <t>Note: While using a symmetric shared key is supported, it is NOT RECOMMENDED.
+        See the <xref target="security">Security Considerations</xref> section about the
+        limitations of shared keys.</t>
+
         <figure anchor="fig_single_cdn"
                 title="URI Signing in a CDN Environment">
           <artwork>
@@ -306,7 +310,7 @@
         maintain HTTPS as the scheme if it was present in the original and it MAY be upgraded from HTTP to HTTPS.</t>
 
         <t>Two types of keys can be used for URI Signing: asymmetric keys and
-        symmetric keys. Asymmetric keys are based on a public/private key pair
+        symmetric shared keys. Asymmetric keys are based on a public/private key pair
         mechanism and always contain a private key known only to the entity
         signing the URI (either CSP or uCDN) and a public key for the
         verification of the Signed URI. With symmetric keys, the same key is
@@ -323,6 +327,10 @@
         confidentiality since public keys can typically be distributed openly
         (because they cannot be used to sign URIs) and the corresponding private keys are kept
         secret by the URI signer.</t>
+
+        <t>Note: While using a symmetric shared key is supported, it is NOT RECOMMENDED.
+        See the <xref target="security">Security Considerations</xref> section about the
+        limitations of shared keys.</t>
       </section>
 
       <section title="URI Signing in a non-CDNI context">
@@ -550,7 +558,7 @@
             be done judiciously. An example of a reasonable use case would be making a
             signed JWT for an internal preview of an asset where the end consumer understands
             that they must be originated from the same IP for the entirety of the session.
-            Using this claim at large is discouraged.</t>
+            Using this claim at large is NOT RECOMMENDED.</t>
         </section>
         <section anchor="cdniuc_claim" title="CDNI URI Container (cdniuc) claim">
             <t>URI Container (cdniuc) [mandatory] - The URI Container (cdniuc)
@@ -1061,6 +1069,10 @@
         general chain of trust model of CDNI both with symmetric and
         asymmetric keys because the key information only needs to be specific
         to a pair of adjacent CDNI hops.</t>
+
+        <t>Note: While using a symmetric shared key is supported, it is NOT RECOMMENDED.
+        See the <xref target="security">Security Considerations</xref> section about the
+        limitations of shared keys.</t>
       </section>
 
       <section anchor="dns" title="DNS Redirection">
@@ -1072,6 +1084,10 @@
         restrict the distribution of the key to a (possibly empty) subset of
         trusted dCDNs. Authorized Delivery CDNs need to obtain the
         key information to verify the signed URI.</t>
+
+        <t>Note: While using a symmetric shared key is supported, it is NOT RECOMMENDED.
+        See the <xref target="security">Security Considerations</xref> section about the
+        limitations of shared keys.</t>
 
         <t>The URI Signing method
         (assuming iterative DNS request routing and a CDN path with two
@@ -1146,9 +1162,13 @@
             communicates to a dCDN the information needed to
             verify Signed JWTs from the CSP (e.g., the URI query
             string parameter name for the URI Signing Package Attribute). In
-            the case of symmetric key, the uCDN checks if the
+            the case of symmetric shared key, the uCDN checks if the
             dCDN is allowed by CSP to obtain the shared secret
             key.</t>
+
+            <t>Note: While using a symmetric shared key is supported, it is NOT RECOMMENDED.
+            See the <xref target="security">Security Considerations</xref> section about the
+            limitations of shared keys.</t>
 
             <t>When a UA requests a piece of protected content from the CSP,
             the CSP makes a specific authorization decision for this unique
