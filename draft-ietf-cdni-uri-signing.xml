@@ -10,7 +10,7 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc category="std" docName="draft-ietf-cdni-uri-signing-23" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-cdni-uri-signing-24" ipr="trust200902">
   <front>
     <title abbrev="CDNI URI Signing">URI Signing for Content Delivery Network Interconnection
     (CDNI)</title>
@@ -1166,10 +1166,6 @@
             dCDN is allowed by CSP to obtain the shared secret
             key.</t>
 
-            <t>Note: While using a symmetric shared key is supported, it is NOT RECOMMENDED.
-            See the <xref target="security">Security Considerations</xref> section about the
-            limitations of shared keys.</t>
-
             <t>When a UA requests a piece of protected content from the CSP,
             the CSP makes a specific authorization decision for this unique
             request based on its local distribution policy.</t>
@@ -1222,6 +1218,10 @@
         relationship. This raises a security concern for applicability of URI
         Signing with symmetric keys in case of DNS-based inter-CDN request
         routing. Due to these concerns, this architecture is NOT RECOMMENDED.</t>
+
+        <t>Note: While using a symmetric shared key is supported, it is NOT RECOMMENDED.
+        See the <xref target="security">Security Considerations</xref> section about the
+        limitations of shared keys.</t>
       </section>
     </section>
 
