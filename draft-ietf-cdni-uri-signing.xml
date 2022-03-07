@@ -229,7 +229,7 @@
 
       <section title="CDNI URI Signing Overview">
         <t>In a CDNI environment, as shown in <xref target="fig_cdni_env"/> below, URI Signing operates the same way in the
-        initial steps #1 and #2 but the later steps involve multiple CDNs
+        initial steps #1 and #2, but the later steps involve multiple CDNs
         delivering the content. The main difference from the
         single CDN case is a redirection step between the uCDN and the
         dCDN. In step #3, the UA may send an HTTP request or a DNS request,
@@ -393,7 +393,7 @@
         can be set by configuration (out of scope of this document).</t>
 
         <t>The following claims (where the "JSON Web Token Claims" registry
-        claim name is specified in parenthesis below) are used to enforce the
+        claim name is specified in parentheses below) are used to enforce the
         distribution policies.  All of the listed claims are mandatory
         to implement in a URI Signing implementation, but are not
         mandatory to use in a given signed JWT. (The "optional" and
@@ -454,7 +454,7 @@
             signed JWT corresponds to a time equal to or earlier than the time of
             the content request, the CDN MUST reject the
             request.
-            If the received signed JWT contains a Expiry Time claim, then any
+            If the received signed JWT contains an Expiry Time claim, then any
             JWT subsequently generated for CDNI redirection MUST also
             contain an Expiry Time claim, and the Expiry Time value MUST be
             the same as in the received signed JWT.  A signed JWT
@@ -533,7 +533,7 @@
             which the Signed URI is valid. This is represented in CIDR
             notation, with dotted decimal format for <xref target="RFC0791">IPv4 addresses</xref> or canonical text
             representation for <xref target="RFC5952">IPv6 addresses</xref>.
-            The request MUST be rejected if sourced from a client outside of the
+            The request MUST be rejected if sourced from a client outside the
             specified IP range. Since the client IP is considered
             personally identifiable information this field
             MUST be a JSON Web Encryption (<xref target="RFC7516">JWE</xref>)
@@ -552,7 +552,7 @@
             signed JWT.</t>
             <t>It should be noted that use of this claim can cause issues, for example,
             in situations with dual-stack IPv4 and IPv6 networks, MPTCP, QUIC, and
-            mobile clients switching from WiFi to Cellular networks where the client's
+            mobile clients switching from Wi-Fi to Cellular networks where the client's
             source address can change, even between address families. This claim exists
             mainly for legacy feature parity reasons, therefore use of this claim should
             be done judiciously. An example of a reasonable use case would be making a
@@ -686,7 +686,7 @@
         Signed URIs to be valid for an extended duration if the content
         described by the manifest is meant to be consumed in real time. For instance, if the manifest file were
         to contain a segmented video stream of more than 30 minutes in length,
-        Signed URIs would require to be valid for a at least 30 minutes, thereby reducing
+        Signed URIs would require to be valid for at least 30 minutes, thereby reducing
         their effectiveness and that of the URI Signing mechanism in general.
         For a more detailed analysis of how segmented protocols such as HTTP Adaptive Streaming protocols affect CDNI,
         see <xref target="RFC6983">Models for HTTP-Adaptive-Streaming-Aware CDNI</xref>.</t>
@@ -706,7 +706,7 @@
         HTTP 2xx Successful message, a signed JWT that it can use whenever it
         requests the next segment. As long as each successive signed JWT
         is correctly verified before a new one is generated, the model is not
-        broken and the User Agent can successfully retrieve additional segments.
+        broken, and the User Agent can successfully retrieve additional segments.
         Given the fact that with segmented protocols, it is usually not possible to
         determine a priori which segment will be requested next (i.e., to allow for
         seeking within the content and for switching to a different representation),
