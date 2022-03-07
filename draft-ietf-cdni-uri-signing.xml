@@ -288,14 +288,12 @@
 
         <t>In CDNI, there are two methods for request routing: DNS-based and
         HTTP-based. For DNS-based request routing, the Signed URI (i.e., the Target
-        CDN URI) provided by the CSP reaches the dCDN directly. In
+        CDN URI) provided by the CSP reaches the CDN directly. In
         the case where the dCDN does not have a trust relationship
         with the CSP, this means that either an asymmetric public/private key
         method needs to be used for computing the signed JWT (because the CSP and
-        dCDN are not able to exchange symmetric shared secret keys), or
-        the CSP needs
-        to allow the uCDN to redistribute shared keys
-        to a subset of their dCDNs.</t>
+        dCDN are not able to exchange symmetric shared secret keys). Shared keys SHOULD NOT
+        be redistributed.</t>
 
         <t>For HTTP-based request routing, the Signed URI (i.e., the Target CDN
         URI) provided by the CSP reaches the uCDN. After this URI has
@@ -1088,10 +1086,8 @@
         agree on a trust model appropriate to the security requirements of the
         CSP's particular content. Use of asymmetric public/private keys allows
         for unlimited distribution of the public key to dCDNs.
-        However, if a shared secret key is preferred, then the CSP may want to
-        restrict the distribution of the key to a (possibly empty) subset of
-        trusted dCDNs. Authorized Delivery CDNs need to obtain the
-        key information to verify the signed URI.</t>
+        However, if a shared secret key is required, then the distribution SHOULD
+        be performed by the CSP directly.</t>
 
         <t>Note: While using a symmetric shared key is supported, it is NOT RECOMMENDED.
         See the <xref target="security">Security Considerations</xref> section about the
@@ -1170,9 +1166,8 @@
             communicates to a dCDN the information needed to
             verify Signed JWTs from the CSP (e.g., the URI query
             string parameter name for the URI Signing Package Attribute). In
-            the case of symmetric shared key, the uCDN checks if the
-            dCDN is allowed by CSP to obtain the shared secret
-            key.</t>
+            the case of symmetric shared key, the uCDN SHOULD NOT share the key
+            with a dCDN.</t>
 
             <t>When a UA requests a piece of protected content from the CSP,
             the CSP makes a specific authorization decision for this unique
@@ -1584,8 +1579,8 @@
           However, this may be easily circumvented by a sophisticated attacker.</t>
         </list></t>
 
-      <t>The shared key between CSP and uCDN may be distributed
-      to dCDNs - including cascaded CDNs. Since this key can be used
+      <t>A shared key distribured between CSP and uCDN is more likely to be
+      compromised. Since this key can be used
       to legitimately sign a URL for content access authorization, it is
       important to know the implications of a compromised shared key. While
       using a shared key scheme can be convenient, this architecture is NOT
