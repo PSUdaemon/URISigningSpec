@@ -39,6 +39,7 @@ function loadKey(kname) {
 var iat = Math.floor(new Date().getTime() / 1000)
 var nbf = iat + 86400
 var exp = nbf + 86400
+var cdniets = 30
 
 var samples = {
   "simple": {
@@ -59,17 +60,17 @@ var samples = {
     "cdniuc": "regex:http://cdni\\.example/foo/bar/[0-9]{3}\\.png"
   },
   "chained-1": {
-    "cdniets": 30,
+    "cdniets": cdniets,
     "cdnistt": 1,
     "cdnistd": 2,
     "exp": exp,
     "cdniuc": "regex:http://cdni\\.example/foo/bar/[0-9]{3}\\.ts"
   },
   "chained-2": {
-    "cdniets": 30,
+    "cdniets": cdniets,
     "cdnistt": 1,
     "cdnistd": 2,
-    "exp": exp,
+    "exp": exp + cdniets,
     "cdniuc": "regex:http://cdni\\.example/foo/bar/[0-9]{3}\\.ts"
   }
 };
