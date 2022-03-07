@@ -178,9 +178,9 @@
         realized in practice by including a set of claims in a signed JWT
         in the URI before redirecting a UA to the CDN. Using these
         attributes, it is possible for a CDN to check an incoming content
-        request to see whether it was authorized by the CSP (e.g., based on the
-        UA's IP address or a time window). To prevent the UA from altering the claims
-        a JWT MUST be signed.</t>
+        request to see whether it was authorized by the CSP (e.g., based on
+        a time window or pattern matching the URI). To prevent the UA from altering the claims
+        the JWT MUST be signed.</t>
 
         <t><xref target="fig_single_cdn"/>, shown below, presents an overview of the URI Signing
         mechanism in the case of a CSP with a single CDN. When the UA browses
@@ -194,10 +194,9 @@
         response with the Signed URI, it sends a new HTTP request using the
         Signed URI to the CDN (#3). Upon receiving the request, the CDN
         authenticates the Signed URI by verifying the signed JWT.
-        If applicable, the CDN checks whether the source IP address of the HTTP
-        request matches the one in the Signed URI and/or if the time window is still
-        valid. After these claims are verified, the CDN delivers
-        the content (#4).</t>
+        If applicable, the CDN checks whether the time window is still valid
+        in the Signed URI and the pattern matches the URI of the request.
+        After these claims are verified, the CDN delivers the content (#4).</t>
 
         <t>Note: While using a symmetric shared key is supported, it is NOT RECOMMENDED.
         See the <xref target="security">Security Considerations</xref> section about the
@@ -307,7 +306,7 @@
         relationship between uCDN and dCDN always exists,
         either asymmetric public/private keys or symmetric shared secret keys
         can be used for URI Signing with HTTP-based request routing. Note that the signed Redirection URI MUST
-        maintain HTTPS as the scheme if it was present in the original and it MAY be upgraded from HTTP to HTTPS.</t>
+        maintain HTTPS as the scheme if it was present in the original and it MAY be upgraded from http: to https:.</t>
 
         <t>Two types of keys can be used for URI Signing: asymmetric keys and
         symmetric shared keys. Asymmetric keys are based on a public/private key pair
@@ -373,7 +372,7 @@
       Both parameter styles MUST be supported to allow flexibility of operation.
       The first matching parameter SHOULD be taken to provide the signed JWT, though providing
       more than one matching key is undefined behavior. Path-style parameters generated in the
-      form indicated by Section 3.2.7 of <xref target="RFC6570" /> MUST be supported.
+      form indicated by Section 3.2.7 of <xref target="RFC6570" /> and
       Form-style parameters generated in the form indicated by Sections 3.2.8 and 3.2.9 of
       <xref target="RFC6570" /> MUST be supported.</t>
 
@@ -395,7 +394,7 @@
         <t>The following claims (where the "JSON Web Token Claims" registry
         claim name is specified in parentheses below) are used to enforce the
         distribution policies.  All of the listed claims are mandatory
-        to implement in a URI Signing implementation, but are not
+        to implement in a URI Signing implementation, but are not necessarily
         mandatory to use in a given signed JWT. (The "optional" and
         "mandatory" identifiers in square brackets refer to whether or
         not a given claim MUST be present in a URI Signing JWT.)</t>
@@ -413,12 +412,16 @@
 
         <section anchor="iss_claim" title="Issuer (iss) claim">
             <t>Issuer (iss) [optional] - The semantics in
-            <xref target="RFC7519"/> Section 4.1.1 MUST be followed. If this
-            claim is used, it MUST be used to confirm that the indicated key
-            was provided by said issuer and used to sign the JWT.  If the CDN verifying the
+            <xref target="RFC7519"/> Section 4.1.1 MUST be followed.
+            If this claim is used, it MUST be used to identify the
+            issuer (signer) of the JWT.  In particular, the recipient will have already
+            received, in trusted configuration, a mapping of issuer name to one or more
+            keys used to sign JWTs, and must verify that the JWT was signed by one of
+            those keys. If this claim is used and the CDN verifying the
             signed JWT does not support Issuer verification, or if the
             Issuer in the signed JWT does not match the list of known
-            acceptable Issuers, the CDN MUST reject the request. If the
+            acceptable Issuers, or if the Issuer claim does not
+            match the key used to sign the JWT, the CDN MUST reject the request. If the
             received signed JWT contains an Issuer claim, then any
             JWT subsequently generated for CDNI redirection MUST also contain an Issuer
             claim, and the Issuer value MUST be updated to identify the
@@ -443,8 +446,11 @@
         <section anchor="aud_claim" title="Audience (aud) claim">
             <t>Audience (aud) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.3 MUST be followed.
             This claim is used to ensure that the CDN verifying the JWT is an intended recipient
-            of the request. The claim MUST contain an identity on behalf of whom the CDN can verify the token (e.g.,
-            the CSP or any CDN in the chain).  A CDN MAY modify the claim as long it can generate a valid signature.</t>
+            of the request. The claim MUST
+            contain an identity belonging to the chain of entities involved in
+            processing the request (e.g., identifying the CSP or any CDN in the chain)
+            that the recipient is configured to use for the processing of this request.
+            A CDN MAY modify the claim as long it can generate a valid signature.</t>
         </section>
         <section anchor="exp_claim" title="Expiry Time (exp) claim">
             <t>Expiry Time (exp) [optional] - The semantics in <xref target="RFC7519"/> Section 4.1.4 MUST be followed,
@@ -593,15 +599,17 @@
           associate a subsequent signed JWT, generated as the result of a CDNI Signed Token Transport claim,
           with a specific URI subset. Its type is a JSON integer. Signed JWTs MUST NOT use a negative
           value for the CDNI Signed Token Depth claim.</t>
+
           <t>If the transport used for Signed Token Transport allows the CDN to associate the path component of a
           URI with tokens (e.g., an HTTP Cookie Path as described in section 4.1.2.4 of <xref target="RFC6265"/>),
           the CDNI Signed Token Depth value is the number of path segments that should be
           considered significant for this association. A CDNI Signed Token Depth of zero means that the
           client SHOULD be directed to return the token with requests for any path. If the CDNI Signed
-          Token Depth is greater than zero, then the client SHOULD be directed to return the token for
+          Token Depth is greater than zero, then the CDN SHOULD send the client a token to return for
           future requests wherein the first CDNI Signed Token Depth segments of the path match the first
           CDNI Signed Token Depth segments of the signed URI path. This matching MUST use the URI with the
           token removed, as specified in <xref target="uri_container_forms"/>.</t>
+
           <t>If the URI path to match contains fewer segments than the CDNI Signed Token Depth claim, a signed JWT
           MUST NOT be generated for the purposes of Signed Token Renewal. If the CDNI Signed Token Depth
           claim is omitted, it means the same thing as if its value were zero. If the received signed JWT
@@ -1779,7 +1787,7 @@
 
         <figure><artwork><![CDATA[
 {
-  "exp": 1641079223,
+  "exp": 1646867369,
   "iss": "uCDN Inc",
   "cdniuc": "hash:sha-256;2tderfWPa86Ku7YnzW51YUp7dGUjBS_3SW3ELx4hmWY"
 }
@@ -1791,10 +1799,10 @@
 
         <figure><artwork><![CDATA[
 eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBPdjBlTXExd2N4TGY3V3hJZzA5SmRTWU
-dZRkRPV2tsZHVlYUltZjAifQ.eyJleHAiOjE2NDEwNzkyMjMsImlzcyI6InVDRE4gS
+dZRkRPV2tsZHVlYUltZjAifQ.eyJleHAiOjE2NDY4NjczNjksImlzcyI6InVDRE4gS
 W5jIiwiY2RuaXVjIjoiaGFzaDpzaGEtMjU2OzJ0ZGVyZldQYTg2S3U3WW56VzUxWVV
-wN2RHVWpCU18zU1czRUx4NGhtV1kifQ.P5It6q0kxNx5NBA76D-bYKIxlourey5JpU
-4diFLGHaVTk21QkEskjxoeneDoBj_1C5Ty1smBOovQMrGzuPmEHA
+wN2RHVWpCU18zU1czRUx4NGhtV1kifQ.TaNlJM3D96i_9J9XvlICO6FUIDFTqt3E2Y
+JkEUOLfcH0b89wYRKTbJ9Yj6h_GRgSoZoQO0cps3yUPcWGK3smCw
 ]]></artwork></figure>
       </section>
 
@@ -1812,8 +1820,8 @@ wN2RHVWpCU18zU1czRUx4NGhtV1kifQ.P5It6q0kxNx5NBA76D-bYKIxlourey5JpU
 
         <figure><artwork><![CDATA[
 eyJlbmMiOiJBMTI4R0NNIiwiYWxnIjoiZGlyIiwia2lkIjoiZi1XYmp4QkMzZFB1ST
-NkMjRrUDJoZnZvczdRejY4OFVUaTZhQjBoTjk5OCJ9..s614z__atK4Cijic.ieSm7
-o2o7rIqCYbDExdoyQ.JUnPLQzBf2dPhBPRTxHKww
+NkMjRrUDJoZnZvczdRejY4OFVUaTZhQjBoTjk5OCJ9..aUDDFEQBIc3nWjOb.bGXWT
+HPkntmPCKn0pPPNEQ.iyTttnFybO2YBLqwl_YSjA
 ]]></artwork></figure>
 
         <t>
@@ -1822,8 +1830,8 @@ o2o7rIqCYbDExdoyQ.JUnPLQzBf2dPhBPRTxHKww
 
         <figure><artwork><![CDATA[
 eyJlbmMiOiJBMTI4R0NNIiwiYWxnIjoiZGlyIiwia2lkIjoiZi1XYmp4QkMzZFB1ST
-NkMjRrUDJoZnZvczdRejY4OFVUaTZhQjBoTjk5OCJ9..MbT8tWet01VVHjuS.4KP7A
-JefU70b.Rc_o3tCfWoPkIdySsYtfMw
+NkMjRrUDJoZnZvczdRejY4OFVUaTZhQjBoTjk5OCJ9..CLAu80xclc8Bp-Ui.6P1A3
+F6ip2Dv.CohdtLLpgBnTvRJQCFuz-g
 ]]></artwork></figure>
 
         <t>
@@ -1834,17 +1842,17 @@ JefU70b.Rc_o3tCfWoPkIdySsYtfMw
 {
   "aud": "dCDN LLC",
   "sub": "eyJlbmMiOiJBMTI4R0NNIiwiYWxnIjoiZGlyIiwia2lkIjoiZi1XYmp4
-QkMzZFB1STNkMjRrUDJoZnZvczdRejY4OFVUaTZhQjBoTjk5OCJ9..MbT8tWet01VV
-HjuS.4KP7AJefU70b.Rc_o3tCfWoPkIdySsYtfMw",
+QkMzZFB1STNkMjRrUDJoZnZvczdRejY4OFVUaTZhQjBoTjk5OCJ9..CLAu80xclc8B
+p-Ui.6P1A3F6ip2Dv.CohdtLLpgBnTvRJQCFuz-g",
   "cdniip": "eyJlbmMiOiJBMTI4R0NNIiwiYWxnIjoiZGlyIiwia2lkIjoiZi1XY
-mp4QkMzZFB1STNkMjRrUDJoZnZvczdRejY4OFVUaTZhQjBoTjk5OCJ9..s614z__at
-K4Cijic.ieSm7o2o7rIqCYbDExdoyQ.JUnPLQzBf2dPhBPRTxHKww",
+mp4QkMzZFB1STNkMjRrUDJoZnZvczdRejY4OFVUaTZhQjBoTjk5OCJ9..aUDDFEQBI
+c3nWjOb.bGXWTHPkntmPCKn0pPPNEQ.iyTttnFybO2YBLqwl_YSjA",
   "cdniv": 1,
-  "exp": 1641079223,
-  "iat": 1640906423,
+  "exp": 1646867369,
+  "iat": 1646694569,
   "iss": "uCDN Inc",
   "jti": "5DAafLhZAfhsbe",
-  "nbf": 1640992823,
+  "nbf": 1646780969,
   "cdniuc": "regex:http://cdni\\.example/foo/bar/[0-9]{3}\\.png"
 }
 ]]></artwork></figure>
@@ -1858,16 +1866,16 @@ eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBPdjBlTXExd2N4TGY3V3hJZzA5SmRTWU
 dZRkRPV2tsZHVlYUltZjAifQ.eyJhdWQiOiJkQ0ROIExMQyIsInN1YiI6ImV5Smxib
 U1pT2lKQk1USTRSME5OSWl3aVlXeG5Jam9pWkdseUlpd2lhMmxrSWpvaVppMVhZbXA
 0UWtNelpGQjFTVE5rTWpSclVESm9ablp2Y3pkUmVqWTRPRlZVYVRaaFFqQm9Uams1T
-0NKOS4uTWJUOHRXZXQwMVZWSGp1Uy40S1A3QUplZlU3MGIuUmNfbzN0Q2ZXb1BrSWR
-5U3NZdGZNdyIsImNkbmlpcCI6ImV5SmxibU1pT2lKQk1USTRSME5OSWl3aVlXeG5Ja
+0NKOS4uQ0xBdTgweGNsYzhCcC1VaS42UDFBM0Y2aXAyRHYuQ29oZHRMTHBnQm5UdlJ
+KUUNGdXotZyIsImNkbmlpcCI6ImV5SmxibU1pT2lKQk1USTRSME5OSWl3aVlXeG5Ja
 m9pWkdseUlpd2lhMmxrSWpvaVppMVhZbXA0UWtNelpGQjFTVE5rTWpSclVESm9ablp
-2Y3pkUmVqWTRPRlZVYVRaaFFqQm9Uams1T0NKOS4uczYxNHpfX2F0SzRDaWppYy5pZ
-VNtN28ybzdySXFDWWJERXhkb3lRLkpVblBMUXpCZjJkUGhCUFJUeEhLd3ciLCJjZG5
-pdiI6MSwiZXhwIjoxNjQxMDc5MjIzLCJpYXQiOjE2NDA5MDY0MjMsImlzcyI6InVDR
-E4gSW5jIiwianRpIjoiNURBYWZMaFpBZmhzYmUiLCJuYmYiOjE2NDA5OTI4MjMsImN
+2Y3pkUmVqWTRPRlZVYVRaaFFqQm9Uams1T0NKOS4uYVVEREZFUUJJYzNuV2pPYi5iR
+1hXVEhQa250bVBDS24wcFBQTkVRLml5VHR0bkZ5Yk8yWUJMcXdsX1lTakEiLCJjZG5
+pdiI6MSwiZXhwIjoxNjQ2ODY3MzY5LCJpYXQiOjE2NDY2OTQ1NjksImlzcyI6InVDR
+E4gSW5jIiwianRpIjoiNURBYWZMaFpBZmhzYmUiLCJuYmYiOjE2NDY3ODA5NjksImN
 kbml1YyI6InJlZ2V4Omh0dHA6Ly9jZG5pXFwuZXhhbXBsZS9mb28vYmFyL1swLTlde
-zN9XFwucG5nIn0.MgV1AIvlWf3rjUqWGKlpR1CcCpF8N5FX7xlZ0wGCqfJY3KpqTrV
-NKaEWVXGoo12oVgQ7J2KoRtcr2ah9dsjqOA
+zN9XFwucG5nIn0.IjmVX0uD5MYqArc-M08uEsEeoDQn8kuYXZ9HGHDmDDxsHikT0c8
+jcX8xYD0z3LzQclMG65i1kT2sRbZ7isUw8w
 ]]></artwork></figure>
 
       </section>
@@ -1886,7 +1894,7 @@ NKaEWVXGoo12oVgQ7J2KoRtcr2ah9dsjqOA
   "cdniets": 30,
   "cdnistt": 1,
   "cdnistd": 2,
-  "exp": 1641079223,
+  "exp": 1646867369,
   "cdniuc": "regex:http://cdni\\.example/foo/bar/[0-9]{3}\\.ts"
 }
 ]]></artwork></figure>
@@ -1898,10 +1906,10 @@ NKaEWVXGoo12oVgQ7J2KoRtcr2ah9dsjqOA
         <figure><artwork><![CDATA[
 eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBPdjBlTXExd2N4TGY3V3hJZzA5SmRTWU
 dZRkRPV2tsZHVlYUltZjAifQ.eyJjZG5pZXRzIjozMCwiY2RuaXN0dCI6MSwiY2Rua
-XN0ZCI6MiwiZXhwIjoxNjQxMDc5MjIzLCJjZG5pdWMiOiJyZWdleDpodHRwOi8vY2R
-uaVxcLmV4YW1wbGUvZm9vL2Jhci9bMC05XXszfVxcLnRzIn0.qp4l3B36rRmIUBXzP
-WdK7p0_zlq7tvgt5oJSBSMOUEWtMsIZf3q0nXSnHPxsNdLcsTSNoFOAgq5y0EjQmvN
-QoA
+XN0ZCI6MiwiZXhwIjoxNjQ2ODY3MzY5LCJjZG5pdWMiOiJyZWdleDpodHRwOi8vY2R
+uaVxcLmV4YW1wbGUvZm9vL2Jhci9bMC05XXszfVxcLnRzIn0.tlPvoKw3BCClw4Lx9
+PQu7MK6b2IN55ZoCPSaxovGK0zS53Wpb1MbJBow7G8LiGR39h6-2Iq7PWUSr3MdTIz
+HYw
 ]]></artwork></figure>
 
         <t>
@@ -1920,7 +1928,7 @@ QoA
   "cdniets": 30,
   "cdnistt": 1,
   "cdnistd": 2,
-  "exp": 1641079223,
+  "exp": 1646867399,
   "cdniuc": "regex:http://cdni\\.example/foo/bar/[0-9]{3}\\.ts"
 }
 ]]></artwork></figure>
@@ -1932,10 +1940,10 @@ QoA
         <figure><artwork><![CDATA[
 eyJhbGciOiJFUzI1NiIsImtpZCI6IlA1VXBPdjBlTXExd2N4TGY3V3hJZzA5SmRTWU
 dZRkRPV2tsZHVlYUltZjAifQ.eyJjZG5pZXRzIjozMCwiY2RuaXN0dCI6MSwiY2Rua
-XN0ZCI6MiwiZXhwIjoxNjQxMDc5MjIzLCJjZG5pdWMiOiJyZWdleDpodHRwOi8vY2R
-uaVxcLmV4YW1wbGUvZm9vL2Jhci9bMC05XXszfVxcLnRzIn0.Qrixg5gbwCQjvV5Wg
-W4__NVnOeFXqqudhc202ptkrY8PDQk3BaMop6uG6dzgKk3KT5lTFVzEN9nfN8a1H8b
-Zow
+XN0ZCI6MiwiZXhwIjoxNjQ2ODY3Mzk5LCJjZG5pdWMiOiJyZWdleDpodHRwOi8vY2R
+uaVxcLmV4YW1wbGUvZm9vL2Jhci9bMC05XXszfVxcLnRzIn0.ivY5d_fKGd-OHTpUs
+8uJUrnHvt-rduzu5H4zM7167pUUAghub53FqDQ5G16jRYX2sY73mA_uLpYDdb-CPts
+8FA
 ]]></artwork></figure>
       </section>
     </section>
