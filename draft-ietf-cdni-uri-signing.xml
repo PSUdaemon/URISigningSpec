@@ -828,7 +828,7 @@
                 <t>Type: Array of Strings</t>
 
                 <t>Mandatory-to-Specify: No. The default is an empty
-                list.  An empty list means that any Issuer is acceptable.</t>
+                list.  An empty list means that any Issuer in the trusted key store of issuers is acceptable.</t>
               </list></t>
 
             <t>Property: package-attribute<list style="empty">
