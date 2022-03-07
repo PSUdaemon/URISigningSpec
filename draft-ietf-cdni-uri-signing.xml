@@ -528,8 +528,8 @@
             specification or if any other constraints
             on its use are violated.  This claim MUST be understood and processed by all implementations.</t>
         </section>
-        <section anchor="cdniip_claim" title="Client IP (cdniip) claim">
-            <t>Client IP (cdniip) [optional] - The Client IP (cdniip) claim holds an IP address or IP prefix for
+        <section anchor="cdniip_claim" title="Client IP Address (cdniip) claim">
+            <t>Client IP Address (cdniip) [optional] - The Client IP Address (cdniip) claim holds an IP address or IP prefix for
             which the Signed URI is valid. This is represented in CIDR
             notation, with dotted decimal format for <xref target="RFC0791">IPv4 addresses</xref> or canonical text
             representation for <xref target="RFC5952">IPv6 addresses</xref>.
@@ -1720,7 +1720,7 @@
     <section title="Signed URI Package Example" anchor="sup_example">
       <t>This section contains three examples of token usage: a simple example with only the
       required claim present, a complex example which demonstrates the full JWT claims set,
-      including an encrypted Client IP (cdniip), and one that uses a Signed Token Renewal.</t>
+      including an encrypted Client IP Address (cdniip), and one that uses a Signed Token Renewal.</t>
 
       <t>Note: All of the examples have whitespace added to improve formatting and readability,
       but are not present in the generated content.</t>
@@ -1801,13 +1801,13 @@ wN2RHVWpCU18zU1czRUx4NGhtV1kifQ.P5It6q0kxNx5NBA76D-bYKIxlourey5JpU
       <section title="Complex Example" anchor="complex_example">
         <t>
           This example uses all fields except for those dealing
-          with Signed Token Renewal, including Client IP (cdniip) and Subject (sub) which are
+          with Signed Token Renewal, including Client IP Address (cdniip) and Subject (sub) which are
           encrpyted. This significantly increases the size of the signed
           JWT token.
         </t>
 
         <t>
-          JWE for Client IP (cdniip) of [2001:db8::1/32]:
+          JWE for Client IP Address (cdniip) of [2001:db8::1/32]:
         </t>
 
         <figure><artwork><![CDATA[
