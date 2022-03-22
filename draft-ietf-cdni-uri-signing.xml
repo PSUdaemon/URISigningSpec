@@ -10,7 +10,7 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc category="std" docName="draft-ietf-cdni-uri-signing-25" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-cdni-uri-signing-26" ipr="trust200902">
   <front>
     <title abbrev="CDNI URI Signing">URI Signing for Content Delivery Network Interconnection
     (CDNI)</title>
@@ -292,7 +292,7 @@
         the case where the dCDN does not have a trust relationship
         with the CSP, this means that either an asymmetric public/private key
         method needs to be used for computing the signed JWT (because the CSP and
-        dCDN are not able to exchange symmetric shared secret keys). Shared keys SHOULD NOT
+        dCDN are not able to exchange symmetric shared secret keys). Shared keys MUST NOT
         be redistributed.</t>
 
         <t>For HTTP-based request routing, the Signed URI (i.e., the Target CDN
@@ -1166,7 +1166,7 @@
             communicates to a dCDN the information needed to
             verify Signed JWTs from the CSP (e.g., the URI query
             string parameter name for the URI Signing Package Attribute). In
-            the case of symmetric shared key, the uCDN SHOULD NOT share the key
+            the case of symmetric shared key, the uCDN MUST NOT share the key
             with a dCDN.</t>
 
             <t>When a UA requests a piece of protected content from the CSP,
@@ -1220,7 +1220,7 @@
         multiple CDNI hops, to CDNs with which the CSP may not have a trust
         relationship. This raises a security concern for applicability of URI
         Signing with symmetric keys in case of DNS-based inter-CDN request
-        routing. Due to these concerns, this architecture is NOT RECOMMENDED.</t>
+        routing. Due to these flaws, this architecture MUST NOT be implemented.</t>
 
         <t>Note: While using a symmetric shared key is supported, it is NOT RECOMMENDED.
         See the <xref target="security">Security Considerations</xref> section about the
