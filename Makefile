@@ -2,7 +2,7 @@ XML2RFC=xml2rfc --v2
 RFC2TXT=$(XML2RFC) --text
 RFC2HTML=$(XML2RFC) --html
 
-SOURCES=draft-ietf-cdni-uri-signing.xml
+SOURCES=rfc9246.xml
 TXT_OUTPUT=$(SOURCES:.xml=.txt)
 HTML_OUTPUT=$(SOURCES:.xml=.html)
 OUTPUT=$(TXT_OUTPUT) $(HTML_OUTPUT)
